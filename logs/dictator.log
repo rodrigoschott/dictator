@@ -1,0 +1,587 @@
+2025-11-11 01:13:43,057 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-11 01:13:43,057 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-11 01:13:43,057 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-11 01:13:43,475 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-11 01:13:45,249 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-11 01:13:45,261 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-11 01:13:45,262 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-11 01:13:45,263 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-11 01:13:55,102 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 01:14:01,447 - DictatorService - INFO - 🔇 Silence detected (2.1s)
+2025-11-11 01:14:01,447 - DictatorService - INFO -    RMS stats: avg=0.00126, max=0.00822, threshold=0.00200
+2025-11-11 01:14:01,447 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 01:14:01,452 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 01:14:01,494 - faster_whisper - INFO - Processing audio with duration 00:06.292
+2025-11-11 01:14:02,635 - DictatorService - INFO - 📝 Transcribed: Ok, agora o Dictator está funcionando.
+2025-11-11 01:14:02,640 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 01:14:03,241 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 01:14:12,930 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 01:14:33,009 - DictatorService - INFO - 🔇 Silence detected (2.0s)
+2025-11-11 01:14:33,009 - DictatorService - INFO -    RMS stats: avg=0.00146, max=0.01000, threshold=0.00200
+2025-11-11 01:14:33,009 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 01:14:33,016 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 01:14:33,059 - faster_whisper - INFO - Processing audio with duration 00:20.020
+2025-11-11 01:14:37,135 - DictatorService - INFO - 📝 Transcribed: Eu gostaria de adicionar algum elemento visual para notificar quando que o som está sendo gravado e quando ele está sendo... enfim, o status do que está acontecendo no Dictator. Pode ser um íconezinho em algum lugar na minha tela, não sei, o que você acha?
+2025-11-11 01:14:37,139 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 01:14:37,740 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 01:15:55,209 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 01:16:01,950 - DictatorService - INFO - 🔇 Silence detected (2.1s)
+2025-11-11 01:16:01,950 - DictatorService - INFO -    RMS stats: avg=0.00122, max=0.00776, threshold=0.00200
+2025-11-11 01:16:01,950 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 01:16:01,955 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 01:16:01,994 - faster_whisper - INFO - Processing audio with duration 00:06.682
+2025-11-11 01:16:03,431 - DictatorService - INFO - 📝 Transcribed: Eu prefiro a opção B, eu não gosto de notificações do Windows.
+2025-11-11 01:16:03,435 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 01:16:04,037 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 01:16:07,971 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 01:16:16,015 - DictatorService - INFO - 🔇 Silence detected (2.0s)
+2025-11-11 01:16:16,015 - DictatorService - INFO -    RMS stats: avg=0.00094, max=0.00466, threshold=0.00200
+2025-11-11 01:16:16,015 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 01:16:16,020 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 01:16:16,057 - faster_whisper - INFO - Processing audio with duration 00:08.008
+2025-11-11 01:16:17,580 - DictatorService - INFO - 📝 Transcribed: Mas eu gostaria que o overlay fosse delicado, nada muito grande, por favor.
+2025-11-11 01:16:17,585 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 01:16:18,186 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 01:23:24,476 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 01:23:36,030 - DictatorService - INFO - 🔇 Silence detected (2.0s)
+2025-11-11 01:23:36,030 - DictatorService - INFO -    RMS stats: avg=0.00002, max=0.00023, threshold=0.00200
+2025-11-11 01:23:36,030 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 01:23:36,035 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 01:23:36,073 - faster_whisper - INFO - Processing audio with duration 00:11.518
+2025-11-11 01:23:37,018 - DictatorService - INFO - 📝 Transcribed: Legenda Adriana Zanotto
+2025-11-11 01:23:37,023 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 01:23:37,624 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 01:32:15,484 - DictatorService - INFO - 💾 Configuration saved
+2025-11-11 01:32:15,484 - DictatorService - INFO - 🔄 Restarting service...
+2025-11-11 01:32:15,484 - DictatorService - INFO - 🛑 Dictator Service stopping...
+2025-11-11 01:32:15,484 - DictatorService - INFO - 👋 Dictator Service stopped
+2025-11-11 01:32:15,486 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-11 01:32:15,486 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-11 01:32:15,486 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-11 01:32:15,638 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-11 01:32:17,424 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-11 01:32:17,424 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-11 01:32:17,424 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-11 01:32:17,424 - DictatorService - INFO - 🖱️  Listening for mouse button: middle
+2025-11-11 01:32:19,178 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 01:32:23,468 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 01:32:23,474 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 01:32:23,542 - faster_whisper - INFO - Processing audio with duration 00:04.238
+2025-11-11 01:32:24,845 - DictatorService - INFO - 📝 Transcribed: Vamos testar com outro atalho agora. Será que funcionou?
+2025-11-11 01:32:24,849 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 01:32:25,452 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 01:32:45,373 - DictatorService - INFO - 💾 Configuration saved
+2025-11-11 01:32:45,373 - DictatorService - INFO - 🔄 Restarting service...
+2025-11-11 01:32:45,373 - DictatorService - INFO - 🛑 Dictator Service stopping...
+2025-11-11 01:32:45,374 - DictatorService - INFO - 👋 Dictator Service stopped
+2025-11-11 01:32:45,375 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-11 01:32:45,375 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-11 01:32:45,375 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-11 01:32:45,519 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-11 01:32:47,398 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-11 01:32:47,398 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-11 01:32:47,398 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-11 01:32:47,398 - DictatorService - INFO - 🖱️  Listening for mouse button: middle
+2025-11-11 01:32:54,492 - DictatorService - INFO - 💾 Configuration saved
+2025-11-11 01:32:54,493 - DictatorService - INFO - 🔄 Restarting service...
+2025-11-11 01:32:54,493 - DictatorService - INFO - 🛑 Dictator Service stopping...
+2025-11-11 01:32:54,493 - DictatorService - INFO - 👋 Dictator Service stopped
+2025-11-11 01:32:54,494 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-11 01:32:54,494 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-11 01:32:54,494 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-11 01:32:54,639 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-11 01:32:56,632 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-11 01:32:56,632 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-11 01:32:56,632 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-11 01:32:56,632 - DictatorService - INFO - 🖱️  Listening for mouse button: side2
+2025-11-11 01:33:31,962 - DictatorService - INFO - Exiting...
+2025-11-11 01:33:31,962 - DictatorService - INFO - 🛑 Dictator Service stopping...
+2025-11-11 01:33:31,962 - DictatorService - INFO - 👋 Dictator Service stopped
+2025-11-11 01:33:31,963 - pystray._base - ERROR - An error occurred when calling message handler
+Traceback (most recent call last):
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_win32.py", line 412, in _dispatcher
+    return int(icon._message_handlers.get(
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        uMsg, lambda w, l: 0)(wParam, lParam) or 0)
+        ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_win32.py", line 224, in _on_notify
+    descriptors[index - 1](self)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_base.py", line 328, in inner
+    callback(self)
+    ~~~~~~~~^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_base.py", line 453, in __call__
+    return self._action(icon, self)
+           ~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_base.py", line 548, in wrapper0
+    return action()
+  File "D:\Dev\py\Dictator\src\dictator\tray.py", line 204, in exit_app
+    item(
+SystemExit: 0
+2025-11-11 11:08:28,342 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-11 11:08:28,342 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-11 11:08:28,344 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-11 11:08:28,783 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-11 11:08:30,520 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-11 11:08:30,533 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-11 11:08:30,767 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-11 11:08:30,768 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-11 11:08:34,722 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:08:47,301 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:08:47,313 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:08:47,361 - faster_whisper - INFO - Processing audio with duration 00:12.506
+2025-11-11 11:08:48,183 - DictatorService - INFO - 📝 Transcribed: E aí
+2025-11-11 11:08:48,189 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 11:08:48,790 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 11:09:09,639 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:09:13,134 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:09:13,146 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:09:13,184 - faster_whisper - INFO - Processing audio with duration 00:03.458
+2025-11-11 11:09:13,991 - DictatorService - INFO - 📝 Transcribed: E aí
+2025-11-11 11:09:13,996 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 11:09:14,597 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 11:09:47,971 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:09:51,285 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:09:51,291 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:09:51,330 - faster_whisper - INFO - Processing audio with duration 00:03.276
+2025-11-11 11:09:52,167 - DictatorService - INFO - 📝 Transcribed: Legenda Adriana Zanotto
+2025-11-11 11:09:52,172 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 11:09:52,774 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 11:10:03,121 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:10:13,266 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:10:13,273 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:10:13,311 - faster_whisper - INFO - Processing audio with duration 00:10.088
+2025-11-11 11:10:13,995 - DictatorService - INFO - 📝 Transcribed: E aí
+2025-11-11 11:10:14,000 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 11:10:14,601 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 11:20:53,249 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:21:10,577 - DictatorService - INFO - 💾 Configuration saved
+2025-11-11 11:21:10,577 - DictatorService - INFO - 🔄 Restarting service...
+2025-11-11 11:21:10,578 - DictatorService - INFO - 🛑 Dictator Service stopping...
+2025-11-11 11:21:10,578 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:21:10,581 - DictatorService - INFO - 👋 Dictator Service stopped
+2025-11-11 11:21:10,582 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-11 11:21:10,582 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-11 11:21:10,583 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-11 11:21:10,593 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:21:10,641 - faster_whisper - INFO - Processing audio with duration 00:17.264
+2025-11-11 11:21:37,921 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-11 11:21:37,922 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-11 11:21:37,923 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-11 11:21:38,319 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 503 Service Temporarily Unavailable"
+2025-11-11 11:21:40,230 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-11 11:21:40,243 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-11 11:21:40,468 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-11 11:21:40,468 - DictatorService - INFO - 🖱️  Listening for mouse button: side2
+2025-11-11 11:21:44,638 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:21:49,582 - DictatorService - INFO - 🔇 Silence detected (2.0s)
+2025-11-11 11:21:49,582 - DictatorService - INFO -    RMS stats: avg=0.01325, max=0.09998, threshold=0.00200
+2025-11-11 11:21:49,583 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:21:49,590 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:21:49,631 - faster_whisper - INFO - Processing audio with duration 00:04.888
+2025-11-11 11:22:12,682 - DictatorService - INFO - 📝 Transcribed: Alô, alô, alô, alô, testando.
+2025-11-11 11:22:12,688 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 11:22:13,289 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 11:22:22,221 - DictatorService - INFO - 💾 Configuration saved
+2025-11-11 11:22:22,221 - DictatorService - INFO - 🔄 Restarting service...
+2025-11-11 11:22:22,222 - DictatorService - INFO - 🛑 Dictator Service stopping...
+2025-11-11 11:22:22,222 - DictatorService - INFO - 👋 Dictator Service stopped
+2025-11-11 11:22:22,223 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-11 11:22:22,223 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-11 11:22:22,223 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-11 11:22:22,414 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-11 11:22:24,303 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-11 11:22:24,303 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-11 11:22:24,304 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-11 11:22:24,304 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-11 11:22:26,464 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:22:30,880 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:22:30,885 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:22:30,961 - faster_whisper - INFO - Processing audio with duration 00:04.368
+2025-11-11 11:22:32,164 - DictatorService - INFO - 📝 Transcribed: Eu acho que agora está tudo funcionando direitinho
+2025-11-11 11:22:32,170 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 11:22:32,771 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 11:23:24,432 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:23:45,104 - DictatorService - INFO - 🔇 Silence detected (2.1s)
+2025-11-11 11:23:45,105 - DictatorService - INFO -    RMS stats: avg=0.02373, max=0.14012, threshold=0.00200
+2025-11-11 11:23:45,105 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:23:45,111 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:23:45,150 - faster_whisper - INFO - Processing audio with duration 00:20.618
+2025-11-11 11:23:49,118 - DictatorService - INFO - 📝 Transcribed: Eu achei um GitHub, um repositório aqui bem interessante e eu queria que você desse uma olhada, por favor, faz uma análise completa desse repositório e identifique aí exatamente quais são as diferenças de implementações e escolhas e arquiteturas que eles tiveram diferentes da gente.
+2025-11-11 11:23:49,123 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 11:23:49,725 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 11:24:13,337 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:24:21,328 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:24:21,338 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:24:21,376 - faster_whisper - INFO - Processing audio with duration 00:07.930
+2025-11-11 11:24:23,269 - DictatorService - INFO - 📝 Transcribed: Por favor, faça uma pesquisa completa, faça buscas e não altere nada antes da minha aprovação.
+2025-11-11 11:24:23,274 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 11:24:23,875 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 11:36:40,747 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:37:24,306 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:37:24,313 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:37:24,353 - faster_whisper - INFO - Processing audio with duration 00:43.498
+2025-11-11 11:37:31,513 - DictatorService - INFO - 📝 Transcribed: Mas aí que está o problema, eu quero assistente de voz bidirecional, eu gostaria de implementar o Cocoro ou o próprio Voicemode para dar uma voz aos meus agentes, eu quero fazer integração com o Cloud Code, também parametrizável, então eu quero uma opção lá no nosso Icon Tray, que se eu marcar o modo MCP ou algo do tipo, o texto vai direto para o Cloud Code, e caso esse modo não esteja marcado, serve como uma ferramenta de dictation normal, e é isso.
+2025-11-11 11:37:31,519 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 11:37:32,120 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 11:38:23,105 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:38:36,002 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:38:36,012 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:38:36,048 - faster_whisper - INFO - Processing audio with duration 00:12.844
+2025-11-11 11:38:38,651 - DictatorService - INFO - 📝 Transcribed: Por favor, faça uma pesquisa e um planejamento profundo para identificar quais são as vantagens e desvantagens e o trabalho necessário para implementar essas três features.
+2025-11-11 11:38:38,656 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 11:38:39,258 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 11:39:32,047 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:39:43,099 - DictatorService - INFO - 🔇 Silence detected (2.0s)
+2025-11-11 11:39:43,099 - DictatorService - INFO -    RMS stats: avg=0.02054, max=0.13562, threshold=0.00200
+2025-11-11 11:39:43,100 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:39:43,105 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:39:43,145 - faster_whisper - INFO - Processing audio with duration 00:10.998
+2025-11-11 11:39:45,554 - DictatorService - INFO - 📝 Transcribed: Lembre-se que você pode usar o próprio repositório do VoiceMode como uma fonte de pesquisa, já que ele implementou basicamente a mesma coisa.
+2025-11-11 11:39:45,559 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 11:39:46,160 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 11:50:09,119 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:50:27,625 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:50:27,630 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:50:27,674 - faster_whisper - INFO - Processing audio with duration 00:18.460
+2025-11-11 11:50:31,291 - DictatorService - INFO - 📝 Transcribed: Vamos começar a implementação pelo TTS, mas me dê detalhes entre o Piper e o Cocoro, por favor, faça uma comparação e tenha sempre em mente que ser 100% grátis e local é um requirement do nosso projeto, tá?
+2025-11-11 11:50:31,296 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 11:50:31,897 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 11:51:42,846 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:51:52,497 - DictatorService - INFO - 🔇 Silence detected (2.0s)
+2025-11-11 11:51:52,497 - DictatorService - INFO -    RMS stats: avg=0.00007, max=0.00079, threshold=0.00200
+2025-11-11 11:51:52,498 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:51:52,503 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:51:52,546 - faster_whisper - INFO - Processing audio with duration 00:09.594
+2025-11-11 11:51:53,423 - DictatorService - INFO - 📝 Transcribed: E assim ficou pronto.
+2025-11-11 11:51:53,428 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 11:51:53,469 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 11:51:54,029 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 11:52:01,570 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 11:52:01,576 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 11:52:01,617 - faster_whisper - INFO - Processing audio with duration 00:08.034
+2025-11-11 11:52:03,613 - DictatorService - INFO - 📝 Transcribed: o Eleven Labs oferece 10 mil créditos por mês no plano grátis, isso não é o suficiente pra gente não?
+2025-11-11 11:52:03,618 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 11:52:04,219 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:06:20,955 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:06:22,898 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:06:22,902 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:06:22,942 - faster_whisper - INFO - Processing audio with duration 00:01.898
+2025-11-11 12:06:23,701 - DictatorService - INFO - 📝 Transcribed: Obrigado.
+2025-11-11 12:06:23,706 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:06:24,308 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:06:31,530 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:06:43,885 - DictatorService - INFO - 🔇 Silence detected (2.0s)
+2025-11-11 12:06:43,885 - DictatorService - INFO -    RMS stats: avg=0.00005, max=0.00124, threshold=0.00200
+2025-11-11 12:06:43,885 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:06:43,891 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:06:43,931 - faster_whisper - INFO - Processing audio with duration 00:12.298
+2025-11-11 12:06:44,797 - DictatorService - INFO - 📝 Transcribed: E assim ficou pronto.
+2025-11-11 12:06:44,802 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:06:45,405 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:06:47,252 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:07:04,823 - DictatorService - INFO - 🔇 Silence detected (2.1s)
+2025-11-11 12:07:04,823 - DictatorService - INFO -    RMS stats: avg=0.00099, max=0.11038, threshold=0.00200
+2025-11-11 12:07:04,823 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:07:04,829 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:07:04,868 - faster_whisper - INFO - Processing audio with duration 00:17.524
+2025-11-11 12:07:05,539 - DictatorService - INFO - 📝 Transcribed: Obrigado.
+2025-11-11 12:07:05,543 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:07:06,146 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:07:28,928 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:07:41,083 - DictatorService - INFO - 🔇 Silence detected (2.1s)
+2025-11-11 12:07:41,083 - DictatorService - INFO -    RMS stats: avg=0.00017, max=0.00075, threshold=0.00200
+2025-11-11 12:07:41,084 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:07:41,092 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:07:41,132 - faster_whisper - INFO - Processing audio with duration 00:12.116
+2025-11-11 12:07:42,055 - DictatorService - INFO - 📝 Transcribed: Tchau, tchau.
+2025-11-11 12:07:42,060 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:07:42,663 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:08:01,283 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:08:13,839 - DictatorService - INFO - 🔇 Silence detected (2.1s)
+2025-11-11 12:08:13,839 - DictatorService - INFO -    RMS stats: avg=0.00011, max=0.00194, threshold=0.00200
+2025-11-11 12:08:13,839 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:08:13,844 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:08:13,883 - faster_whisper - INFO - Processing audio with duration 00:12.506
+2025-11-11 12:08:14,522 - DictatorService - INFO - 📝 Transcribed: Obrigado.
+2025-11-11 12:08:14,527 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:08:15,130 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:08:34,690 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:08:41,126 - DictatorService - INFO - 🔇 Silence detected (2.0s)
+2025-11-11 12:08:41,127 - DictatorService - INFO -    RMS stats: avg=0.00024, max=0.01574, threshold=0.00200
+2025-11-11 12:08:41,127 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:08:41,136 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:08:41,178 - faster_whisper - INFO - Processing audio with duration 00:06.396
+2025-11-11 12:08:42,004 - DictatorService - INFO - 📝 Transcribed: E assim ficou pronto.
+2025-11-11 12:08:42,010 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:08:42,613 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:11:56,931 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:12:20,052 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:12:20,059 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:12:20,097 - faster_whisper - INFO - Processing audio with duration 00:23.062
+2025-11-11 12:12:24,369 - DictatorService - INFO - 📝 Transcribed: Uma última modificação, eu gostaria que você verificasse a pasta self-hosted AI starter kit e analisasse o arquivo docker-compose.eml deles e queria que validasse a possibilidade de adicionar esse projeto como um docker dentro desse ecossistema, por favor.
+2025-11-11 12:12:24,373 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:12:24,975 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:16:15,438 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:16:31,029 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:16:31,035 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:16:31,082 - faster_whisper - INFO - Processing audio with duration 00:15.548
+2025-11-11 12:16:33,961 - DictatorService - INFO - 📝 Transcribed: Você tem razão, é muito complexo implementar o Docker nesse caso, vamos manter uma aplicação 100% local, então quais seriam os próximos passos? Por favor me refreste do planejamento.
+2025-11-11 12:16:33,967 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:16:34,568 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:24:58,089 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:25:16,967 - DictatorService - INFO - 🔇 Silence detected (2.1s)
+2025-11-11 12:25:16,967 - DictatorService - INFO -    RMS stats: avg=0.00014, max=0.00153, threshold=0.00200
+2025-11-11 12:25:16,967 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:25:16,974 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:25:17,015 - faster_whisper - INFO - Processing audio with duration 00:18.824
+2025-11-11 12:25:17,830 - DictatorService - INFO - 📝 Transcribed: E assim ficou pronto.
+2025-11-11 12:25:17,834 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:25:18,435 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:32:06,884 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:32:07,584 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:32:07,588 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:32:07,626 - faster_whisper - INFO - Processing audio with duration 00:00.650
+2025-11-11 12:32:08,373 - DictatorService - INFO - 📝 Transcribed: Obrigado.
+2025-11-11 12:32:08,378 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:32:08,981 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:32:31,189 - DictatorService - INFO - 🔄 Restarting service...
+2025-11-11 12:32:31,189 - DictatorService - INFO - 🛑 Dictator Service stopping...
+2025-11-11 12:32:31,189 - DictatorService - INFO - 👋 Dictator Service stopped
+2025-11-11 12:32:31,191 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-11 12:32:31,191 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-11 12:32:31,191 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-11 12:32:31,350 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-11 12:32:33,125 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-11 12:32:33,125 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-11 12:32:33,126 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-11 12:32:33,126 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-11 12:32:45,019 - DictatorService - INFO - Exiting...
+2025-11-11 12:32:45,019 - DictatorService - INFO - 🛑 Dictator Service stopping...
+2025-11-11 12:32:45,019 - DictatorService - INFO - 👋 Dictator Service stopped
+2025-11-11 12:32:45,019 - pystray._base - ERROR - An error occurred when calling message handler
+Traceback (most recent call last):
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_win32.py", line 412, in _dispatcher
+    return int(icon._message_handlers.get(
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        uMsg, lambda w, l: 0)(wParam, lParam) or 0)
+        ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_win32.py", line 224, in _on_notify
+    descriptors[index - 1](self)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_base.py", line 328, in inner
+    callback(self)
+    ~~~~~~~~^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_base.py", line 453, in __call__
+    return self._action(icon, self)
+           ~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_base.py", line 548, in wrapper0
+    return action()
+  File "D:\Dev\py\Dictator\src\dictator\tray.py", line 235, in exit_app
+SystemExit: 0
+2025-11-11 12:32:56,027 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-11 12:32:56,027 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-11 12:32:56,028 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-11 12:32:56,402 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-11 12:32:58,220 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-11 12:32:58,234 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-11 12:32:58,234 - DictatorService - INFO - 🎤 Loading TTS engine...
+2025-11-11 12:32:58,234 - KokoroTTS - INFO - 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-11 12:32:58,716 - KokoroTTS - INFO - ✅ Kokoro TTS loaded successfully!
+2025-11-11 12:32:58,717 - DictatorService - INFO - ✅ TTS engine loaded successfully!
+2025-11-11 12:32:58,942 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-11 12:32:58,943 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-11 12:33:08,630 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:33:10,062 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:33:10,067 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:33:10,116 - faster_whisper - INFO - Processing audio with duration 00:01.378
+2025-11-11 12:33:10,939 - DictatorService - INFO - 📝 Transcribed: Testando...
+2025-11-11 12:33:10,945 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:33:11,547 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:33:33,103 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:33:43,857 - DictatorService - INFO - 🔇 Silence detected (2.0s)
+2025-11-11 12:33:43,857 - DictatorService - INFO -    RMS stats: avg=0.00596, max=0.05259, threshold=0.00200
+2025-11-11 12:33:43,858 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:33:43,865 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:33:43,923 - faster_whisper - INFO - Processing audio with duration 00:10.712
+2025-11-11 12:33:45,475 - DictatorService - INFO - 📝 Transcribed: Eu acho que eu não entendi exatamente como é que eu testo o TTS lá.
+2025-11-11 12:33:45,481 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:33:46,082 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:34:12,627 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:34:30,401 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:34:30,413 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:34:30,460 - faster_whisper - INFO - Processing audio with duration 00:17.706
+2025-11-11 12:34:33,974 - DictatorService - INFO - 📝 Transcribed: Ok, eu reiniciei e parece que o Kokoro foi carregado com sucesso, mas como eu testo isso? Porque essa mensagem que eu estou te mandando foi feita utilizando o nosso Dictator e eu não ouvi nenhum retorno.
+2025-11-11 12:34:33,980 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:34:34,582 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:36:28,276 - DictatorService - INFO - 🔄 Restarting service...
+2025-11-11 12:36:28,277 - DictatorService - INFO - 🛑 Dictator Service stopping...
+2025-11-11 12:36:28,277 - DictatorService - INFO - 👋 Dictator Service stopped
+2025-11-11 12:36:28,279 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-11 12:36:28,279 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-11 12:36:28,279 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-11 12:36:28,437 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-11 12:36:30,356 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-11 12:36:30,356 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-11 12:36:30,357 - DictatorService - INFO - 🎤 Loading TTS engine...
+2025-11-11 12:36:30,357 - KokoroTTS - INFO - 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-11 12:36:30,832 - KokoroTTS - INFO - ✅ Kokoro TTS loaded successfully!
+2025-11-11 12:36:30,832 - DictatorService - INFO - ✅ TTS engine loaded successfully!
+2025-11-11 12:36:30,833 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-11 12:36:30,833 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-11 12:36:39,099 - DictatorService - INFO - Exiting...
+2025-11-11 12:36:39,100 - DictatorService - INFO - 🛑 Dictator Service stopping...
+2025-11-11 12:36:39,100 - DictatorService - INFO - 👋 Dictator Service stopped
+2025-11-11 12:36:39,101 - pystray._base - ERROR - An error occurred when calling message handler
+Traceback (most recent call last):
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_win32.py", line 412, in _dispatcher
+    return int(icon._message_handlers.get(
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        uMsg, lambda w, l: 0)(wParam, lParam) or 0)
+        ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_win32.py", line 224, in _on_notify
+    descriptors[index - 1](self)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_base.py", line 328, in inner
+    callback(self)
+    ~~~~~~~~^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_base.py", line 453, in __call__
+    return self._action(icon, self)
+           ~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_base.py", line 548, in wrapper0
+    return action()
+  File "D:\Dev\py\Dictator\src\dictator\tray.py", line 241, in exit_app
+    self.service.logger.warning("⚠️ TTS not available")
+    ^^^^^^^
+SystemExit: 0
+2025-11-11 12:36:47,458 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-11 12:36:47,458 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-11 12:36:47,459 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-11 12:36:47,838 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-11 12:36:49,632 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-11 12:36:49,645 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-11 12:36:49,645 - DictatorService - INFO - 🎤 Loading TTS engine...
+2025-11-11 12:36:49,645 - KokoroTTS - INFO - 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-11 12:36:50,121 - KokoroTTS - INFO - ✅ Kokoro TTS loaded successfully!
+2025-11-11 12:36:50,122 - DictatorService - INFO - ✅ TTS engine loaded successfully!
+2025-11-11 12:36:50,348 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-11 12:36:50,348 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-11 12:37:21,723 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:37:25,348 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:37:25,355 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:37:25,410 - faster_whisper - INFO - Processing audio with duration 00:03.562
+2025-11-11 12:37:26,569 - DictatorService - INFO - 📝 Transcribed: Testando novamente por causa do ordem acima.
+2025-11-11 12:37:26,574 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:37:27,176 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:37:32,997 - DictatorService - INFO - 🧪 Testing TTS from menu...
+2025-11-11 12:37:32,997 - DictatorService - INFO - 🧪 Testing TTS: Olá! Este é um teste do sistema de síntese de voz.
+2025-11-11 12:37:33,003 - DictatorService - INFO - 🔊 Speaking: Olá! Este é um teste do sistema de síntese de voz.
+2025-11-11 12:37:33,003 - KokoroTTS - INFO - 🔊 Speaking: Olá! Este é um teste do sistema de síntese de voz.
+2025-11-11 12:37:33,578 - KokoroTTS - INFO - ⚡ Audio generated in 0.57s
+2025-11-11 12:37:36,812 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-11 12:37:58,263 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-11 12:38:01,918 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:38:01,925 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:38:01,974 - faster_whisper - INFO - Processing audio with duration 00:03.614
+2025-11-11 12:38:03,134 - DictatorService - INFO - 📝 Transcribed: Tudo parece estar funcionando normalmente. Podemos seguir.
+2025-11-11 12:38:03,139 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:38:03,741 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:38:30,157 - DictatorService - INFO - 💾 Configuration saved
+2025-11-11 12:38:30,158 - DictatorService - INFO - VAD: Disabled
+2025-11-11 12:38:32,483 - DictatorService - INFO - 💾 Configuration saved
+2025-11-11 12:38:32,483 - DictatorService - INFO - Mode: push_to_talk
+2025-11-11 12:38:59,155 - DictatorService - INFO - 🔴 Recording started...
+2025-11-11 12:38:59,293 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:38:59,299 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:38:59,344 - faster_whisper - INFO - Processing audio with duration 00:00.078
+2025-11-11 12:39:00,169 - DictatorService - INFO - 📝 Transcribed: Legenda Adriana Zanotto
+2025-11-11 12:39:00,174 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:39:00,777 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:39:03,842 - DictatorService - INFO - 🔴 Recording started...
+2025-11-11 12:39:03,966 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:39:03,971 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:39:04,016 - faster_whisper - INFO - Processing audio with duration 00:00.078
+2025-11-11 12:39:04,745 - DictatorService - INFO - 📝 Transcribed: Legenda Adriana Zanotto
+2025-11-11 12:39:04,751 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:39:05,354 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:39:06,907 - DictatorService - INFO - 🔴 Recording started...
+2025-11-11 12:39:08,909 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:39:08,915 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:39:08,961 - faster_whisper - INFO - Processing audio with duration 00:01.950
+2025-11-11 12:39:09,801 - DictatorService - INFO - 📝 Transcribed: Pousadas à venda em Paraty
+2025-11-11 12:39:09,806 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:39:10,409 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:39:49,365 - DictatorService - INFO - 🔴 Recording started...
+2025-11-11 12:39:49,522 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:39:49,531 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:39:49,601 - faster_whisper - INFO - Processing audio with duration 00:00.104
+2025-11-11 12:39:50,570 - DictatorService - INFO - 📝 Transcribed: Legenda Adriana Zanotto
+2025-11-11 12:39:50,575 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:39:51,177 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:41:54,253 - DictatorService - INFO - 🔴 Recording started...
+2025-11-11 12:42:01,496 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:42:01,507 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:42:01,560 - faster_whisper - INFO - Processing audio with duration 00:07.176
+2025-11-11 12:42:03,972 - DictatorService - INFO - 📝 Transcribed: Primeira missão cumprida, eu tô ditando essa mensagem aqui pra minha ai e depois ela vai ler a sua resposta pra mim. Rá!
+2025-11-11 12:42:03,977 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:42:04,581 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:45:39,877 - DictatorService - INFO - 🔴 Recording started...
+2025-11-11 12:45:42,760 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:45:42,766 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:45:42,819 - faster_whisper - INFO - Processing audio with duration 00:02.834
+2025-11-11 12:45:43,839 - DictatorService - INFO - 📝 Transcribed: Comprar pendrive niterói
+2025-11-11 12:45:43,844 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:45:44,447 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:46:47,608 - DictatorService - INFO - 🔴 Recording started...
+2025-11-11 12:46:48,627 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:46:48,634 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:46:48,705 - faster_whisper - INFO - Processing audio with duration 00:00.962
+2025-11-11 12:46:49,462 - DictatorService - INFO - 📝 Transcribed: Mercado Livre
+2025-11-11 12:46:49,467 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:46:50,070 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:51:49,163 - DictatorService - INFO - 🔴 Recording started...
+2025-11-11 12:51:49,305 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:51:49,311 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:51:49,380 - faster_whisper - INFO - Processing audio with duration 00:00.078
+2025-11-11 12:51:50,315 - DictatorService - INFO - 📝 Transcribed: Legenda Adriana Zanotto
+2025-11-11 12:51:50,321 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:51:50,924 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:59:11,536 - DictatorService - INFO - 🔴 Recording started...
+2025-11-11 12:59:11,767 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:59:11,773 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:59:11,820 - faster_whisper - INFO - Processing audio with duration 00:00.182
+2025-11-11 12:59:12,557 - DictatorService - INFO - 📝 Transcribed: E aí
+2025-11-11 12:59:12,562 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:59:13,166 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 12:59:17,034 - DictatorService - INFO - 🔴 Recording started...
+2025-11-11 12:59:20,918 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-11 12:59:20,929 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-11 12:59:20,987 - faster_whisper - INFO - Processing audio with duration 00:03.822
+2025-11-11 12:59:22,346 - DictatorService - INFO - 📝 Transcribed: É, hoje o dia bom pra comprar coisas lá na promoção maluca
+2025-11-11 12:59:22,351 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-11 12:59:22,955 - DictatorService - INFO - ✅ Text pasted!
+2025-11-11 13:02:19,545 - DictatorService - INFO - Exiting...
+2025-11-11 13:02:19,545 - DictatorService - INFO - 🛑 Dictator Service stopping...
+2025-11-11 13:02:19,545 - DictatorService - INFO - 👋 Dictator Service stopped
+2025-11-11 13:02:19,546 - pystray._base - ERROR - An error occurred when calling message handler
+Traceback (most recent call last):
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_win32.py", line 412, in _dispatcher
+    return int(icon._message_handlers.get(
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        uMsg, lambda w, l: 0)(wParam, lParam) or 0)
+        ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_win32.py", line 224, in _on_notify
+    descriptors[index - 1](self)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_base.py", line 328, in inner
+    callback(self)
+    ~~~~~~~~^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_base.py", line 453, in __call__
+    return self._action(icon, self)
+           ~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\rodri\AppData\Local\pypoetry\Cache\virtualenvs\dictator-naCAx4Hh-py3.13\Lib\site-packages\pystray\_base.py", line 548, in wrapper0
+    return action()
+  File "D:\Dev\py\Dictator\src\dictator\tray.py", line 255, in exit_app
+    sys.exit(0)
+    ~~~~~~~~^^^
+SystemExit: 0

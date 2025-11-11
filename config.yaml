@@ -1,0 +1,56 @@
+advanced:
+  cache_dir: ''
+  temp_dir: ''
+audio:
+  channels: 1
+  sample_rate: 16000
+hotkey:
+  auto_stop_silence: 2.0
+  keyboard_trigger: ctrl+alt+v
+  max_duration: 60
+  mode: push_to_talk
+  mouse_button: side1
+  type: mouse
+  vad_enabled: false
+  vad_threshold: 0.002
+mcp:
+  claude:
+    max_tokens: 4096
+    model: claude-sonnet-4
+  conversation:
+    max_history: 10
+    timeout: 30
+  enabled: false
+  fallback_dictation: true
+  server_script: src/dictator/mcp_server.py
+overlay:
+  enabled: true
+  padding: 20
+  position: top-right
+  size: 15
+paste:
+  auto_paste: true
+  delay: 0.5
+service:
+  auto_start: true
+  log_file: ''
+  log_level: INFO
+  notifications: true
+tray:
+  enabled: true
+  tooltip: Dictator - Voice to Text (Mouse Side Button)
+tts:
+  enabled: true
+  engine: kokoro-onnx
+  interrupt_on_speech: true
+  kokoro:
+    language: pt-br
+    model_path: kokoro-v1.0.onnx
+    speed: 1.0
+    voice: af_sarah
+    voices_path: voices-v1.0.bin
+  volume: 0.8
+whisper:
+  device: cuda
+  language: pt
+  model: large-v3

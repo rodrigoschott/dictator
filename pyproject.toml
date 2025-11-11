@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "dictator"
+version = "0.1.0"
+description = "Voice to Text - Local Whisper transcription with GPU support"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "dictator", from = "src"}]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.14"
+faster-whisper = "^1.2.0"
+sounddevice = "^0.4.6"
+soundfile = "^0.12.1"
+pyperclip = "^1.8.2"
+pyautogui = "^0.9.54"
+numpy = "^2.0.0"
+
+# Windows Service Components
+pynput = "^1.7.6"
+pystray = "^0.19.5"
+pillow = "^10.0.0"
+pyyaml = "^6.0.1"
+
+# Note: faster-whisper uses CTranslate2 (automatically included)
+# No need for PyTorch! Works with RTX 5080 out of the box
+kokoro-onnx = {extras = ["gpu"], version = "^0.4.9"}
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+black = "^23.7.0"
+ruff = "^0.0.285"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+dictator = "dictator.main:main"
+dictator-service = "dictator.service:main"
+dictator-tray = "dictator.tray:main"
