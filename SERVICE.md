@@ -1,18 +1,50 @@
-# Dictator - Voice to Text Service
+# Dictator - Voice to Text Service - Technical Documentation
 
 ## Overview
 
-Dictator is a Windows background service that provides global voice-to-text functionality using OpenAI's Whisper AI running locally with GPU acceleration. Simply press a hotkey, speak, and your words are automatically transcribed and pasted into any active application.
+Dictator is a Windows background service that provides global voice-to-text functionality using **faster-whisper** (optimized Whisper AI) running locally with GPU acceleration via CTranslate2. Simply press a trigger (mouse button or hotkey), speak, and your words are automatically transcribed and pasted into any active application.
 
 ### Key Features
 
-- **Global Hotkey**: Activate from anywhere with Ctrl+Alt+V (configurable)
+- **Mouse/Keyboard Triggers**: Mouse side button (default) or Ctrl+Alt+V (configurable)
 - **Local Processing**: No internet required - all processing happens on your machine
-- **GPU Accelerated**: Uses NVIDIA CUDA for fast transcription
-- **System Tray Integration**: Easy access to settings and controls
+- **GPU Accelerated**: Uses CTranslate2 with CUDA for ultrafast transcription
+- **System Tray Integration**: Full control and configuration via tray menu
+- **Visual Overlay**: Colored indicator showing recording/processing status
+- **TTS Support**: Local text-to-speech with Kokoro-ONNX
 - **Auto-paste**: Transcribed text automatically appears in your focused field
 - **Windows Service**: Starts automatically with Windows (optional)
-- **Multi-language**: Supports Portuguese by default, configurable for other languages
+- **Multi-language**: Supports 99+ languages via Whisper
+- **VAD Support**: Auto-stop recording after silence detection
+- **Push-to-Talk**: Record while holding button/key
+
+## Technical Stack
+
+### Core Technologies
+
+- **faster-whisper**: Optimized Whisper implementation using CTranslate2
+  - 4-5x faster than original openai-whisper
+  - Uses less VRAM
+  - **No PyTorch required!** Uses CTranslate2 directly
+- **CTranslate2**: Efficient inference engine for Transformer models
+  - Supports CUDA, CPU, and quantization
+  - Automatic mixed precision (FP16/INT8)
+- **kokoro-onnx**: High-quality local TTS engine
+  - ONNX Runtime with GPU acceleration
+  - Multiple voices and languages
+- **pynput**: Global hotkey/mouse event capture
+- **pystray**: System tray integration
+- **sounddevice/soundfile**: Audio recording and processing
+
+### Why faster-whisper instead of openai-whisper?
+
+| Feature | openai-whisper | faster-whisper |
+|---------|----------------|----------------|
+| Speed | Baseline | **4-5x faster** |
+| VRAM Usage | High | **50% less** |
+| Dependencies | PyTorch (~2GB) | CTranslate2 (~200MB) |
+| Quantization | Limited | **INT8, FP16, FP32** |
+| Streaming | No | **Yes** |
 
 ## Dependency Management
 
@@ -23,11 +55,12 @@ This project uses **Poetry** for Python dependency management. Poetry creates an
 - **Reproducible builds**: `poetry.lock` ensures everyone uses the same versions
 - **Easy dependency management**: Simple commands to add/remove packages
 - **Virtual environment**: Automatic .venv creation and management
+- **No manual CUDA/PyTorch installation**: Everything via Poetry!
 
 ### Poetry Commands
 
 ```batch
-# Install all dependencies
+# Install all dependencies (includes faster-whisper with CUDA)
 poetry install
 
 # Update dependencies
@@ -42,6 +75,16 @@ poetry run python script.py
 # Activate the virtual environment
 poetry shell
 ```
+
+### Important Note on PyTorch
+
+⚠️ **You do NOT need to install PyTorch manually!**
+
+Unlike the original openai-whisper, faster-whisper uses CTranslate2 which is automatically installed via Poetry. This means:
+- ✅ Smaller install size (~200MB vs ~2GB)
+- ✅ Faster inference
+- ✅ No manual CUDA toolkit installation
+- ✅ Works out-of-the-box with NVIDIA GPUs
 
 ## System Requirements
 
@@ -91,8 +134,8 @@ python -m pip install poetry
 cd D:\Dev\py\Dictator
 poetry install --no-dev
 
-# 3. Install PyTorch with CUDA support
-poetry run pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+# 3. All dependencies are installed via Poetry, including faster-whisper with CUDA support
+# No need to manually install PyTorch - faster-whisper uses CTranslate2 which is included!
 
 # 4. Download NSSM from https://nssm.cc/download
 # Extract and copy nssm.exe to C:\Windows\System32\
