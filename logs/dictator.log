@@ -9162,3 +9162,71 @@ Okay, the user is asking if I, as a local language model, have access to MCP too
 2025-11-12 16:15:32,255 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
 2025-11-12 16:15:32,255 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
 2025-11-12 16:15:32,414 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-12 16:15:34,862 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-12 16:15:34,862 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-12 16:15:34,862 - DictatorService - INFO - 🎤 Loading TTS engine...
+2025-11-12 16:15:34,862 - KokoroTTS - INFO - 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-12 16:15:35,318 - KokoroTTS - INFO - ✅ Kokoro TTS loaded successfully!
+2025-11-12 16:15:35,319 - DictatorService - INFO - ✅ TTS engine loaded successfully!
+2025-11-12 16:15:35,319 - DictatorService - INFO - 📢 Claude Mode disabled - using Dictation Mode (text only)
+2025-11-12 16:15:35,320 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-12 16:15:35,320 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-12 16:15:48,889 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 16:16:04,754 - DictatorService - INFO - 🔇 Silence detected (2.1s)
+2025-11-12 16:16:04,754 - DictatorService - INFO -    RMS stats: avg=0.01517, max=0.10293, threshold=0.00200
+2025-11-12 16:16:04,755 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 16:16:04,756 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-12 16:16:04,902 - faster_whisper - INFO - Processing audio with duration 00:15.808
+2025-11-12 16:16:07,415 - DictatorService - INFO - 📝 Transcribed: Tá funcionando, obrigado. Por favor, verifique o README file e faça qualquer atualização necessária a partir das últimas modificações que nós fizemos.
+2025-11-12 16:16:07,420 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-12 16:16:07,724 - DictatorService - INFO - ✅ Text pasted!
+2025-11-12 16:16:43,685 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 16:16:52,633 - DictatorService - INFO - 🔇 Silence detected (2.0s)
+2025-11-12 16:16:52,633 - DictatorService - INFO -    RMS stats: avg=0.01198, max=0.12284, threshold=0.00200
+2025-11-12 16:16:52,634 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 16:16:52,635 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-12 16:16:52,716 - faster_whisper - INFO - Processing audio with duration 00:08.892
+2025-11-12 16:16:54,659 - DictatorService - INFO - 📝 Transcribed: Você tem acesso a ferramentas de diretório? Por exemplo, você consegue digitar arquivos em uma pasta específica?
+2025-11-12 16:16:54,666 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-12 16:16:54,967 - DictatorService - INFO - ✅ Text pasted!
+2025-11-12 16:17:26,165 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 16:17:40,224 - DictatorService - INFO - 🔇 Silence detected (2.1s)
+2025-11-12 16:17:40,224 - DictatorService - INFO -    RMS stats: avg=0.00094, max=0.01168, threshold=0.00200
+2025-11-12 16:17:40,225 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 16:17:40,225 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-12 16:17:40,298 - faster_whisper - INFO - Processing audio with duration 00:14.014
+2025-11-12 16:17:40,863 - DictatorService - INFO - 📝 Transcribed: Tchau.
+2025-11-12 16:17:40,869 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-12 16:17:41,172 - DictatorService - INFO - ✅ Text pasted!
+2025-11-12 16:19:16,912 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 16:19:33,282 - DictatorService - INFO - 🔇 Silence detected (2.0s)
+2025-11-12 16:19:33,283 - DictatorService - INFO -    RMS stats: avg=0.01065, max=0.06956, threshold=0.00200
+2025-11-12 16:19:33,284 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 16:19:33,285 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-12 16:19:33,352 - faster_whisper - INFO - Processing audio with duration 00:16.328
+2025-11-12 16:19:36,645 - DictatorService - INFO - 📝 Transcribed: Agora eu quero que você escaneie a solução por todos os arquivos de teste que temos espalhados, categorize eles e organize isso em uma pasta separada, em um suite de teste organizado e estruturado, por favor.
+2025-11-12 16:19:36,650 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-12 16:19:36,954 - DictatorService - INFO - ✅ Text pasted!
+2025-11-12 16:27:47,956 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 16:27:59,112 - DictatorService - INFO - 🔇 Silence detected (2.1s)
+2025-11-12 16:27:59,113 - DictatorService - INFO -    RMS stats: avg=0.00691, max=0.06562, threshold=0.00200
+2025-11-12 16:27:59,113 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 16:27:59,114 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-12 16:27:59,182 - faster_whisper - INFO - Processing audio with duration 00:11.102
+2025-11-12 16:28:01,117 - DictatorService - INFO - 📝 Transcribed: Cara, eu esqueci de pegar as paradas na sua casa ontem. Posso passar aí hoje a noite? Rapidinho?
+2025-11-12 16:28:01,124 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-12 16:28:01,430 - DictatorService - INFO - ✅ Text pasted!
+2025-11-12 16:34:00,479 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 16:34:00,809 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 16:34:00,811 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-12 16:34:00,885 - faster_whisper - INFO - Processing audio with duration 00:00.286
+2025-11-12 16:34:01,480 - DictatorService - INFO - 📝 Transcribed: Tchau.
+2025-11-12 16:34:01,485 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-12 16:34:01,788 - DictatorService - INFO - ✅ Text pasted!
+2025-11-12 16:34:04,696 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 16:34:19,568 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 16:34:19,570 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-12 16:34:19,636 - faster_whisper - INFO - Processing audio with duration 00:14.820
+2025-11-12 16:34:21,508 - DictatorService - INFO - 📝 Transcribed: Eu estou cancelando manualmente porque o processo está pendurando ali naquela parte. Aí eu tenho que cancelar.
+2025-11-12 16:34:21,514 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-12 16:34:21,818 - DictatorService - INFO - ✅ Text pasted!
