@@ -10,11 +10,11 @@ not for voice loop management.
 
 import asyncio
 import json
-from typing import AsyncGenerator, Optional
+from typing import Optional
 from pathlib import Path
 
 from .events import Event, EventType, EventPubSub
-from .sentence_chunker import SentenceChunker, MarkdownCleaner
+from .sentence_chunker import MarkdownCleaner
 
 
 class LLMCaller:
@@ -83,27 +83,18 @@ class LLMCaller:
             })
 
             logger.info(f"📄 Response text: {response[:200]}...")
-            logger.info("🔄 Splitting response into sentences...")
 
-            # Stream response sentences for TTS
-            sentence_count = 0
-            async for sentence in self._split_into_sentences(response):
-                sentence_count += 1
-                logger.info(f"📝 Sentence {sentence_count}: {sentence[:100]}...")
+            # Clean entire response for TTS (single shot)
+            clean_response = MarkdownCleaner.clean(response)
+            logger.info(f"🧹 Cleaned response: {clean_response[:100]}...")
 
-                # Clean text for TTS
-                clean_sentence = MarkdownCleaner.clean(sentence)
-                logger.info(f"🧹 Cleaned sentence: {clean_sentence[:100]}...")
-
-                # Emit TTS event
-                logger.info(f"📢 Publishing TTS_SENTENCE_READY event...")
-                self.pubsub.publish_nowait(Event(
-                    type=EventType.TTS_SENTENCE_READY,
-                    data={"text": clean_sentence},
-                    session_id=self.session_id
-                ))
-
-            logger.info(f"✅ Finished splitting ({sentence_count} sentences)")
+            # Emit single TTS event
+            logger.info(f"📢 Publishing TTS_SENTENCE_READY event...")
+            self.pubsub.publish_nowait(Event(
+                type=EventType.TTS_SENTENCE_READY,
+                data={"text": clean_response},
+                session_id=self.session_id
+            ))
 
             # Emit completion
             logger.info("📢 Publishing LLM_RESPONSE_COMPLETED event")
@@ -150,12 +141,14 @@ class LLMCaller:
         # Find Claude Code CLI executable
         claude_cmd = self._find_claude_executable()
         if not claude_cmd:
-            logger.error("❌ Claude Code CLI not found")
+            logger.error("❌ Claude Code CLI not found in PATH or common locations")
             raise RuntimeError(
                 "Claude Code CLI not found. Please install from: "
                 "https://docs.anthropic.com/en/docs/claude-code\n"
                 "Or ensure 'claude' is in your PATH"
             )
+        
+        logger.info(f"🔍 Using Claude CLI: {claude_cmd}")
 
         # Use a queue to get result from thread
         result_queue: queue.Queue = queue.Queue()
@@ -165,20 +158,33 @@ class LLMCaller:
             try:
                 logger.info(f"🤖 [Thread {threading.current_thread().name}] Calling Claude CLI")
                 logger.info(f"📝 Prompt length: {len(context)} chars")
+                logger.info(f"🔧 Command: {claude_cmd} --print --output-format text")
+                logger.info(f"📄 First 200 chars of prompt: {context[:200]}...")
+                
+                # Run in project directory (important for Claude CLI context)
+                import os
+                cwd = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+                logger.info(f"📁 Working directory: {cwd}")
 
                 result = subprocess.run(
                     [claude_cmd, '--print', '--output-format', 'text'],
                     input=context.encode('utf-8'),
                     capture_output=True,
                     timeout=30.0,
+                    cwd=cwd  # Run in project root
                 )
 
                 logger.info(f"✅ Subprocess completed with code: {result.returncode}")
 
                 if result.returncode != 0:
-                    error_msg = result.stderr.decode('utf-8', errors='replace')
-                    logger.error(f"❌ Claude CLI error: {error_msg}")
-                    result_queue.put(('error', f"Claude CLI failed: {error_msg}"))
+                    error_msg = result.stderr.decode('utf-8', errors='replace').strip()
+                    stdout_msg = result.stdout.decode('utf-8', errors='replace').strip()
+                    logger.error(f"❌ Claude CLI stderr: {error_msg}")
+                    logger.error(f"❌ Claude CLI stdout: {stdout_msg}")
+                    
+                    # Use stdout if stderr is empty (Claude might output error to stdout)
+                    full_error = error_msg or stdout_msg or "Unknown error (no output)"
+                    result_queue.put(('error', f"Claude CLI failed (exit {result.returncode}): {full_error}"))
                     return
 
                 response = result.stdout.decode('utf-8', errors='replace').strip()
@@ -294,38 +300,6 @@ Provide helpful, accurate information in a friendly, spoken style."""
 
         return "".join(prompt_parts)
 
-    async def _split_into_sentences(self, response: str) -> AsyncGenerator[str, None]:
-        """
-        Split response into sentences for streaming TTS
-
-        Args:
-            response: Full response text
-
-        Yields:
-            Individual sentences
-        """
-        chunker = SentenceChunker()
-
-        # Feed response character by character
-        for char in response:
-            await chunker.add_token(char)
-
-        # Flush remaining content
-        await chunker.flush()
-
-        # Collect all sentences from queue
-        sentences = []
-        while not chunker.queue.empty():
-            try:
-                sentence = chunker.queue.get_nowait()
-                sentences.append(sentence)
-            except asyncio.QueueEmpty:
-                break
-
-        # Yield sentences
-        for sentence in sentences:
-            yield sentence
-
     def clear_history(self) -> None:
         """Clear conversation history"""
         self.conversation_history.clear()
@@ -370,15 +344,13 @@ class DirectLLMCaller(LLMCaller):
             self._client = AsyncAnthropic(api_key=self.api_key)
         return self._client
 
-    async def _stream_response(self) -> AsyncGenerator[str, None]:
+    async def _get_response(self) -> str:
         """
-        Stream LLM response directly from Anthropic API
+        Get LLM response directly from Anthropic API
 
-        Yields:
-            Complete sentences ready for TTS
+        Returns:
+            Complete response text
         """
-        chunker = SentenceChunker()
-
         # Prepare messages
         messages = [
             {
@@ -396,7 +368,7 @@ class DirectLLMCaller(LLMCaller):
             "Match the user's language automatically."
         )
 
-        # Stream from Claude
+        # Get response from Claude
         full_response = ""
         async with self.client.messages.stream(
             model=self.model,
@@ -406,7 +378,6 @@ class DirectLLMCaller(LLMCaller):
         ) as stream:
             async for text in stream.text_stream:
                 full_response += text
-                await chunker.add_token(text)
 
         # Add to history
         self.conversation_history.append({
@@ -414,9 +385,200 @@ class DirectLLMCaller(LLMCaller):
             "content": full_response
         })
 
-        # Flush remaining
-        await chunker.flush()
+        return full_response
 
-        # Yield sentences
-        async for sentence in chunker:
-            yield sentence
+
+class OllamaLLMCaller(LLMCaller):
+    """
+    Ollama LLM caller for local model inference
+
+    Calls Ollama API (running in Docker) for unlimited local testing.
+    Supports streaming and conversation history.
+
+    Advantages:
+    - Free, unlimited usage (no token limits)
+    - Low latency (local inference)
+    - Privacy (no cloud API calls)
+
+    Requirements:
+    - Ollama container running (docker-compose up ollama)
+    - Model pulled (e.g., llama3.2:latest)
+    """
+
+    def __init__(
+        self,
+        pubsub: EventPubSub,
+        base_url: str = "http://localhost:11434",
+        model: str = "llama3.2:latest",
+        session_id: str | None = None
+    ):
+        # Initialize without MCP files (not needed for Ollama)
+        super().__init__(
+            pubsub=pubsub,
+            mcp_request_file=Path("/dev/null"),
+            mcp_response_file=Path("/dev/null"),
+            session_id=session_id
+        )
+
+        self.base_url = base_url
+        self.model = model
+
+    async def process_transcription(self, transcription: str) -> None:
+        """
+        Process user transcription with Ollama
+
+        Overrides parent method to use Ollama API instead of Claude CLI.
+
+        Args:
+            transcription: User's transcribed speech
+        """
+        # Add to history
+        self.conversation_history.append({
+            "role": "user",
+            "content": transcription
+        })
+
+        # Emit LLM request event
+        self.pubsub.publish_nowait(Event(
+            type=EventType.LLM_REQUEST,
+            data={"transcription": transcription},
+            session_id=self.session_id
+        ))
+
+        try:
+            import logging
+            logger = logging.getLogger("DictatorService")
+            logger.info(f"🦙 Calling Ollama API ({self.model})...")
+
+            # Call Ollama API
+            response = await self._call_ollama_api(transcription)
+            logger.info(f"🟢 Ollama returned: {len(response)} chars")
+
+            # Add response to history
+            self.conversation_history.append({
+                "role": "assistant",
+                "content": response
+            })
+
+            logger.info(f"📄 Response text: {response[:200]}...")
+
+            # Clean response for TTS
+            clean_response = MarkdownCleaner.clean(response)
+            logger.info(f"🧹 Cleaned response: {clean_response[:100]}...")
+
+            # Emit TTS event
+            logger.info(f"📢 Publishing TTS_SENTENCE_READY event...")
+            self.pubsub.publish_nowait(Event(
+                type=EventType.TTS_SENTENCE_READY,
+                data={"text": clean_response},
+                session_id=self.session_id
+            ))
+
+            # Emit completion
+            logger.info("📢 Publishing LLM_RESPONSE_COMPLETED event")
+            self.pubsub.publish_nowait(Event(
+                type=EventType.LLM_RESPONSE_COMPLETED,
+                data={},
+                session_id=self.session_id
+            ))
+
+        except Exception as e:
+            logger = logging.getLogger("DictatorService")
+            logger.error(f"❌ Ollama API error: {e}")
+            # Emit failure event
+            self.pubsub.publish_nowait(Event(
+                type=EventType.LLM_RESPONSE_FAILED,
+                data={"error": str(e)},
+                session_id=self.session_id
+            ))
+            raise
+
+    async def _call_ollama_api(self, transcription: str) -> str:
+        """
+        Call Ollama API with conversation context
+
+        Uses /api/chat endpoint for conversational interaction.
+
+        Args:
+            transcription: User's current message
+
+        Returns:
+            Complete response from Ollama
+        """
+        import aiohttp
+        import logging
+
+        logger = logging.getLogger("DictatorService")
+
+        # Build system prompt optimized for TTS
+        system_prompt = """You are Dictator, a concise voice assistant integrated into a Windows dictation system.
+
+IMPORTANT - Your responses will be read aloud via text-to-speech:
+- Keep answers under 3 sentences maximum
+- Be direct, natural, and conversational
+- Avoid markdown formatting, code blocks, or complex punctuation
+- Don't use asterisks, backticks, or special symbols
+- Speak as if talking to the user face-to-face
+- Match the user's language automatically (Portuguese or English)
+
+Provide helpful, accurate information in a friendly, spoken style."""
+
+        # Build messages with history
+        messages = [{"role": "system", "content": system_prompt}]
+        
+        # Add recent conversation history
+        recent_history = self.conversation_history[-(self.max_history):]
+        messages.extend([
+            {"role": msg["role"], "content": msg["content"]}
+            for msg in recent_history
+        ])
+
+        # Prepare request payload
+        payload = {
+            "model": self.model,
+            "messages": messages,
+            "stream": False,  # Get complete response at once
+            "options": {
+                "temperature": 0.7,
+                "top_p": 0.9,
+                "top_k": 40
+            }
+        }
+
+        logger.info(f"🔗 Calling Ollama: {self.base_url}/api/chat")
+        logger.info(f"📦 Payload: {len(messages)} messages, model={self.model}")
+
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.post(
+                    f"{self.base_url}/api/chat",
+                    json=payload,
+                    timeout=aiohttp.ClientTimeout(total=60.0)
+                ) as response:
+                    if response.status != 200:
+                        error_text = await response.text()
+                        raise RuntimeError(
+                            f"Ollama API error (HTTP {response.status}): {error_text}"
+                        )
+
+                    # Parse JSON response
+                    result = await response.json()
+                    
+                    # Extract message content
+                    if "message" not in result or "content" not in result["message"]:
+                        raise RuntimeError(f"Unexpected Ollama response format: {result}")
+
+                    response_text = result["message"]["content"].strip()
+                    logger.info(f"✅ Ollama response: {len(response_text)} chars")
+
+                    return response_text
+
+        except aiohttp.ClientError as e:
+            logger.error(f"❌ HTTP error calling Ollama: {e}")
+            raise RuntimeError(f"Failed to connect to Ollama at {self.base_url}: {e}")
+        except asyncio.TimeoutError:
+            logger.error("❌ Ollama API timeout")
+            raise RuntimeError("Ollama API timed out after 60 seconds")
+        except Exception as e:
+            logger.error(f"❌ Unexpected error: {e}")
+            raise

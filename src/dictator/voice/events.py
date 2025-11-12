@@ -102,13 +102,22 @@ class EventPubSub:
         self._lock = asyncio.Lock()
         self.event_history: list[Event] = []  # For debugging
         self.max_history = 1000
+        self._loop: asyncio.AbstractEventLoop | None = None  # Event loop reference for thread-safe publishing
+
+    def set_event_loop(self, loop: asyncio.AbstractEventLoop) -> None:
+        """
+        Set event loop for thread-safe publishing
+        
+        Must be called from the event loop's thread.
+        """
+        self._loop = loop
 
     def publish_nowait(self, event: Event) -> None:
         """
-        Publish event to all subscribers instantly
+        Publish event to all subscribers instantly (THREAD-SAFE)
 
-        Non-blocking call that wakes up all waiting subscribers.
-        Uses queue.put_nowait() for zero-latency delivery.
+        Can be called from any thread. If event loop is set and we're in a different thread,
+        uses call_soon_threadsafe() for thread-safe delivery.
 
         Args:
             event: Event to publish
@@ -121,10 +130,15 @@ class EventPubSub:
         # Distribute to all subscribers
         for subscriber in self.subscribers:
             try:
-                subscriber.put_nowait(event.model_copy())
-            except asyncio.QueueFull:
-                # If queue is full, skip this subscriber
-                # (should not happen with unbounded queues)
+                # Check if we need thread-safe call
+                if self._loop is not None:
+                    # Use call_soon_threadsafe to safely put item from any thread
+                    self._loop.call_soon_threadsafe(subscriber.put_nowait, event.model_copy())
+                else:
+                    # No loop set, use direct put (legacy behavior)
+                    subscriber.put_nowait(event.model_copy())
+            except (asyncio.QueueFull, RuntimeError) as e:
+                # If queue is full or runtime error, skip this subscriber
                 pass
 
     async def poll(self) -> AsyncGenerator[Event, None]:

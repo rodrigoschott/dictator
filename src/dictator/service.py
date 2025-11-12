@@ -35,7 +35,8 @@ try:
         VoiceSessionManager,
         VADConfig,
         LLMCaller,
-        DirectLLMCaller
+        DirectLLMCaller,
+        OllamaLLMCaller
     )
     VOICE_SESSION_AVAILABLE = True
 except ImportError:
@@ -102,7 +103,11 @@ class DictatorService:
             return self.get_default_config()
 
         with open(config_file, 'r', encoding='utf-8') as f:
-            return yaml.safe_load(f)
+            config = yaml.safe_load(f)
+            # Return default if file is empty or invalid
+            if not config:
+                return self.get_default_config()
+            return config
 
     def get_default_config(self) -> dict:
         """Return default configuration"""
@@ -145,6 +150,26 @@ class DictatorService:
                 'size': 15,
                 'position': 'top-right',
                 'padding': 20
+            },
+            'tts': {
+                'enabled': True,
+                'model': 'kokoro-v1.0.onnx',
+                'voice': 'af_sarah'
+            },
+            'voice': {
+                'mode': 'event_driven',
+                'claude_mode': False,
+                'llm': {
+                    'provider': 'ollama',
+                    'ollama': {
+                        'base_url': 'http://localhost:11434',
+                        'model': 'llama3.2:latest'
+                    },
+                    'claude_direct': {
+                        'api_key': '',
+                        'model': 'claude-3-5-sonnet-20241022'
+                    }
+                }
             }
         }
 
@@ -264,6 +289,10 @@ class DictatorService:
         try:
             self.logger.info("🎯 Loading event-driven voice session...")
 
+            # Get VAD enabled flag from hotkey config (same as normal dictation mode)
+            vad_enabled = self.config['hotkey'].get('vad_enabled', False)
+            self.logger.info(f"🎤 VAD enabled: {vad_enabled}")
+
             # Create VAD config
             vad_config_dict = voice_config.get('vad', {})
             vad_config = VADConfig(
@@ -272,23 +301,58 @@ class DictatorService:
                 sample_rate=16000
             )
 
-            # Create LLM caller
+            # Create LLM caller based on provider
             llm_config = voice_config.get('llm', {})
-            mcp_request_file = Path("temp/mcp_voice_request.json")
-            mcp_response_file = Path("temp/mcp_voice_response.json")
+            provider = llm_config.get('provider', 'claude-cli')
 
-            llm_caller = LLMCaller(
-                pubsub=None,  # Will be set by session manager
-                mcp_request_file=mcp_request_file,
-                mcp_response_file=mcp_response_file
-            )
+            if provider == 'ollama':
+                # Ollama provider
+                ollama_config = llm_config.get('ollama', {})
+                base_url = ollama_config.get('base_url', 'http://localhost:11434')
+                model = ollama_config.get('model', 'llama3.2:latest')
+                
+                self.logger.info(f"🦙 Using Ollama provider: {model} @ {base_url}")
+                llm_caller = OllamaLLMCaller(
+                    pubsub=None,  # Will be set by session manager
+                    base_url=base_url,
+                    model=model
+                )
+                
+            elif provider == 'claude-direct':
+                # Direct Anthropic API
+                direct_config = llm_config.get('claude_direct', {})
+                api_key = direct_config.get('api_key')
+                model = direct_config.get('model', 'claude-sonnet-4-20250514')
+                
+                self.logger.info(f"🤖 Using Claude Direct API: {model}")
+                llm_caller = DirectLLMCaller(
+                    pubsub=None,  # Will be set by session manager
+                    api_key=api_key,
+                    model=model
+                )
+                
+            else:
+                # Default: Claude CLI
+                mcp_request_file = Path("temp/mcp_voice_request.json")
+                mcp_response_file = Path("temp/mcp_voice_response.json")
+                
+                self.logger.info("🤖 Using Claude CLI provider")
+                llm_caller = LLMCaller(
+                    pubsub=None,  # Will be set by session manager
+                    mcp_request_file=mcp_request_file,
+                    mcp_response_file=mcp_response_file
+                )
 
             # Create voice session manager
             self.voice_session = VoiceSessionManager(
                 stt_callback=self.transcribe_audio,
                 tts_callback=self.speak_text,
                 llm_caller=llm_caller,
-                vad_config=vad_config
+                vad_config=vad_config,
+                vad_enabled=vad_enabled,
+                error_callback=self._emit_state,  # Reset UI state on errors
+                vad_stop_callback=self._on_vad_stop,  # Reset recording state when VAD detects stop
+                tts_engine=self.tts_engine  # For TTS interrupt support
             )
 
             # Start session in background thread with asyncio loop
@@ -408,6 +472,17 @@ class DictatorService:
         else:
             self.start_recording()
 
+    def _on_vad_stop(self):
+        """
+        Callback when VAD detects speech stopped
+        
+        Resets recording state so that next hotkey press starts a new recording
+        instead of trying to stop an already-stopped recording.
+        """
+        if self.is_recording:
+            self.logger.info("🎯 VAD detected speech stop, resetting recording state")
+            self.is_recording = False
+
     def start_recording(self):
         """Start recording audio"""
         if self.is_recording:
@@ -422,6 +497,11 @@ class DictatorService:
         self.recording_data = []
         self.last_sound_time = time.time()  # Track last time we heard sound
         self.audio_chunk_timestamp_ms = 0  # Reset timestamp for voice session
+
+        # Clear voice session buffer if in event-driven mode
+        if self.use_event_driven_mode and self.voice_session:
+            self.voice_session.current_audio_buffer = np.array([], dtype=np.float32)
+            self.logger.info("🧹 Cleared audio buffer")
 
         # Emit state change
         self._emit_state("recording")
@@ -552,6 +632,48 @@ class DictatorService:
 
         self.logger.info("⏹️ Recording stopped")
         self.is_recording = False
+
+        # Event-driven mode with VAD disabled: emit SPEECH_STOPPED manually
+        if self.use_event_driven_mode and self.voice_session:
+            vad_enabled = self.config['hotkey'].get('vad_enabled', False)
+            if not vad_enabled:
+                # User stopped manually, trigger speech processing
+                from .voice import Event, EventType
+                self.logger.info("🎤 VAD disabled: emitting manual SPEECH_STOPPED event")
+                
+                # Interrupt TTS if playing (user wants to speak)
+                if self.tts_engine and self.tts_engine.is_speaking():
+                    self.logger.info("🚨 Interrupting TTS - user wants to speak")
+                    self.tts_engine.stop()
+                
+                # Emit processing state BEFORE event (voice session will handle transcription)
+                self._emit_state("processing")
+                
+                # Emit SPEECH_STOPPED event to voice session
+                try:
+                    subscriber_count = self.voice_session.pubsub.subscriber_count
+                    self.logger.info(f"📢 Publishing SPEECH_STOPPED event to {subscriber_count} subscribers")
+                    
+                    self.voice_session.pubsub.publish_nowait(Event(
+                        type=EventType.SPEECH_STOPPED,
+                        data={},
+                        session_id=self.voice_session.session_id
+                    ))
+                    
+                    if subscriber_count == 0:
+                        self.logger.error("❌ No subscribers! Event processor may have crashed")
+                        self._emit_state("idle")
+                        return
+                    
+                    self.logger.info("✅ SPEECH_STOPPED event published to queue")
+                except Exception as e:
+                    self.logger.error(f"❌ Failed to publish SPEECH_STOPPED event: {e}")
+                    self._emit_state("idle")
+                    return
+                
+                # In event-driven mode, voice session handles everything
+                self.logger.info("🎯 Event-driven mode: Voice session will handle transcription via events")
+                return
 
         if not self.recording_data:
             self.logger.warning("No audio recorded!")

@@ -8,10 +8,10 @@ hotkey:
   auto_stop_silence: 2.0
   keyboard_trigger: ctrl+alt+v
   max_duration: 60
-  mode: push_to_talk
+  mode: toggle
   mouse_button: side1
   type: mouse
-  vad_enabled: false
+  vad_enabled: true
   vad_threshold: 0.002
 mcp:
   claude:
@@ -30,7 +30,7 @@ overlay:
   size: 15
 paste:
   auto_paste: true
-  delay: 0.5
+  delay: 0.2
 service:
   auto_start: true
   log_file: ''
@@ -50,6 +50,32 @@ tts:
     voice: af_sarah
     voices_path: voices-v1.0.bin
   volume: 0.8
+voice:
+  claude_mode: false
+  event_loop:
+    local: true
+    pubsub_buffer_size: 100
+  llm:
+    call_mode: single
+    claude_cli:
+      mcp_request_file: null
+      mcp_response_file: null
+    claude_direct:
+      api_key: null
+      model: claude-sonnet-4-20250514
+    ollama:
+      base_url: http://localhost:11434
+      model: qwen3:14b
+    provider: ollama
+    sentence_chunking: true
+    streaming: true
+  mode: event_driven
+  vad:
+    enabled: true
+    min_speech_duration_ms: 250
+    model_ttl: -1
+    silence_duration_ms: 700
+    threshold: 0.3
 whisper:
   device: cuda
   language: pt

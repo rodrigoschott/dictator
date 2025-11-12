@@ -12,6 +12,7 @@ import yaml
 import pystray
 from PIL import Image, ImageDraw
 from pystray import MenuItem as item
+import requests
 
 from dictator.service import DictatorService
 from dictator.overlay import OverlayState, init_overlay, set_state as set_overlay_state
@@ -35,8 +36,17 @@ class DictatorTray:
     def save_config(self):
         """Save current config to file"""
         try:
+            # Create a clean copy of config with only serializable values
+            clean_config = {}
+            for key, value in self.service.config.items():
+                # Skip non-serializable objects
+                if isinstance(value, (dict, list, str, int, float, bool, type(None))):
+                    clean_config[key] = value
+                elif hasattr(value, '__dict__'):
+                    self.service.logger.warning(f"⚠️ Skipping non-serializable config key: {key}")
+                    
             with open(self.config_path, 'w', encoding='utf-8') as f:
-                yaml.dump(self.service.config, f, default_flow_style=False, allow_unicode=True)
+                yaml.dump(clean_config, f, default_flow_style=False, allow_unicode=True)
             self.service.logger.info("💾 Configuration saved")
         except Exception as e:
             self.service.logger.error(f"❌ Failed to save config: {e}")
@@ -91,13 +101,61 @@ class DictatorTray:
         if state in overlay_state_map:
             set_overlay_state(overlay_state_map[state])
 
+    def get_ollama_models(self):
+        """Fetch available models from Ollama API"""
+        try:
+            base_url = self.service.config['voice']['llm']['ollama']['base_url']
+            response = requests.get(f"{base_url}/api/tags", timeout=2)
+            response.raise_for_status()
+            
+            data = response.json()
+            models = [model['name'] for model in data.get('models', [])]
+            
+            if not models:
+                # Fallback to defaults if API returns empty
+                return ['llama3.2:latest', 'llama3.1:latest', 'mistral:latest', 'codellama:latest']
+            
+            return sorted(models)
+        except Exception as e:
+            print(f"⚠️ Failed to fetch Ollama models: {e}")
+            # Fallback to default models
+            return ['llama3.2:latest', 'llama3.1:latest', 'mistral:latest', 'codellama:latest']
+
+    def _create_ollama_model_items(self, voice_config):
+        """Create menu items for Ollama models"""
+        from pystray import MenuItem as item
+        
+        def make_callback(model_name):
+            """Create callback for specific model"""
+            def callback(icon, item_obj):
+                self.set_ollama_model(model_name)
+            return callback
+        
+        current_model = voice_config.get('llm', {}).get('ollama', {}).get('model', 'llama3.2:latest')
+        
+        return tuple(
+            item(
+                model_name,
+                make_callback(model_name),
+                checked=lambda _, m=model_name: m == current_model
+            )
+            for model_name in self.get_ollama_models()
+        )
+
     def toggle_vad(self):
         """Toggle VAD (Voice Activity Detection)"""
         current = self.service.config['hotkey'].get('vad_enabled', False)
         self.service.config['hotkey']['vad_enabled'] = not current
         self.save_config()
         self.icon.menu = self.create_menu()  # Refresh menu
-        self.service.logger.info(f"VAD: {'Enabled' if not current else 'Disabled'}")
+
+        status = 'Enabled' if not current else 'Disabled'
+        self.service.logger.info(f"VAD: {status}")
+
+        # If LLM Mode is active, restart to apply VAD changes
+        if self.service.use_event_driven_mode:
+            self.service.logger.info("⚠️ Restarting service to apply VAD changes in LLM Mode")
+            self.restart_service()
 
     def toggle_push_to_talk(self):
         """Toggle between push-to-talk and toggle mode"""
@@ -107,6 +165,35 @@ class DictatorTray:
         self.save_config()
         self.icon.menu = self.create_menu()  # Refresh menu
         self.service.logger.info(f"Mode: {new_mode}")
+
+    def toggle_claude_mode(self):
+        """Toggle LLM Mode (Voice Assistant)"""
+        voice_config = self.service.config.get('voice', {})
+        current = voice_config.get('claude_mode', False)
+        self.service.config.setdefault('voice', {})['claude_mode'] = not current
+        self.save_config()
+        self.icon.menu = self.create_menu()  # Refresh menu
+        status = 'Enabled' if not current else 'Disabled'
+        self.service.logger.info(f"🤖 LLM Mode: {status}")
+        # Requires restart to take effect
+        if not current:
+            self.service.logger.info("⚠️ Restart service to activate LLM Mode")
+
+    def set_llm_provider(self, provider: str):
+        """Set LLM provider"""
+        self.service.config.setdefault('voice', {}).setdefault('llm', {})['provider'] = provider
+        self.save_config()
+        self.icon.menu = self.create_menu()  # Refresh menu
+        self.service.logger.info(f"🔄 LLM Provider changed to: {provider}")
+        self.service.logger.info("⚠️ Restart service to apply changes")
+
+    def set_ollama_model(self, model: str):
+        """Set Ollama model"""
+        self.service.config.setdefault('voice', {}).setdefault('llm', {}).setdefault('ollama', {})['model'] = model
+        self.save_config()
+        self.icon.menu = self.create_menu()  # Refresh menu
+        self.service.logger.info(f"🦙 Ollama model changed to: {model}")
+        self.service.logger.info("⚠️ Restart service to apply changes")
 
     def set_mouse_button(self, button):
         """Set mouse button trigger"""
@@ -129,6 +216,10 @@ class DictatorTray:
         vad_enabled = self.service.config['hotkey'].get('vad_enabled', False)
         mode = self.service.config['hotkey'].get('mode', 'toggle')
         is_push_to_talk = (mode == 'push_to_talk')
+
+        # Voice/Claude settings
+        voice_config = self.service.config.get('voice', {})
+        claude_mode = voice_config.get('claude_mode', False)
 
         # Trigger info text
         if trigger_type == 'mouse':
@@ -160,17 +251,17 @@ class DictatorTray:
                 pystray.Menu(
                     item(
                         'Mouse Side 1 (Back)',
-                        lambda: self.set_mouse_button('side1'),
+                        lambda icon, item: self.set_mouse_button('side1'),
                         checked=lambda _: trigger_type == 'mouse' and mouse_button == 'side1'
                     ),
                     item(
                         'Mouse Side 2 (Forward)',
-                        lambda: self.set_mouse_button('side2'),
+                        lambda icon, item: self.set_mouse_button('side2'),
                         checked=lambda _: trigger_type == 'mouse' and mouse_button == 'side2'
                     ),
                     item(
                         'Mouse Middle (Scroll)',
-                        lambda: self.set_mouse_button('middle'),
+                        lambda icon, item: self.set_mouse_button('middle'),
                         checked=lambda _: trigger_type == 'mouse' and mouse_button == 'middle'
                     ),
                     pystray.Menu.SEPARATOR,
@@ -192,6 +283,43 @@ class DictatorTray:
                 'Auto-Stop (VAD)',
                 self.toggle_vad,
                 checked=lambda _: vad_enabled
+            ),
+            pystray.Menu.SEPARATOR,
+            # LLM integration
+            item(
+                'LLM Mode (Voice Assistant)',
+                self.toggle_claude_mode,
+                checked=lambda _: claude_mode
+            ),
+            pystray.Menu.SEPARATOR,
+            # LLM Provider selection
+            item(
+                'LLM Provider',
+                pystray.Menu(
+                    item(
+                        'Claude CLI (Local)',
+                        lambda icon, item: self.set_llm_provider('claude-cli'),
+                        checked=lambda _: voice_config.get('llm', {}).get('provider', 'claude-cli') == 'claude-cli'
+                    ),
+                    item(
+                        'Claude Direct (API)',
+                        lambda icon, item: self.set_llm_provider('claude-direct'),
+                        checked=lambda _: voice_config.get('llm', {}).get('provider', 'claude-cli') == 'claude-direct'
+                    ),
+                    item(
+                        'Ollama (Local)',
+                        lambda icon, item: self.set_llm_provider('ollama'),
+                        checked=lambda _: voice_config.get('llm', {}).get('provider', 'claude-cli') == 'ollama'
+                    )
+                )
+            ),
+            # Ollama model selection (only shown when Ollama is active) - Dynamic discovery
+            item(
+                'Ollama Model',
+                pystray.Menu(
+                    lambda: self._create_ollama_model_items(voice_config)
+                ),
+                visible=lambda _: voice_config.get('llm', {}).get('provider', 'claude-cli') == 'ollama'
             ),
             pystray.Menu.SEPARATOR,
             item(
