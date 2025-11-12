@@ -23,7 +23,15 @@ Serviço Windows para transcrição de voz em texto usando **faster-whisper** (W
 - ✅ **Toggle Mode** - Clique para iniciar/parar gravação
 - ✅ **VAD (Voice Activity Detection)** - Para automaticamente após silêncio
 - ✅ **TTS (Text-to-Speech)** - Kokoro-ONNX para síntese de voz local de alta qualidade
-- ✅ **Interrupt on Speech** - TTS para automaticamente quando você começa a falar
+- ✅ **TTS Interrupt** - Para TTS instantaneamente ao pressionar hotkey (~170ms latência)
+- ✅ **Event-Driven Architecture** - Zero polling, processamento eficiente via fila de eventos
+
+### 🤖 LLM Integration (Voice Assistant Mode)
+- ✅ **Ollama Integration** - Conecte com modelos locais (llama, qwen, deepseek, etc.)
+- ✅ **Dynamic Model Discovery** - Modelos Ollama descobertos automaticamente no menu
+- ✅ **Thinking Models Support** - Filtra tags `<think>` de modelos como Qwen3 e DeepSeek-R1
+- ✅ **Context Preservation** - Mantém histórico de conversação
+- ✅ **Auto-Restart** - Mudanças de modelo/provider reiniciam serviço automaticamente
 
 ### ⚙️ Configuration & Management
 - ✅ **YAML Config** - Configuração completa e fácil personalização
@@ -130,11 +138,17 @@ Clique com **botão direito** no ícone do microfone 🎤:
 **Modos de Gravação:**
 - ☑️ **Push-to-Talk Mode** - Grava enquanto segura
 - ☑️ **Auto-Stop (VAD)** - Para após silêncio
+- ☑️ **LLM Mode** - Habilita assistente de voz com LLM
+
+**LLM Configuration (Voice Assistant):**
+- 🦙 **Ollama Models** - Lista dinâmica de modelos instalados
+- 🔄 **LLM Provider** - Escolha entre Ollama, Claude Direct, ou Claude CLI
+- 🎙️ **VAD Toggle** - Liga/desliga detecção de voz
 
 **Ações:**
 - **Open Config** - Editar `config.yaml`
 - **Open Logs** - Ver `logs/dictator.log`
-- **Restart Service** - Reiniciar serviço
+- **Restart Service** - Reiniciar serviço automaticamente
 - **Exit** - Sair do serviço
 
 ## ⚙️ Configuração Completa
@@ -190,12 +204,26 @@ tts:
   kokoro:
     model_path: "kokoro-v1.0.onnx"   # Caminho do modelo
     voices_path: "voices-v1.0.bin"   # Caminho das vozes
-    voice: "af_sarah"                # Voz padrão
-    language: "pt-br"                # pt-br, en-us, etc.
-    speed: 1.0                       # Velocidade (0.5 - 2.0)
+    voice: "pf_dora"                 # Voz padrão (Portuguese Female)
+    language: "pt-br"                # pt-br, en-us, en-gb, es, fr, it, ja, zh, hi
+    speed: 1.25                      # Velocidade (0.5 - 2.0)
 ```
 
-**Vozes disponíveis:** `af_sarah`, `af_sky`, `am_adam`, `am_michael`, entre outras.
+**56 vozes disponíveis em múltiplos idiomas:**
+
+🇵🇹 **Português:** `pf_dora`, `pm_alex`, `pm_santa`  
+🇺🇸 **American:** `af_alloy`, `af_bella`, `af_nova`, `am_adam`, `am_onyx`, etc.  
+🇬🇧 **British:** `bf_alice`, `bf_emma`, `bm_daniel`, `bm_george`  
+🇪🇸 **Spanish:** `ef_dora`, `em_alex`  
+🇫🇷 **French:** `ff_siwis`  
+🇮🇹 **Italian:** `if_sara`, `im_nicola`  
+🇯🇵 **Japanese:** `jf_alpha`, `jf_gongitsune`, `jm_kumo`  
+🇨🇳 **Chinese:** `zf_xiaobei`, `zm_yunxi`, etc.
+
+**Teste vozes com:**
+```batch
+poetry run python test_portuguese_voices.py
+```
 
 ### 🎨 Visual Overlay
 ```yaml
@@ -349,32 +377,46 @@ Dictator/
 ├── src/
 │   └── dictator/
 │       ├── __init__.py
-│       ├── main.py          # Script original standalone
-│       ├── service.py       # Core service (gravação + transcrição)
-│       ├── tray.py          # System tray GUI
-│       ├── overlay.py       # Visual feedback overlay
-│       └── tts_engine.py    # Text-to-Speech engine
+│       ├── main.py                  # Script original standalone
+│       ├── service.py               # Core service (gravação + transcrição)
+│       ├── tray.py                  # System tray GUI + dynamic model menu
+│       ├── overlay.py               # Visual feedback overlay
+│       ├── tts_engine.py            # Text-to-Speech engine (Kokoro)
+│       └── voice/
+│           ├── __init__.py
+│           ├── events.py            # Event-driven architecture
+│           ├── llm_caller.py        # LLM integration + thinking tag filter
+│           ├── session_manager.py   # Voice session event processor
+│           ├── vad_processor.py     # Voice Activity Detection
+│           └── sentence_chunker.py  # Real-time sentence chunking
 ├── logs/
-│   └── dictator.log         # Logs do serviço
-├── config.yaml              # Configuração principal
-├── pyproject.toml           # Poetry dependencies
-├── poetry.lock              # Lock file
-├── .gitattributes           # Git LFS config
+│   └── dictator.log                 # Logs do serviço
+├── config.yaml                      # Configuração principal
+├── pyproject.toml                   # Poetry dependencies
+├── poetry.lock                      # Lock file
+├── .gitattributes                   # Git LFS config
 ├── .gitignore               # Git ignore rules
 │
 ├── kokoro-v1.0.onnx         # Modelo TTS (310 MB - via Git LFS)
 ├── voices-v1.0.bin          # Vozes TTS (43 MB - via Git LFS)
 │
-├── setup.bat                # Instalar dependências
-├── install_service.bat      # Instalador Windows Service
-├── uninstall_service.bat    # Desinstalador
-├── run_local.bat            # Teste local
-├── run_local_admin.bat      # Teste local (admin)
-├── restart_dictator.bat     # Reiniciar serviço
-├── verify_deps.py           # Verificar dependências
+├── setup.bat                        # Instalar dependências
+├── install_service.bat              # Instalador Windows Service
+├── uninstall_service.bat            # Desinstalador
+├── run_local.bat                    # Teste local
+├── run_local_admin.bat              # Teste local (admin)
+├── restart_dictator.bat             # Reiniciar serviço
+├── verify_deps.py                   # Verificar dependências
 │
-├── SERVICE.md               # Documentação técnica completa
-└── README.md                # Este arquivo
+├── test_portuguese_voices.py        # Teste de vozes Kokoro
+├── test_thinking_tags.py            # Teste filtro thinking models
+├── test_vad_tts_interrupt.py        # Teste interrupção TTS
+├── test_auto_restart.py             # Teste auto-restart
+│
+├── ANALYSIS_VAD_TTS_INTERRUPT.md    # Análise técnica interrupção
+├── IMPLEMENTATION_VAD_TTS_FIX.md    # Documentação implementação
+├── SERVICE.md                       # Documentação técnica completa
+└── README.md                        # Este arquivo
 ```
 
 ## 🔐 Privacidade & Segurança
@@ -440,8 +482,17 @@ Sim! Quando instalado como **Windows Service**, funciona em todos os apps. No mo
 ### O TTS é obrigatório?
 Não! TTS é opcional. Você pode desabilitar em `config.yaml` definindo `tts.enabled: false`.
 
+### Como funciona o modo Voice Assistant (LLM)?
+Quando habilitado (`voice.claude_mode: true`), o sistema envia a transcrição para um LLM (Ollama, Claude) e fala a resposta via TTS. Modelos Ollama são descobertos automaticamente no menu.
+
+### Posso interromper o LLM enquanto ele fala?
+Sim! Pressione a hotkey durante a fala do TTS e ele para instantaneamente (~170ms). Com VAD habilitado, basta começar a falar.
+
+### O que são "thinking models"?
+Modelos como Qwen3 e DeepSeek-R1 expõem raciocínio interno via tags `<think>`. O sistema filtra automaticamente essas tags para não falar o processo de pensamento.
+
 ### Suporta outros idiomas além de Português?
-Sim! Whisper suporta 99+ idiomas. Altere `language` no config (ex: `en` para inglês, `es` para espanhol).
+Sim! Whisper suporta 99+ idiomas. Altere `language` no config (ex: `en` para inglês, `es` para espanhol). TTS tem 56 vozes em 9 idiomas.
 
 ### Por que usar faster-whisper ao invés de openai-whisper?
 faster-whisper é **4-5x mais rápido** e usa **menos VRAM** que a implementação original do OpenAI, graças ao CTranslate2.
