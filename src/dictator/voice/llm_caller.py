@@ -10,11 +10,36 @@ not for voice loop management.
 
 import asyncio
 import json
+import re
 from typing import Optional
 from pathlib import Path
 
 from .events import Event, EventType, EventPubSub
 from .sentence_chunker import MarkdownCleaner
+
+
+def remove_thinking_tags(text: str) -> str:
+    """
+    Remove <think>...</think> tags and their content from LLM response.
+    
+    Many thinking models (like Qwen, DeepSeek-R1) expose their reasoning
+    process using <think> tags. We don't want to speak this internal monologue.
+    
+    Examples:
+        Input: "<think>Let me analyze this...</think>The answer is 42."
+        Output: "The answer is 42."
+        
+        Input: "Here's what I found <think>hmm...</think> after searching."
+        Output: "Here's what I found  after searching."
+    """
+    # Remove <think>...</think> blocks (including multiline)
+    cleaned = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL | re.IGNORECASE)
+    
+    # Clean up extra whitespace/newlines left behind
+    cleaned = re.sub(r'\n\s*\n+', '\n\n', cleaned)  # Multiple blank lines -> double newline
+    cleaned = cleaned.strip()
+    
+    return cleaned
 
 
 class LLMCaller:
@@ -84,6 +109,9 @@ class LLMCaller:
 
             logger.info(f"📄 Response text: {response[:200]}...")
 
+            # Remove thinking tags first (for thinking models like Qwen, DeepSeek-R1)
+            response = remove_thinking_tags(response)
+            
             # Clean entire response for TTS (single shot)
             clean_response = MarkdownCleaner.clean(response)
             logger.info(f"🧹 Cleaned response: {clean_response[:100]}...")
@@ -462,6 +490,9 @@ class OllamaLLMCaller(LLMCaller):
 
             logger.info(f"📄 Response text: {response[:200]}...")
 
+            # Remove thinking tags first (for thinking models like Qwen, DeepSeek-R1)
+            response = remove_thinking_tags(response)
+            
             # Clean response for TTS
             clean_response = MarkdownCleaner.clean(response)
             logger.info(f"🧹 Cleaned response: {clean_response[:100]}...")

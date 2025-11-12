@@ -175,9 +175,9 @@ class DictatorTray:
         self.icon.menu = self.create_menu()  # Refresh menu
         status = 'Enabled' if not current else 'Disabled'
         self.service.logger.info(f"🤖 LLM Mode: {status}")
-        # Requires restart to take effect
-        if not current:
-            self.service.logger.info("⚠️ Restart service to activate LLM Mode")
+        # Restart service to apply changes
+        self.service.logger.info("🔄 Restarting service to apply LLM Mode changes...")
+        self.restart_service()
 
     def set_llm_provider(self, provider: str):
         """Set LLM provider"""
@@ -185,7 +185,10 @@ class DictatorTray:
         self.save_config()
         self.icon.menu = self.create_menu()  # Refresh menu
         self.service.logger.info(f"🔄 LLM Provider changed to: {provider}")
-        self.service.logger.info("⚠️ Restart service to apply changes")
+        # Restart service to apply changes
+        if self.service.use_event_driven_mode:
+            self.service.logger.info("🔄 Restarting service to apply provider changes...")
+            self.restart_service()
 
     def set_ollama_model(self, model: str):
         """Set Ollama model"""
@@ -193,7 +196,10 @@ class DictatorTray:
         self.save_config()
         self.icon.menu = self.create_menu()  # Refresh menu
         self.service.logger.info(f"🦙 Ollama model changed to: {model}")
-        self.service.logger.info("⚠️ Restart service to apply changes")
+        # Restart service to apply changes
+        if self.service.use_event_driven_mode:
+            self.service.logger.info("🔄 Restarting service to apply model changes...")
+            self.restart_service()
 
     def set_mouse_button(self, button):
         """Set mouse button trigger"""
