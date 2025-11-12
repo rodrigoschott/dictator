@@ -5,11 +5,16 @@ Tests OllamaLLMCaller with local Ollama server.
 """
 
 import asyncio
+import contextlib
 import logging
+import sys
 from pathlib import Path
 
-from src.dictator.voice.events import EventPubSub, EventType
-from src.dictator.voice.llm_caller import OllamaLLMCaller
+REPO_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO_ROOT / "src"))
+
+from dictator.voice.events import EventPubSub, EventType  # noqa: E402
+from dictator.voice.llm_caller import OllamaLLMCaller  # noqa: E402
 
 
 # Configure logging
@@ -225,9 +230,7 @@ async def test_tts_interrupt():
     mock_tts = MockTTSEngine()
 
     # Import session manager to test interrupt logic
-    from src.dictator.voice.session_manager import VoiceSessionManager
-    from src.dictator.voice.events import Event
-    import numpy as np
+    from dictator.voice.session_manager import VoiceSessionManager  # noqa: E402
 
     # Mock callbacks
     def mock_stt(audio):
@@ -252,8 +255,14 @@ async def test_tts_interrupt():
         tts_engine=mock_tts  # Pass mock TTS engine
     )
 
-    # Start session
-    await session.start()
+    # Use the session's pubsub (VoiceSessionManager replaces the LLM caller's pubsub)
+    pubsub = session.pubsub
+
+    # Start session processor in the background (start() blocks until stop())
+    session_task = asyncio.create_task(session.start())
+
+    # Give event loop time to attach subscribers
+    await asyncio.sleep(0.1)
 
     try:
         # Simulate TTS speaking by triggering actual TTS
@@ -287,12 +296,12 @@ async def test_tts_interrupt():
         
         # Start monitoring task
         monitor_task = asyncio.create_task(monitor_and_interrupt())
-        
+
         # Send simple request
         await ollama.process_transcription("Diga algo curto")
-        
+
         # Wait for monitoring to complete
-        tts_started = await monitor_task
+        tts_started = await asyncio.wait_for(monitor_task, timeout=15.0)
         
         # Give time for cleanup
         await asyncio.sleep(0.2)
@@ -317,6 +326,12 @@ async def test_tts_interrupt():
 
     finally:
         await session.stop()
+        try:
+            await asyncio.wait_for(session_task, timeout=2.0)
+        except asyncio.TimeoutError:
+            session_task.cancel()
+            with contextlib.suppress(asyncio.CancelledError):
+                await session_task
 
 
 async def main():

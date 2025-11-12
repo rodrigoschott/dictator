@@ -4,14 +4,21 @@ Test VAD + TTS interrupt functionality
 Validates that VAD can detect speech even during TTS playback
 """
 
+from pathlib import Path
+
 print("🧪 Testing VAD + TTS interrupt implementation...")
 print()
 
+# Resolve project root so the test works when run from any directory
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
 # Read the modified files
-with open("src/dictator/service.py", "r", encoding="utf-8") as f:
+service_path = REPO_ROOT / "src" / "dictator" / "service.py"
+with service_path.open("r", encoding="utf-8") as f:
     service_content = f.read()
 
-with open("src/dictator/voice/session_manager.py", "r", encoding="utf-8") as f:
+session_path = REPO_ROOT / "src" / "dictator" / "voice" / "session_manager.py"
+with session_path.open("r", encoding="utf-8") as f:
     session_content = f.read()
 
 tests = [

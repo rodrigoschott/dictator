@@ -1,4 +1,4 @@
-advanced:
+Eu estou cancelando manualmente porque o processo está pendurando ali naquela parte. Aí eu tenho que cancelar.advanced:
   cache_dir: ''
   temp_dir: ''
 audio:
@@ -46,8 +46,8 @@ tts:
   kokoro:
     language: pt-br
     model_path: kokoro-v1.0.onnx
-    speed: 1.0
-    voice: af_sarah
+    speed: 1.25
+    voice: pf_dora
     voices_path: voices-v1.0.bin
   volume: 0.8
 voice:

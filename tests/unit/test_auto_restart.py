@@ -3,11 +3,15 @@
 Test auto-restart functionality in tray menu actions
 """
 
+from pathlib import Path
+
 print("🧪 Testing auto-restart implementation...")
 print()
 
 # Read tray.py and check for restart_service() calls
-with open("src/dictator/tray.py", "r", encoding="utf-8") as f:
+REPO_ROOT = Path(__file__).resolve().parents[2]
+tray_path = REPO_ROOT / "src" / "dictator" / "tray.py"
+with tray_path.open("r", encoding="utf-8") as f:
     content = f.read()
 
 tests = [

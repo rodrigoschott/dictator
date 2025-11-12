@@ -222,7 +222,7 @@ tts:
 
 **Teste vozes com:**
 ```batch
-poetry run python test_portuguese_voices.py
+poetry run python tests/manual/test_portuguese_voices.py
 ```
 
 ### 🎨 Visual Overlay
@@ -408,10 +408,20 @@ Dictator/
 ├── restart_dictator.bat             # Reiniciar serviço
 ├── verify_deps.py                   # Verificar dependências
 │
-├── test_portuguese_voices.py        # Teste de vozes Kokoro
-├── test_thinking_tags.py            # Teste filtro thinking models
-├── test_vad_tts_interrupt.py        # Teste interrupção TTS
-├── test_auto_restart.py             # Teste auto-restart
+├── tests/
+│   ├── unit/
+│   │   ├── test_auto_restart.py             # Teste auto-restart
+│   │   ├── test_thinking_tags.py            # Teste filtro thinking models
+│   │   └── test_vad_tts_interrupt.py        # Teste interrupção TTS
+│   ├── integration/
+│   │   ├── test_ollama_discovery.py         # Valida API local do Ollama
+│   │   └── test_ollama_integration.py       # Exercita fluxo Ollama completo
+│   └── manual/
+│       ├── test_claude_cli.py               # Verificação CLI do Claude
+│       ├── test_menu_callbacks.py           # Auditoria manual do config.yaml
+│       ├── test_portuguese_voices.py        # Teste de vozes Kokoro
+│       ├── test_subprocess_claude.py        # Debug do subprocesso Claude
+│       └── test_thread_subprocess.py        # Teste threading + subprocess
 │
 ├── ANALYSIS_VAD_TTS_INTERRUPT.md    # Análise técnica interrupção
 ├── IMPLEMENTATION_VAD_TTS_FIX.md    # Documentação implementação

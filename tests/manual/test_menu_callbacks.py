@@ -3,11 +3,13 @@
 Test script to validate menu callbacks don't pollute config
 """
 
-import yaml
+import yaml  # type: ignore
 from pathlib import Path
 
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
 # Load config
-config_path = Path("config.yaml")
+config_path = REPO_ROOT / "config.yaml"
 with open(config_path, 'r', encoding='utf-8') as f:
     config = yaml.safe_load(f)
 

@@ -4,7 +4,10 @@ Test script to validate thinking tag removal
 """
 
 import sys
-sys.path.insert(0, 'src')
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO_ROOT / 'src'))
 
 from dictator.voice.llm_caller import remove_thinking_tags
 
