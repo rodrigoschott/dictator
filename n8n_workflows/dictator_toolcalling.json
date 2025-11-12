@@ -1,0 +1,255 @@
+{
+  "name": "Dictator Tool-Calling",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dictator-llm",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a1b2c3d4-5678-90ab-cdef-1234567890ab",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ],
+      "webhookId": "dictator-llm-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare Ollama API payload with tools\n// Get messages from webhook body\nconst body = $input.item.json.body || {};\nconst messages = body.messages || [];\n\n// Add tool usage instruction to system message\nif (messages.length > 0 && messages[0].role === 'system') {\n  messages[0].content += '\\n\\nIMPORTANT: You have access to tools, but only call them when the user explicitly asks for specific information you cannot provide. Available tools: get_weather (for weather in cities), get_time (for current time in timezones). For greetings, general questions, opinions, or any conversation you can answer directly, DO NOT call any tools. Respond naturally without tools.';\n}\n\nconst payload = {\n  model: \"qwen3:14b\",\n  messages: messages,\n  stream: false,\n  tools: [\n    {\n      type: \"function\",\n      function: {\n        name: \"get_weather\",\n        description: \"Get current weather information for a city\",\n        parameters: {\n          type: \"object\",\n          properties: {\n            city: {\n              type: \"string\",\n              description: \"City name (e.g., Paris, London, New York)\"\n            }\n          },\n          required: [\"city\"]\n        }\n      }\n    },\n    {\n      type: \"function\",\n      function: {\n        name: \"get_time\",\n        description: \"Get current time in a specific timezone\",\n        parameters: {\n          type: \"object\",\n          properties: {\n            timezone: {\n              type: \"string\",\n              description: \"Timezone (e.g., America/New_York, Europe/Paris)\"\n            }\n          },\n          required: [\"timezone\"]\n        }\n      }\n    }\n  ]\n};\n\nreturn {\n  payload: payload,\n  originalMessages: messages\n};"
+      },
+      "id": "prep-ollama-1",
+      "name": "Prepare Ollama Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ollama:11434/api/chat",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.payload) }}",
+        "options": {}
+      },
+      "id": "b2c3d4e5-6789-01bc-def2-234567890abc",
+      "name": "Call Ollama (Initial)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition1",
+              "leftValue": "={{ $json.message.tool_calls && $json.message.tool_calls.length > 0 }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c3d4e5f6-789a-12cd-ef34-34567890abcd",
+      "name": "Has Tool Calls?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Execute tool calls\nconst toolCalls = $input.item.json.message.tool_calls || [];\nconst originalMessages = $('Prepare Ollama Request').item.json.originalMessages || [];\nconst assistantMessage = $input.item.json.message;\nconst toolResults = [];\nconst toolsUsed = [];\n\nfor (const toolCall of toolCalls) {\n  const toolName = toolCall.function.name;\n  const args = toolCall.function.arguments || {};\n  \n  toolsUsed.push(toolName);\n  \n  let result;\n  \n  if (toolName === 'get_weather') {\n    // Mock weather data (replace with real API)\n    const city = args.city || 'Unknown';\n    result = {\n      city: city,\n      temperature: '22°C',\n      condition: 'partly cloudy',\n      humidity: '65%',\n      wind: '15 km/h'\n    };\n  } \n  else if (toolName === 'get_time') {\n    // Mock time data (replace with real API)\n    const timezone = args.timezone || 'UTC';\n    const now = new Date();\n    result = {\n      timezone: timezone,\n      time: now.toISOString(),\n      formatted: now.toLocaleString('en-US', { timeZone: timezone })\n    };\n  }\n  else {\n    result = { error: `Unknown tool: ${toolName}` };\n  }\n  \n  toolResults.push({\n    role: 'tool',\n    content: JSON.stringify(result)\n  });\n}\n\nreturn {\n  originalMessages: originalMessages,\n  assistantMessage: assistantMessage,\n  toolResults: toolResults,\n  toolsUsed: toolsUsed\n};"
+      },
+      "id": "d4e5f6a7-89ab-23de-f456-4567890abcde",
+      "name": "Execute Tools",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare final Ollama call with tool results\nconst originalMessages = $input.item.json.originalMessages || [];\nconst assistantMessage = $input.item.json.assistantMessage;\nconst toolResults = $input.item.json.toolResults || [];\n\nconst payload = {\n  model: \"qwen3:14b\",\n  messages: [...originalMessages, assistantMessage, ...toolResults],\n  stream: false\n};\n\nreturn { payload: payload };"
+      },
+      "id": "prep-ollama-2",
+      "name": "Prepare Final Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1340,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ollama:11434/api/chat",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.payload) }}",
+        "options": {}
+      },
+      "id": "e5f6a7b8-9abc-34ef-5678-567890abcdef",
+      "name": "Call Ollama (Final)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1560,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {\n  \"response\": $json.message.content,\n  \"tools_used\": $('Execute Tools').item.json.toolsUsed || []\n} }}"
+      },
+      "id": "f6a7b8c9-abcd-45f0-6789-67890abcdef0",
+      "name": "Respond (With Tools)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1780,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {\n  \"response\": $json.message.content,\n  \"tools_used\": []\n} }}"
+      },
+      "id": "a7b8c9d0-bcde-56f1-789a-7890abcdef01",
+      "name": "Respond (No Tools)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        400
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Prepare Ollama Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Ollama Request": {
+      "main": [
+        [
+          {
+            "node": "Call Ollama (Initial)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Ollama (Initial)": {
+      "main": [
+        [
+          {
+            "node": "Has Tool Calls?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Tool Calls?": {
+      "main": [
+        [
+          {
+            "node": "Execute Tools",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond (No Tools)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Tools": {
+      "main": [
+        [
+          {
+            "node": "Prepare Final Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Final Request": {
+      "main": [
+        [
+          {
+            "node": "Call Ollama (Final)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Ollama (Final)": {
+      "main": [
+        [
+          {
+            "node": "Respond (With Tools)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d1c2b3a4-5678-90ab-cdef-1234567890ab",
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "dictator-voice-assistant"
+  },
+  "id": "dictator-toolcalling-v2",
+  "tags": []
+}

@@ -613,3 +613,225 @@ Provide helpful, accurate information in a friendly, spoken style."""
         except Exception as e:
             logger.error(f"❌ Unexpected error: {e}")
             raise
+
+
+class N8NToolCallingLLMCaller(LLMCaller):
+    """
+    N8N Tool-Calling LLM caller
+
+    Calls N8N webhook which orchestrates:
+    - Ollama LLM processing
+    - Tool/function execution (weather, calendar, APIs, etc.)
+    - Multi-step reasoning with tool results
+    - Response generation
+
+    Advantages:
+    - Centralized tool orchestration via N8N visual workflows
+    - Easy tool addition/modification without code changes
+    - Debug tool calls visually in N8N UI
+    - Reusable workflows across different contexts
+    - Separates conversation logic from tool execution
+
+    Requirements:
+    - N8N instance running (e.g., http://localhost:15678)
+    - Dictator workflow imported in N8N
+    - Ollama container available to N8N
+    """
+
+    def __init__(
+        self,
+        pubsub: EventPubSub,
+        webhook_url: str,
+        timeout: int = 120,
+        session_id: str | None = None
+    ):
+        """
+        Initialize N8N caller
+
+        Args:
+            pubsub: Event pub/sub system
+            webhook_url: N8N webhook URL (e.g., http://localhost:15678/webhook/dictator-llm)
+            timeout: Request timeout in seconds (default: 120s for tool execution)
+            session_id: Session identifier
+        """
+        # Initialize without MCP files (not needed for N8N)
+        super().__init__(
+            pubsub=pubsub,
+            mcp_request_file=Path("/dev/null"),
+            mcp_response_file=Path("/dev/null"),
+            session_id=session_id
+        )
+
+        self.webhook_url = webhook_url
+        self.timeout = timeout
+
+    async def process_transcription(self, transcription: str) -> None:
+        """
+        Process user transcription with N8N orchestration
+
+        Overrides parent method to use N8N webhook instead of direct LLM calls.
+        N8N handles the complete flow: LLM → tool calls → tool execution → final response.
+
+        Args:
+            transcription: User's transcribed speech
+        """
+        # Add to history
+        self.conversation_history.append({
+            "role": "user",
+            "content": transcription
+        })
+
+        # Emit LLM request event
+        self.pubsub.publish_nowait(Event(
+            type=EventType.LLM_REQUEST,
+            data={"transcription": transcription},
+            session_id=self.session_id
+        ))
+
+        try:
+            import logging
+            logger = logging.getLogger("DictatorService")
+            logger.info(f"🔗 Calling N8N webhook: {self.webhook_url}")
+
+            # Call N8N webhook
+            response = await self._call_n8n_webhook(transcription)
+            logger.info(f"🟢 N8N returned: {len(response)} chars")
+
+            # Add response to history
+            self.conversation_history.append({
+                "role": "assistant",
+                "content": response
+            })
+
+            logger.info(f"📄 Response text: {response[:200]}...")
+
+            # Remove thinking tags first (for thinking models)
+            response = remove_thinking_tags(response)
+
+            # Clean response for TTS
+            clean_response = MarkdownCleaner.clean(response)
+            logger.info(f"🧹 Cleaned response: {clean_response[:100]}...")
+
+            # Emit TTS event
+            logger.info(f"📢 Publishing TTS_SENTENCE_READY event...")
+            self.pubsub.publish_nowait(Event(
+                type=EventType.TTS_SENTENCE_READY,
+                data={"text": clean_response},
+                session_id=self.session_id
+            ))
+
+            # Emit completion
+            logger.info("📢 Publishing LLM_RESPONSE_COMPLETED event")
+            self.pubsub.publish_nowait(Event(
+                type=EventType.LLM_RESPONSE_COMPLETED,
+                data={},
+                session_id=self.session_id
+            ))
+
+        except Exception as e:
+            logger = logging.getLogger("DictatorService")
+            logger.error(f"❌ N8N webhook error: {e}")
+            # Emit failure event
+            self.pubsub.publish_nowait(Event(
+                type=EventType.LLM_RESPONSE_FAILED,
+                data={"error": str(e)},
+                session_id=self.session_id
+            ))
+            raise
+
+    async def _call_n8n_webhook(self, transcription: str) -> str:
+        """
+        Call N8N webhook with conversation context
+
+        N8N workflow receives full conversation history and orchestrates:
+        1. LLM analyzes request and identifies needed tools
+        2. N8N executes tools (API calls, DB queries, scripts, etc.)
+        3. LLM generates final response with tool results
+        4. Response returned to Dictator
+
+        Args:
+            transcription: User's current message
+
+        Returns:
+            Complete response from N8N (after tool execution and LLM processing)
+        """
+        import aiohttp
+        import logging
+        from datetime import datetime
+
+        logger = logging.getLogger("DictatorService")
+
+        # Build system prompt (same as Ollama for consistency)
+        system_prompt = """You are Dictator, a concise voice assistant integrated into a Windows dictation system.
+
+IMPORTANT - Your responses will be read aloud via text-to-speech:
+- Keep answers under 3 sentences maximum
+- Be direct, natural, and conversational
+- Avoid markdown formatting, code blocks, or complex punctuation
+- Don't use asterisks, backticks, or special symbols
+- Speak as if talking to the user face-to-face
+- Match the user's language automatically (Portuguese or English)
+
+You have access to tools for external information. Use them when needed, but keep responses concise.
+Provide helpful, accurate information in a friendly, spoken style."""
+
+        # Build conversation history
+        messages = [{"role": "system", "content": system_prompt}]
+
+        # Add recent history
+        recent_history = self.conversation_history[-(self.max_history):]
+        messages.extend([
+            {"role": msg["role"], "content": msg["content"]}
+            for msg in recent_history
+        ])
+
+        # Prepare webhook payload
+        payload = {
+            "messages": messages,
+            "timestamp": datetime.now().isoformat(),
+            "session_id": self.session_id or "default"
+        }
+
+        logger.info(f"🔗 Calling N8N webhook: {self.webhook_url}")
+        logger.info(f"📦 Payload: {len(messages)} messages")
+
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.post(
+                    self.webhook_url,
+                    json=payload,
+                    timeout=aiohttp.ClientTimeout(total=self.timeout)
+                ) as response:
+                    if response.status != 200:
+                        error_text = await response.text()
+                        raise RuntimeError(
+                            f"N8N webhook error (HTTP {response.status}): {error_text}"
+                        )
+
+                    # Parse JSON response
+                    result = await response.json()
+
+                    # Extract response text
+                    # Expected format: {"response": "text here", "tools_used": [...]}
+                    if "response" not in result:
+                        raise RuntimeError(f"Unexpected N8N response format: {result}")
+
+                    response_text = result["response"].strip()
+
+                    # Log tool usage if available
+                    if "tools_used" in result and result["tools_used"]:
+                        tools = ", ".join(result["tools_used"])
+                        logger.info(f"🔧 Tools used: {tools}")
+
+                    logger.info(f"✅ N8N response: {len(response_text)} chars")
+                    return response_text
+
+        except aiohttp.ClientError as e:
+            logger.error(f"❌ HTTP error calling N8N: {e}")
+            raise RuntimeError(f"Failed to connect to N8N at {self.webhook_url}: {e}")
+        except asyncio.TimeoutError:
+            logger.error(f"❌ N8N webhook timeout ({self.timeout}s)")
+            raise RuntimeError(f"N8N webhook timed out after {self.timeout} seconds")
+        except Exception as e:
+            logger.error(f"❌ Unexpected error: {e}")
+            raise

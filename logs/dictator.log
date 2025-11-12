@@ -9230,3 +9230,856 @@ Okay, the user is asking if I, as a local language model, have access to MCP too
 2025-11-12 16:34:21,508 - DictatorService - INFO - 📝 Transcribed: Eu estou cancelando manualmente porque o processo está pendurando ali naquela parte. Aí eu tenho que cancelar.
 2025-11-12 16:34:21,514 - DictatorService - INFO - 📋 Copied to clipboard
 2025-11-12 16:34:21,818 - DictatorService - INFO - ✅ Text pasted!
+2025-11-12 16:40:31,279 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 16:40:46,046 - DictatorService - INFO - 🔇 Silence detected (2.0s)
+2025-11-12 16:40:46,047 - DictatorService - INFO -    RMS stats: avg=0.00311, max=0.05104, threshold=0.00200
+2025-11-12 16:40:46,047 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 16:40:46,048 - DictatorService - INFO - 🤖 Transcribing...
+2025-11-12 16:40:46,121 - faster_whisper - INFO - Processing audio with duration 00:14.716
+2025-11-12 16:40:46,888 - DictatorService - INFO - 📝 Transcribed: Verifique a integração do...
+2025-11-12 16:40:46,893 - DictatorService - INFO - 📋 Copied to clipboard
+2025-11-12 16:40:47,195 - DictatorService - INFO - ✅ Text pasted!
+2025-11-12 18:59:19,435 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-12 18:59:19,435 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-12 18:59:19,437 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-12 18:59:19,883 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-12 18:59:21,733 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-12 18:59:21,747 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-12 18:59:21,747 - DictatorService - INFO - 🎤 Loading TTS engine...
+2025-11-12 18:59:21,747 - KokoroTTS - INFO - 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-12 18:59:22,224 - KokoroTTS - INFO - ✅ Kokoro TTS loaded successfully!
+2025-11-12 18:59:22,225 - DictatorService - INFO - ✅ TTS engine loaded successfully!
+2025-11-12 18:59:22,225 - DictatorService - INFO - 📢 Claude Mode disabled - using Dictation Mode (text only)
+2025-11-12 18:59:22,452 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-12 18:59:22,452 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-12 18:59:46,615 - DictatorService - INFO - 💾 Configuration saved
+2025-11-12 18:59:46,702 - DictatorService - INFO - 🤖 LLM Mode: Enabled
+2025-11-12 18:59:46,702 - DictatorService - INFO - 🔄 Restarting service to apply LLM Mode changes...
+2025-11-12 18:59:46,703 - DictatorService - INFO - 🔄 Restarting service...
+2025-11-12 18:59:46,703 - DictatorService - INFO - 🛑 Dictator Service stopping...
+2025-11-12 18:59:46,703 - DictatorService - INFO - 👋 Dictator Service stopped
+2025-11-12 18:59:46,706 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-12 18:59:46,706 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-12 18:59:46,706 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-12 18:59:46,851 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-12 18:59:48,732 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-12 18:59:48,732 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-12 18:59:48,732 - DictatorService - INFO - 🎤 Loading TTS engine...
+2025-11-12 18:59:48,733 - KokoroTTS - INFO - 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-12 18:59:49,206 - KokoroTTS - INFO - ✅ Kokoro TTS loaded successfully!
+2025-11-12 18:59:49,206 - DictatorService - INFO - ✅ TTS engine loaded successfully!
+2025-11-12 18:59:49,207 - DictatorService - INFO - 🎯 Loading event-driven voice session...
+2025-11-12 18:59:49,207 - DictatorService - INFO - 🎤 VAD enabled: True
+2025-11-12 18:59:49,207 - DictatorService - INFO - 🦙 Using Ollama provider: qwen3:14b @ http://localhost:11434
+2025-11-12 18:59:49,209 - DictatorService - INFO - 🎤 Starting voice session (attempt 1/3)
+2025-11-12 18:59:49,209 - DictatorService - INFO - 🔗 Event loop configured for thread-safe publishing
+2025-11-12 18:59:49,209 - DictatorService - INFO - 🔄 Event processor started
+2025-11-12 18:59:49,308 - DictatorService - INFO - ✅ Event-driven voice session loaded - ZERO polling!
+2025-11-12 18:59:49,309 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-12 18:59:49,310 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-12 19:02:09,685 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-12 19:02:09,686 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-12 19:02:09,687 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-12 19:02:10,072 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-12 19:02:11,922 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-12 19:02:11,935 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-12 19:02:11,936 - DictatorService - INFO - 🎤 Loading TTS engine...
+2025-11-12 19:02:11,936 - KokoroTTS - INFO - 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-12 19:02:12,423 - KokoroTTS - INFO - ✅ Kokoro TTS loaded successfully!
+2025-11-12 19:02:12,423 - DictatorService - INFO - ✅ TTS engine loaded successfully!
+2025-11-12 19:02:12,424 - DictatorService - INFO - 🎯 Loading event-driven voice session...
+2025-11-12 19:02:12,424 - DictatorService - INFO - 🎤 VAD enabled: True
+2025-11-12 19:02:12,424 - DictatorService - INFO - 🦙 Using Ollama provider: qwen3:14b @ http://localhost:11434
+2025-11-12 19:02:12,425 - DictatorService - INFO - 🎤 Starting voice session (attempt 1/3)
+2025-11-12 19:02:12,425 - DictatorService - INFO - 🔗 Event loop configured for thread-safe publishing
+2025-11-12 19:02:12,425 - DictatorService - INFO - 🔄 Event processor started
+2025-11-12 19:02:12,525 - DictatorService - INFO - ✅ Event-driven voice session loaded - ZERO polling!
+2025-11-12 19:02:12,752 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-12 19:02:12,752 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-12 19:02:17,671 - DictatorService - INFO - 💾 Configuration saved
+2025-11-12 19:02:17,671 - DictatorService - INFO - 🔄 LLM Provider changed to: n8n_toolcalling
+2025-11-12 19:02:17,671 - DictatorService - INFO - 🔄 Restarting service to apply provider changes...
+2025-11-12 19:02:17,672 - DictatorService - INFO - 🔄 Restarting service...
+2025-11-12 19:02:17,672 - DictatorService - INFO - 🛑 Dictator Service stopping...
+2025-11-12 19:02:17,672 - DictatorService - INFO - Voice session stopped
+2025-11-12 19:02:17,672 - DictatorService - INFO - Voice session completed normally
+2025-11-12 19:02:17,672 - DictatorService - INFO - 👋 Dictator Service stopped
+2025-11-12 19:02:17,675 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-12 19:02:17,675 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-12 19:02:17,675 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-12 19:02:17,816 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-12 19:02:19,755 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-12 19:02:19,755 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-12 19:02:19,755 - DictatorService - INFO - 🎤 Loading TTS engine...
+2025-11-12 19:02:19,755 - KokoroTTS - INFO - 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-12 19:02:20,238 - KokoroTTS - INFO - ✅ Kokoro TTS loaded successfully!
+2025-11-12 19:02:20,239 - DictatorService - INFO - ✅ TTS engine loaded successfully!
+2025-11-12 19:02:20,239 - DictatorService - INFO - 🎯 Loading event-driven voice session...
+2025-11-12 19:02:20,239 - DictatorService - INFO - 🎤 VAD enabled: True
+2025-11-12 19:02:20,240 - DictatorService - INFO - 🔗 Using N8N Tool-Calling provider: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:02:20,241 - DictatorService - INFO - 🎤 Starting voice session (attempt 1/3)
+2025-11-12 19:02:20,241 - DictatorService - INFO - 🔗 Event loop configured for thread-safe publishing
+2025-11-12 19:02:20,241 - DictatorService - INFO - 🔄 Event processor started
+2025-11-12 19:02:20,341 - DictatorService - INFO - ✅ Event-driven voice session loaded - ZERO polling!
+2025-11-12 19:02:20,341 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-12 19:02:20,342 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-12 19:02:27,224 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 19:02:27,224 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:02:28,313 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:02:36,041 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 19:02:36,042 - DictatorService - INFO - 🎯 Event-driven mode: Voice session processed speech automatically via events
+2025-11-12 19:02:45,648 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 19:02:45,649 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:02:46,730 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:03:07,993 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STARTED (total events: 1)
+2025-11-12 19:03:07,993 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STARTED
+2025-11-12 19:03:07,994 - DictatorService - INFO - 🎤 Speech detected by VAD
+2025-11-12 19:03:09,093 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 2)
+2025-11-12 19:03:09,093 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:03:09,094 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:03:09,094 - DictatorService - INFO - 🎯 VAD detected speech stop, resetting recording state
+2025-11-12 19:03:09,094 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: enabled, Buffer size: 480000 samples (30.00s)
+2025-11-12 19:03:09,212 - faster_whisper - INFO - Processing audio with duration 00:30.000
+2025-11-12 19:03:09,898 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 3)
+2025-11-12 19:03:09,898 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:03:09,899 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 4)
+2025-11-12 19:03:09,899 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 19:03:09,899 - DictatorService - INFO - 📝 Transcription complete, calling LLM...
+2025-11-12 19:03:09,899 - DictatorService - INFO - 📝 Transcribed text: 'E aí'
+2025-11-12 19:03:09,899 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:03:09,944 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:03:09,944 - DictatorService - INFO - 📦 Payload: 2 messages
+2025-11-12 19:03:13,011 - DictatorService - INFO - 🔧 Tools used: get_weather
+2025-11-12 19:03:13,011 - DictatorService - INFO - ✅ N8N response: 56 chars
+2025-11-12 19:03:13,012 - DictatorService - INFO - 🟢 N8N returned: 56 chars
+2025-11-12 19:03:13,012 - DictatorService - INFO - 📄 Response text: Hoje é uma vez tempestade na região norte e sol, no sul....
+2025-11-12 19:03:13,013 - DictatorService - INFO - 🧹 Cleaned response: Hoje é uma vez tempestade na região norte e sol, no sul....
+2025-11-12 19:03:13,013 - DictatorService - INFO - 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 19:03:13,013 - DictatorService - INFO - 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 19:03:13,013 - DictatorService - INFO - 📨 Event received: EventType.LLM_REQUEST (total events: 5)
+2025-11-12 19:03:13,013 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 19:03:13,014 - DictatorService - INFO - 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 6)
+2025-11-12 19:03:13,014 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 19:03:13,014 - DictatorService - INFO - 🔊 TTS sentence ready, synthesizing...
+2025-11-12 19:03:13,014 - DictatorService - INFO - 🎵 TTS handler received: 'Hoje é uma vez tempestade na região norte e sol, no sul....'
+2025-11-12 19:03:13,014 - DictatorService - INFO - 🔊 Starting TTS synthesis...
+2025-11-12 19:03:13,014 - DictatorService - INFO - 🔊 Speaking: Hoje é uma vez tempestade na região norte e sol, n...
+2025-11-12 19:03:13,014 - KokoroTTS - INFO - 🔊 Speaking: Hoje é uma vez tempestade na região norte e sol, n...
+2025-11-12 19:03:13,524 - KokoroTTS - INFO - ⚡ Audio generated in 0.51s
+2025-11-12 19:03:16,427 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-12 19:03:16,427 - DictatorService - INFO - ✅ TTS synthesis completed
+2025-11-12 19:03:16,428 - DictatorService - INFO - 🎤 VAD re-enabled after TTS
+2025-11-12 19:03:16,428 - DictatorService - INFO - 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 7)
+2025-11-12 19:03:16,428 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 19:03:16,428 - DictatorService - INFO - 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 8)
+2025-11-12 19:03:16,428 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_AUDIO_GENERATED
+2025-11-12 19:03:16,588 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 19:03:16,589 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:03:17,671 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:03:18,473 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STARTED (total events: 9)
+2025-11-12 19:03:18,473 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STARTED
+2025-11-12 19:03:18,474 - DictatorService - INFO - 🎤 Speech detected by VAD
+2025-11-12 19:03:23,283 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 10)
+2025-11-12 19:03:23,283 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:03:23,284 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:03:23,284 - DictatorService - INFO - 🎯 VAD detected speech stop, resetting recording state
+2025-11-12 19:03:23,284 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: enabled, Buffer size: 106496 samples (6.66s)
+2025-11-12 19:03:23,344 - faster_whisper - INFO - Processing audio with duration 00:06.656
+2025-11-12 19:03:24,689 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 11)
+2025-11-12 19:03:24,689 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:03:24,689 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 12)
+2025-11-12 19:03:24,690 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 19:03:24,690 - DictatorService - INFO - 📝 Transcription complete, calling LLM...
+2025-11-12 19:03:24,690 - DictatorService - INFO - 📝 Transcribed text: 'Como está a temperatura no Rio de Janeiro, Niterói?'
+2025-11-12 19:03:24,690 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:03:24,690 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:03:24,690 - DictatorService - INFO - 📦 Payload: 4 messages
+2025-11-12 19:03:25,211 - DictatorService - INFO - 🔧 Tools used: get_weather
+2025-11-12 19:03:25,211 - DictatorService - INFO - ✅ N8N response: 157 chars
+2025-11-12 19:03:25,212 - DictatorService - INFO - 🟢 N8N returned: 157 chars
+2025-11-12 19:03:25,212 - DictatorService - INFO - 📄 Response text: A temperatura no Rio de Janeiro e Niterói é de 22 graus Celsius, com um céu parcialmente nuvoso e umidade relativa de 65%. Ventos de 15 quilômetros por hora....
+2025-11-12 19:03:25,212 - DictatorService - INFO - 🧹 Cleaned response: A temperatura no Rio de Janeiro e Niterói é de 22 graus Celsius, com um céu parcialmente nuvoso e um...
+2025-11-12 19:03:25,212 - DictatorService - INFO - 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 19:03:25,212 - DictatorService - INFO - 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 19:03:25,213 - DictatorService - INFO - 📨 Event received: EventType.LLM_REQUEST (total events: 13)
+2025-11-12 19:03:25,213 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 19:03:25,213 - DictatorService - INFO - 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 14)
+2025-11-12 19:03:25,213 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 19:03:25,213 - DictatorService - INFO - 🔊 TTS sentence ready, synthesizing...
+2025-11-12 19:03:25,213 - DictatorService - INFO - 🎵 TTS handler received: 'A temperatura no Rio de Janeiro e Niterói é de 22 graus Celsius, com um céu parcialmente nuvoso e um...'
+2025-11-12 19:03:25,213 - DictatorService - INFO - 🔊 Starting TTS synthesis...
+2025-11-12 19:03:25,213 - DictatorService - INFO - 🔊 Speaking: A temperatura no Rio de Janeiro e Niterói é de 22 ...
+2025-11-12 19:03:25,214 - KokoroTTS - INFO - 🔊 Speaking: A temperatura no Rio de Janeiro e Niterói é de 22 ...
+2025-11-12 19:03:25,214 - phonemizer - WARNING - words count mismatch on 100.0% of the lines (1/1)
+2025-11-12 19:03:26,545 - KokoroTTS - INFO - ⚡ Audio generated in 1.33s
+2025-11-12 19:03:36,358 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-12 19:03:36,358 - DictatorService - INFO - ✅ TTS synthesis completed
+2025-11-12 19:03:36,359 - DictatorService - INFO - 🎤 VAD re-enabled after TTS
+2025-11-12 19:03:36,359 - DictatorService - INFO - 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 15)
+2025-11-12 19:03:36,359 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 19:03:36,359 - DictatorService - INFO - 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 16)
+2025-11-12 19:03:36,359 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_AUDIO_GENERATED
+2025-11-12 19:03:38,790 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 19:03:46,813 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:03:47,896 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:03:48,678 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STARTED (total events: 17)
+2025-11-12 19:03:48,678 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STARTED
+2025-11-12 19:03:48,679 - DictatorService - INFO - 🎤 Speech detected by VAD
+2025-11-12 19:03:50,368 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 18)
+2025-11-12 19:03:50,368 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:03:50,369 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:03:50,369 - DictatorService - INFO - 🎯 VAD detected speech stop, resetting recording state
+2025-11-12 19:03:50,369 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: enabled, Buffer size: 56160 samples (3.51s)
+2025-11-12 19:03:50,426 - faster_whisper - INFO - Processing audio with duration 00:03.510
+2025-11-12 19:03:51,121 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 19)
+2025-11-12 19:03:51,121 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:03:51,122 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 20)
+2025-11-12 19:03:51,122 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 19:03:51,122 - DictatorService - INFO - 📝 Transcription complete, calling LLM...
+2025-11-12 19:03:51,122 - DictatorService - INFO - 📝 Transcribed text: 'Tchau.'
+2025-11-12 19:03:51,122 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:03:51,122 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:03:51,123 - DictatorService - INFO - 📦 Payload: 6 messages
+2025-11-12 19:03:51,464 - DictatorService - INFO - 🔧 Tools used: get_weather
+2025-11-12 19:03:51,464 - DictatorService - INFO - ✅ N8N response: 24 chars
+2025-11-12 19:03:51,465 - DictatorService - INFO - 🟢 N8N returned: 24 chars
+2025-11-12 19:03:51,465 - DictatorService - INFO - 📄 Response text: Tchau, tenha um dia bom!...
+2025-11-12 19:03:51,465 - DictatorService - INFO - 🧹 Cleaned response: Tchau, tenha um dia bom!...
+2025-11-12 19:03:51,465 - DictatorService - INFO - 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 19:03:51,465 - DictatorService - INFO - 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 19:03:51,465 - DictatorService - INFO - 📨 Event received: EventType.LLM_REQUEST (total events: 21)
+2025-11-12 19:03:51,466 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 19:03:51,466 - DictatorService - INFO - 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 22)
+2025-11-12 19:03:51,466 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 19:03:51,466 - DictatorService - INFO - 🔊 TTS sentence ready, synthesizing...
+2025-11-12 19:03:51,466 - DictatorService - INFO - 🎵 TTS handler received: 'Tchau, tenha um dia bom!...'
+2025-11-12 19:03:51,466 - DictatorService - INFO - 🔊 Starting TTS synthesis...
+2025-11-12 19:03:51,466 - DictatorService - INFO - 🔊 Speaking: Tchau, tenha um dia bom!
+2025-11-12 19:03:51,466 - KokoroTTS - INFO - 🔊 Speaking: Tchau, tenha um dia bom!
+2025-11-12 19:03:51,650 - KokoroTTS - INFO - ⚡ Audio generated in 0.18s
+2025-11-12 19:03:53,044 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-12 19:03:53,045 - DictatorService - INFO - ✅ TTS synthesis completed
+2025-11-12 19:03:53,045 - DictatorService - INFO - 🎤 VAD re-enabled after TTS
+2025-11-12 19:03:53,045 - DictatorService - INFO - 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 23)
+2025-11-12 19:03:53,045 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 19:03:53,046 - DictatorService - INFO - 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 24)
+2025-11-12 19:03:53,046 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_AUDIO_GENERATED
+2025-11-12 19:03:58,875 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 19:03:58,875 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:03:59,957 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:04:00,238 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STARTED (total events: 25)
+2025-11-12 19:04:00,238 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STARTED
+2025-11-12 19:04:00,239 - DictatorService - INFO - 🎤 Speech detected by VAD
+2025-11-12 19:04:08,219 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 26)
+2025-11-12 19:04:08,220 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:04:08,220 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:04:08,220 - DictatorService - INFO - 🎯 VAD detected speech stop, resetting recording state
+2025-11-12 19:04:08,221 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: enabled, Buffer size: 148928 samples (9.31s)
+2025-11-12 19:04:08,296 - faster_whisper - INFO - Processing audio with duration 00:09.308
+2025-11-12 19:04:09,196 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 27)
+2025-11-12 19:04:09,196 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:04:09,197 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 28)
+2025-11-12 19:04:09,197 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 19:04:09,198 - DictatorService - INFO - 📝 Transcription complete, calling LLM...
+2025-11-12 19:04:09,198 - DictatorService - INFO - 📝 Transcribed text: 'Como está a temperatura na França?'
+2025-11-12 19:04:09,198 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:04:09,198 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:04:09,198 - DictatorService - INFO - 📦 Payload: 8 messages
+2025-11-12 19:04:09,561 - DictatorService - INFO - 🔧 Tools used: get_weather
+2025-11-12 19:04:09,561 - DictatorService - INFO - ✅ N8N response: 51 chars
+2025-11-12 19:04:09,562 - DictatorService - INFO - 🟢 N8N returned: 51 chars
+2025-11-12 19:04:09,562 - DictatorService - INFO - 📄 Response text: Está em 22 graus, parcialmente nuvens e vento leve....
+2025-11-12 19:04:09,562 - DictatorService - INFO - 🧹 Cleaned response: Está em 22 graus, parcialmente nuvens e vento leve....
+2025-11-12 19:04:09,562 - DictatorService - INFO - 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 19:04:09,563 - DictatorService - INFO - 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 19:04:09,563 - DictatorService - INFO - 📨 Event received: EventType.LLM_REQUEST (total events: 29)
+2025-11-12 19:04:09,563 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 19:04:09,563 - DictatorService - INFO - 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 30)
+2025-11-12 19:04:09,563 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 19:04:09,563 - DictatorService - INFO - 🔊 TTS sentence ready, synthesizing...
+2025-11-12 19:04:09,564 - DictatorService - INFO - 🎵 TTS handler received: 'Está em 22 graus, parcialmente nuvens e vento leve....'
+2025-11-12 19:04:09,564 - DictatorService - INFO - 🔊 Starting TTS synthesis...
+2025-11-12 19:04:09,564 - DictatorService - INFO - 🔊 Speaking: Está em 22 graus, parcialmente nuvens e vento leve...
+2025-11-12 19:04:09,564 - KokoroTTS - INFO - 🔊 Speaking: Está em 22 graus, parcialmente nuvens e vento leve...
+2025-11-12 19:04:09,955 - KokoroTTS - INFO - ⚡ Audio generated in 0.39s
+2025-11-12 19:04:13,139 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-12 19:04:13,139 - DictatorService - INFO - ✅ TTS synthesis completed
+2025-11-12 19:04:13,139 - DictatorService - INFO - 🎤 VAD re-enabled after TTS
+2025-11-12 19:04:13,139 - DictatorService - INFO - 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 31)
+2025-11-12 19:04:13,140 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 19:04:13,140 - DictatorService - INFO - 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 32)
+2025-11-12 19:04:13,140 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_AUDIO_GENERATED
+2025-11-12 19:04:48,054 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 19:04:48,054 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:04:49,138 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:04:49,320 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STARTED (total events: 33)
+2025-11-12 19:04:49,320 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STARTED
+2025-11-12 19:04:49,320 - DictatorService - INFO - 🎤 Speech detected by VAD
+2025-11-12 19:04:54,000 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 34)
+2025-11-12 19:04:54,001 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:04:54,001 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:04:54,001 - DictatorService - INFO - 🎯 VAD detected speech stop, resetting recording state
+2025-11-12 19:04:54,002 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: enabled, Buffer size: 94432 samples (5.90s)
+2025-11-12 19:04:54,064 - faster_whisper - INFO - Processing audio with duration 00:05.902
+2025-11-12 19:04:55,160 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 35)
+2025-11-12 19:04:55,160 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:04:55,161 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 36)
+2025-11-12 19:04:55,161 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 19:04:55,161 - DictatorService - INFO - 📝 Transcription complete, calling LLM...
+2025-11-12 19:04:55,161 - DictatorService - INFO - 📝 Transcribed text: 'Como é que está a temperatura no Piauí?'
+2025-11-12 19:04:55,161 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:04:55,161 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:04:55,161 - DictatorService - INFO - 📦 Payload: 10 messages
+2025-11-12 19:04:55,512 - DictatorService - INFO - 🔧 Tools used: get_weather
+2025-11-12 19:04:55,513 - DictatorService - INFO - ✅ N8N response: 52 chars
+2025-11-12 19:04:55,513 - DictatorService - INFO - 🟢 N8N returned: 52 chars
+2025-11-12 19:04:55,514 - DictatorService - INFO - 📄 Response text: Tem 23 graus, parcialmente nublado e vento moderado....
+2025-11-12 19:04:55,514 - DictatorService - INFO - 🧹 Cleaned response: Tem 23 graus, parcialmente nublado e vento moderado....
+2025-11-12 19:04:55,514 - DictatorService - INFO - 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 19:04:55,514 - DictatorService - INFO - 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 19:04:55,514 - DictatorService - INFO - 📨 Event received: EventType.LLM_REQUEST (total events: 37)
+2025-11-12 19:04:55,515 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 19:04:55,515 - DictatorService - INFO - 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 38)
+2025-11-12 19:04:55,515 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 19:04:55,515 - DictatorService - INFO - 🔊 TTS sentence ready, synthesizing...
+2025-11-12 19:04:55,515 - DictatorService - INFO - 🎵 TTS handler received: 'Tem 23 graus, parcialmente nublado e vento moderado....'
+2025-11-12 19:04:55,515 - DictatorService - INFO - 🔊 Starting TTS synthesis...
+2025-11-12 19:04:55,515 - DictatorService - INFO - 🔊 Speaking: Tem 23 graus, parcialmente nublado e vento moderad...
+2025-11-12 19:04:55,515 - KokoroTTS - INFO - 🔊 Speaking: Tem 23 graus, parcialmente nublado e vento moderad...
+2025-11-12 19:04:55,939 - KokoroTTS - INFO - ⚡ Audio generated in 0.42s
+2025-11-12 19:04:59,194 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-12 19:04:59,194 - DictatorService - INFO - ✅ TTS synthesis completed
+2025-11-12 19:04:59,194 - DictatorService - INFO - 🎤 VAD re-enabled after TTS
+2025-11-12 19:04:59,194 - DictatorService - INFO - 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 39)
+2025-11-12 19:04:59,194 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 19:04:59,195 - DictatorService - INFO - 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 40)
+2025-11-12 19:04:59,195 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_AUDIO_GENERATED
+2025-11-12 19:07:41,455 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 19:07:41,455 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:07:42,539 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:07:49,530 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STARTED (total events: 41)
+2025-11-12 19:07:49,531 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STARTED
+2025-11-12 19:07:49,532 - DictatorService - INFO - 🎤 Speech detected by VAD
+2025-11-12 19:07:50,751 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 42)
+2025-11-12 19:07:50,751 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:07:50,752 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:07:50,752 - DictatorService - INFO - 🎯 VAD detected speech stop, resetting recording state
+2025-11-12 19:07:50,752 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: enabled, Buffer size: 148096 samples (9.26s)
+2025-11-12 19:07:50,818 - faster_whisper - INFO - Processing audio with duration 00:09.256
+2025-11-12 19:07:56,283 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 43)
+2025-11-12 19:07:56,283 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:08:11,661 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 19:08:11,662 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:08:12,746 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:08:12,927 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STARTED (total events: 44)
+2025-11-12 19:08:12,927 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STARTED
+2025-11-12 19:08:12,928 - DictatorService - INFO - 🎤 Speech detected by VAD
+2025-11-12 19:08:16,487 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 45)
+2025-11-12 19:08:16,488 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:08:16,488 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:08:16,488 - DictatorService - INFO - 🎯 VAD detected speech stop, resetting recording state
+2025-11-12 19:08:16,488 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: enabled, Buffer size: 76544 samples (4.78s)
+2025-11-12 19:08:16,561 - faster_whisper - INFO - Processing audio with duration 00:04.784
+2025-11-12 19:08:17,661 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 46)
+2025-11-12 19:08:17,661 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:08:17,662 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 47)
+2025-11-12 19:08:17,662 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 19:08:17,662 - DictatorService - INFO - 📝 Transcription complete, calling LLM...
+2025-11-12 19:08:17,662 - DictatorService - INFO - 📝 Transcribed text: 'Me diga cinco cores, por favor.'
+2025-11-12 19:08:17,662 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:08:17,662 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:08:17,663 - DictatorService - INFO - 📦 Payload: 11 messages
+2025-11-12 19:08:18,217 - DictatorService - INFO - 🔧 Tools used: get_weather
+2025-11-12 19:08:18,218 - DictatorService - INFO - ✅ N8N response: 180 chars
+2025-11-12 19:08:18,219 - DictatorService - INFO - 🟢 N8N returned: 180 chars
+2025-11-12 19:08:18,219 - DictatorService - INFO - 📄 Response text: Desculpe, parece que não consegui obter informações sobre a temperatura no Piauí. Vou tentar novamente. Oito cores são: Vermelho, Azul, Verde, Amarelo, Marrom, Cinza, Prata e Roxo....
+2025-11-12 19:08:18,219 - DictatorService - INFO - 🧹 Cleaned response: Desculpe, parece que não consegui obter informações sobre a temperatura no Piauí. Vou tentar novamen...
+2025-11-12 19:08:18,219 - DictatorService - INFO - 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 19:08:18,219 - DictatorService - INFO - 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 19:08:18,219 - DictatorService - INFO - 📨 Event received: EventType.LLM_REQUEST (total events: 48)
+2025-11-12 19:08:18,220 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 19:08:18,220 - DictatorService - INFO - 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 49)
+2025-11-12 19:08:18,220 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 19:08:18,220 - DictatorService - INFO - 🔊 TTS sentence ready, synthesizing...
+2025-11-12 19:08:18,220 - DictatorService - INFO - 🎵 TTS handler received: 'Desculpe, parece que não consegui obter informações sobre a temperatura no Piauí. Vou tentar novamen...'
+2025-11-12 19:08:18,220 - DictatorService - INFO - 🔊 Starting TTS synthesis...
+2025-11-12 19:08:18,220 - DictatorService - INFO - 🔊 Speaking: Desculpe, parece que não consegui obter informaçõe...
+2025-11-12 19:08:18,220 - KokoroTTS - INFO - 🔊 Speaking: Desculpe, parece que não consegui obter informaçõe...
+2025-11-12 19:08:19,401 - KokoroTTS - INFO - ⚡ Audio generated in 1.18s
+2025-11-12 19:08:28,530 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-12 19:08:28,530 - DictatorService - INFO - ✅ TTS synthesis completed
+2025-11-12 19:08:28,531 - DictatorService - INFO - 🎤 VAD re-enabled after TTS
+2025-11-12 19:08:28,531 - DictatorService - INFO - 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 50)
+2025-11-12 19:08:28,531 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 19:08:28,531 - DictatorService - INFO - 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 51)
+2025-11-12 19:08:28,531 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_AUDIO_GENERATED
+2025-11-12 19:08:55,405 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 19:08:55,405 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:08:56,431 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STARTED (total events: 52)
+2025-11-12 19:08:56,432 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STARTED
+2025-11-12 19:08:56,432 - DictatorService - INFO - 🎤 Speech detected by VAD
+2025-11-12 19:08:56,490 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:09:05,332 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 53)
+2025-11-12 19:09:05,332 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:09:05,333 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:09:05,333 - DictatorService - INFO - 🎯 VAD detected speech stop, resetting recording state
+2025-11-12 19:09:05,333 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: enabled, Buffer size: 158080 samples (9.88s)
+2025-11-12 19:09:05,398 - faster_whisper - INFO - Processing audio with duration 00:09.880
+2025-11-12 19:09:07,206 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 54)
+2025-11-12 19:09:07,207 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:09:07,207 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 55)
+2025-11-12 19:09:07,207 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 19:09:07,207 - DictatorService - INFO - 📝 Transcription complete, calling LLM...
+2025-11-12 19:09:07,208 - DictatorService - INFO - 📝 Transcribed text: 'Eu acho que ele tá sempre entrando no fluxo True, independente se eu solicito call ou não.'
+2025-11-12 19:09:07,208 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:09:07,208 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:09:07,208 - DictatorService - INFO - 📦 Payload: 11 messages
+2025-11-12 19:09:07,558 - DictatorService - INFO - 🔧 Tools used: get_time
+2025-11-12 19:09:07,559 - DictatorService - INFO - ✅ N8N response: 27 chars
+2025-11-12 19:09:07,559 - DictatorService - INFO - 🟢 N8N returned: 27 chars
+2025-11-12 19:09:07,560 - DictatorService - INFO - 📄 Response text: O momento atual é às 19h09....
+2025-11-12 19:09:07,560 - DictatorService - INFO - 🧹 Cleaned response: O momento atual é às 19h09....
+2025-11-12 19:09:07,560 - DictatorService - INFO - 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 19:09:07,560 - DictatorService - INFO - 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 19:09:07,560 - DictatorService - INFO - 📨 Event received: EventType.LLM_REQUEST (total events: 56)
+2025-11-12 19:09:07,560 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 19:09:07,561 - DictatorService - INFO - 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 57)
+2025-11-12 19:09:07,561 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 19:09:07,561 - DictatorService - INFO - 🔊 TTS sentence ready, synthesizing...
+2025-11-12 19:09:07,561 - DictatorService - INFO - 🎵 TTS handler received: 'O momento atual é às 19h09....'
+2025-11-12 19:09:07,561 - DictatorService - INFO - 🔊 Starting TTS synthesis...
+2025-11-12 19:09:07,561 - DictatorService - INFO - 🔊 Speaking: O momento atual é às 19h09.
+2025-11-12 19:09:07,561 - KokoroTTS - INFO - 🔊 Speaking: O momento atual é às 19h09.
+2025-11-12 19:09:07,562 - phonemizer - WARNING - words count mismatch on 100.0% of the lines (1/1)
+2025-11-12 19:09:07,868 - KokoroTTS - INFO - ⚡ Audio generated in 0.31s
+2025-11-12 19:09:10,319 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-12 19:09:10,319 - DictatorService - INFO - ✅ TTS synthesis completed
+2025-11-12 19:09:10,320 - DictatorService - INFO - 🎤 VAD re-enabled after TTS
+2025-11-12 19:09:10,320 - DictatorService - INFO - 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 58)
+2025-11-12 19:09:10,320 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 19:09:10,320 - DictatorService - INFO - 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 59)
+2025-11-12 19:09:10,320 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_AUDIO_GENERATED
+2025-11-12 19:09:26,907 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 19:09:26,908 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:09:27,990 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:09:28,142 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STARTED (total events: 60)
+2025-11-12 19:09:28,142 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STARTED
+2025-11-12 19:09:28,142 - DictatorService - INFO - 🎤 Speech detected by VAD
+2025-11-12 19:09:40,863 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 61)
+2025-11-12 19:09:40,863 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:09:40,863 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:09:40,863 - DictatorService - INFO - 🎯 VAD detected speech stop, resetting recording state
+2025-11-12 19:09:40,864 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: enabled, Buffer size: 222560 samples (13.91s)
+2025-11-12 19:09:40,941 - faster_whisper - INFO - Processing audio with duration 00:13.910
+2025-11-12 19:09:43,837 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 62)
+2025-11-12 19:09:43,837 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:09:43,838 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 63)
+2025-11-12 19:09:43,838 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 19:09:43,838 - DictatorService - INFO - 📝 Transcription complete, calling LLM...
+2025-11-12 19:09:43,839 - DictatorService - INFO - 📝 Transcribed text: 'Eu acho que o N8n call está sempre utilizando o caminho true do branch para to call, ele não está validando se exige to call ou não. Isso é o correto?'
+2025-11-12 19:09:43,839 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:09:43,839 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:09:43,839 - DictatorService - INFO - 📦 Payload: 11 messages
+2025-11-12 19:09:44,446 - DictatorService - INFO - 🔧 Tools used: get_time
+2025-11-12 19:09:44,446 - DictatorService - INFO - ✅ N8N response: 264 chars
+2025-11-12 19:09:44,447 - DictatorService - INFO - 🟢 N8N returned: 264 chars
+2025-11-12 19:09:44,447 - DictatorService - INFO - 📄 Response text: Sim, é correto. O N8n call está sempre utilizando o caminho true do branch para to call, mesmo quando não é necessário. Isso pode causar problemas de desempenho e segurança. É recomendável que você va...
+2025-11-12 19:09:44,447 - DictatorService - INFO - 🧹 Cleaned response: Sim, é correto. O N8n call está sempre utilizando o caminho true do branch para to call, mesmo quand...
+2025-11-12 19:09:44,447 - DictatorService - INFO - 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 19:09:44,447 - DictatorService - INFO - 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 19:09:44,447 - DictatorService - INFO - 📨 Event received: EventType.LLM_REQUEST (total events: 64)
+2025-11-12 19:09:44,447 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 19:09:44,448 - DictatorService - INFO - 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 65)
+2025-11-12 19:09:44,448 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 19:09:44,448 - DictatorService - INFO - 🔊 TTS sentence ready, synthesizing...
+2025-11-12 19:09:44,448 - DictatorService - INFO - 🎵 TTS handler received: 'Sim, é correto. O N8n call está sempre utilizando o caminho true do branch para to call, mesmo quand...'
+2025-11-12 19:09:44,448 - DictatorService - INFO - 🔊 Starting TTS synthesis...
+2025-11-12 19:09:44,448 - DictatorService - INFO - 🔊 Speaking: Sim, é correto. O N8n call está sempre utilizando ...
+2025-11-12 19:09:44,448 - KokoroTTS - INFO - 🔊 Speaking: Sim, é correto. O N8n call está sempre utilizando ...
+2025-11-12 19:09:44,449 - phonemizer - WARNING - words count mismatch on 100.0% of the lines (1/1)
+2025-11-12 19:09:46,281 - KokoroTTS - INFO - ⚡ Audio generated in 1.83s
+2025-11-12 19:09:59,944 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-12 19:10:07,028 - DictatorService - INFO - ✅ TTS synthesis completed
+2025-11-12 19:10:07,031 - DictatorService - INFO - 🎤 VAD re-enabled after TTS
+2025-11-12 19:10:07,031 - DictatorService - INFO - 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 66)
+2025-11-12 19:10:07,031 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 19:10:07,032 - DictatorService - INFO - 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 67)
+2025-11-12 19:10:07,032 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_AUDIO_GENERATED
+2025-11-12 19:20:22,901 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-12 19:20:22,901 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-12 19:20:22,902 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-12 19:20:23,286 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-12 19:20:25,174 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-12 19:20:25,188 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-12 19:20:25,188 - DictatorService - INFO - 🎤 Loading TTS engine...
+2025-11-12 19:20:25,188 - KokoroTTS - INFO - 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-12 19:20:25,675 - KokoroTTS - INFO - ✅ Kokoro TTS loaded successfully!
+2025-11-12 19:20:25,675 - DictatorService - INFO - ✅ TTS engine loaded successfully!
+2025-11-12 19:20:25,676 - DictatorService - INFO - 🎯 Loading event-driven voice session...
+2025-11-12 19:20:25,676 - DictatorService - INFO - 🎤 VAD enabled: True
+2025-11-12 19:20:25,676 - DictatorService - INFO - 🦙 Using Ollama provider: qwen3:14b @ http://localhost:11434
+2025-11-12 19:20:25,677 - DictatorService - INFO - 🎤 Starting voice session (attempt 1/3)
+2025-11-12 19:20:25,677 - DictatorService - INFO - 🔗 Event loop configured for thread-safe publishing
+2025-11-12 19:20:25,677 - DictatorService - INFO - 🔄 Event processor started
+2025-11-12 19:20:25,777 - DictatorService - INFO - ✅ Event-driven voice session loaded - ZERO polling!
+2025-11-12 19:20:26,003 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-12 19:20:26,004 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-12 19:20:32,713 - DictatorService - INFO - 💾 Configuration saved
+2025-11-12 19:20:32,714 - DictatorService - INFO - 🔄 LLM Provider changed to: n8n_toolcalling
+2025-11-12 19:20:32,714 - DictatorService - INFO - 🔄 Restarting service to apply provider changes...
+2025-11-12 19:20:32,714 - DictatorService - INFO - 🔄 Restarting service...
+2025-11-12 19:20:32,714 - DictatorService - INFO - 🛑 Dictator Service stopping...
+2025-11-12 19:20:32,714 - DictatorService - INFO - Voice session stopped
+2025-11-12 19:20:32,714 - DictatorService - INFO - Voice session completed normally
+2025-11-12 19:20:32,715 - DictatorService - INFO - 👋 Dictator Service stopped
+2025-11-12 19:20:32,717 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-12 19:20:32,717 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-12 19:20:32,717 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-12 19:20:32,874 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-12 19:20:35,076 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-12 19:20:35,076 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-12 19:20:35,077 - DictatorService - INFO - 🎤 Loading TTS engine...
+2025-11-12 19:20:35,077 - KokoroTTS - INFO - 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-12 19:20:35,536 - KokoroTTS - INFO - ✅ Kokoro TTS loaded successfully!
+2025-11-12 19:20:35,536 - DictatorService - INFO - ✅ TTS engine loaded successfully!
+2025-11-12 19:20:35,537 - DictatorService - INFO - 🎯 Loading event-driven voice session...
+2025-11-12 19:20:35,537 - DictatorService - INFO - 🎤 VAD enabled: True
+2025-11-12 19:20:35,537 - DictatorService - INFO - 🔗 Using N8N Tool-Calling provider: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:20:35,538 - DictatorService - INFO - 🎤 Starting voice session (attempt 1/3)
+2025-11-12 19:20:35,538 - DictatorService - INFO - 🔗 Event loop configured for thread-safe publishing
+2025-11-12 19:20:35,538 - DictatorService - INFO - 🔄 Event processor started
+2025-11-12 19:20:35,637 - DictatorService - INFO - ✅ Event-driven voice session loaded - ZERO polling!
+2025-11-12 19:20:35,639 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-12 19:20:35,639 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-12 19:20:41,213 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 19:20:41,213 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:20:42,246 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STARTED (total events: 1)
+2025-11-12 19:20:42,247 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STARTED
+2025-11-12 19:20:42,247 - DictatorService - INFO - 🎤 Speech detected by VAD
+2025-11-12 19:20:42,305 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:20:47,088 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 2)
+2025-11-12 19:20:47,088 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:20:47,089 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:20:47,089 - DictatorService - INFO - 🎯 VAD detected speech stop, resetting recording state
+2025-11-12 19:20:47,089 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: enabled, Buffer size: 93184 samples (5.82s)
+2025-11-12 19:20:47,214 - faster_whisper - INFO - Processing audio with duration 00:05.824
+2025-11-12 19:20:48,588 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 3)
+2025-11-12 19:20:48,588 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:20:48,589 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 4)
+2025-11-12 19:20:48,589 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 19:20:48,589 - DictatorService - INFO - 📝 Transcription complete, calling LLM...
+2025-11-12 19:20:48,589 - DictatorService - INFO - 📝 Transcribed text: 'Só fazendo um teste de integração com o workflow do N8n.'
+2025-11-12 19:20:48,589 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:20:48,636 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:20:48,636 - DictatorService - INFO - 📦 Payload: 2 messages
+2025-11-12 19:20:50,973 - DictatorService - INFO - ✅ N8N response: 426 chars
+2025-11-12 19:20:50,974 - DictatorService - INFO - 🟢 N8N returned: 426 chars
+2025-11-12 19:20:50,974 - DictatorService - INFO - 📄 Response text: <think>
+Okay, the user is testing the integration with N8n's workflow. They might be setting up automation or checking how different tools connect. I should respond briefly to confirm the test and off...
+2025-11-12 19:20:50,974 - DictatorService - INFO - 🧹 Cleaned response: Entendo, está apenas testando a integração com o N8n. Se precisar de ajuda com algo específico, poss...
+2025-11-12 19:20:50,974 - DictatorService - INFO - 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 19:20:50,975 - DictatorService - INFO - 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 19:20:50,975 - DictatorService - INFO - 📨 Event received: EventType.LLM_REQUEST (total events: 5)
+2025-11-12 19:20:50,975 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 19:20:50,975 - DictatorService - INFO - 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 6)
+2025-11-12 19:20:50,975 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 19:20:50,975 - DictatorService - INFO - 🔊 TTS sentence ready, synthesizing...
+2025-11-12 19:20:50,975 - DictatorService - INFO - 🎵 TTS handler received: 'Entendo, está apenas testando a integração com o N8n. Se precisar de ajuda com algo específico, poss...'
+2025-11-12 19:20:50,975 - DictatorService - INFO - 🔊 Starting TTS synthesis...
+2025-11-12 19:20:50,976 - DictatorService - INFO - 🔊 Speaking: Entendo, está apenas testando a integração com o N...
+2025-11-12 19:20:50,976 - KokoroTTS - INFO - 🔊 Speaking: Entendo, está apenas testando a integração com o N...
+2025-11-12 19:20:51,125 - phonemizer - WARNING - words count mismatch on 100.0% of the lines (1/1)
+2025-11-12 19:20:51,876 - KokoroTTS - INFO - ⚡ Audio generated in 0.90s
+2025-11-12 19:20:58,024 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-12 19:20:58,025 - DictatorService - INFO - ✅ TTS synthesis completed
+2025-11-12 19:20:58,025 - DictatorService - INFO - 🎤 VAD re-enabled after TTS
+2025-11-12 19:20:58,025 - DictatorService - INFO - 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 7)
+2025-11-12 19:20:58,025 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 19:20:58,026 - DictatorService - INFO - 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 8)
+2025-11-12 19:20:58,026 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_AUDIO_GENERATED
+2025-11-12 19:21:09,385 - DictatorService - INFO - 🔴 Recording started (VAD)...
+2025-11-12 19:21:34,948 - DictatorService - INFO - 💾 Configuration saved
+2025-11-12 19:22:05,166 - DictatorService - INFO - 🎙️ Dictator Service initializing...
+2025-11-12 19:22:05,166 - DictatorService - INFO - 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-12 19:22:05,167 - DictatorService - INFO -    Using faster-whisper with compute_type=float16
+2025-11-12 19:22:05,658 - httpx - INFO - HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-12 19:22:07,470 - DictatorService - INFO - ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-12 19:22:07,484 - DictatorService - INFO - 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-12 19:22:07,484 - DictatorService - INFO - 🎤 Loading TTS engine...
+2025-11-12 19:22:07,484 - KokoroTTS - INFO - 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-12 19:22:07,969 - KokoroTTS - INFO - ✅ Kokoro TTS loaded successfully!
+2025-11-12 19:22:07,970 - DictatorService - INFO - ✅ TTS engine loaded successfully!
+2025-11-12 19:22:07,970 - DictatorService - INFO - 🎯 Loading event-driven voice session...
+2025-11-12 19:22:07,970 - DictatorService - INFO - 🎤 VAD enabled: False
+2025-11-12 19:22:07,970 - DictatorService - INFO - 🔗 Using N8N Tool-Calling provider: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:22:07,972 - DictatorService - INFO - 🎤 Starting voice session (attempt 1/3)
+2025-11-12 19:22:07,972 - DictatorService - INFO - 🔗 Event loop configured for thread-safe publishing
+2025-11-12 19:22:07,972 - DictatorService - INFO - 🔄 Event processor started
+2025-11-12 19:22:08,071 - DictatorService - INFO - ✅ Event-driven voice session loaded - ZERO polling!
+2025-11-12 19:22:08,298 - DictatorService - INFO - 🚀 Dictator Service started
+2025-11-12 19:22:08,299 - DictatorService - INFO - 🖱️  Listening for mouse button: side1
+2025-11-12 19:22:21,369 - DictatorService - INFO - 🔴 Recording started...
+2025-11-12 19:22:21,370 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:22:22,465 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:22:26,088 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 19:22:26,089 - DictatorService - INFO - 🎤 VAD disabled: emitting manual SPEECH_STOPPED event
+2025-11-12 19:22:26,092 - DictatorService - INFO - 📢 Publishing SPEECH_STOPPED event to 1 subscribers
+2025-11-12 19:22:26,092 - DictatorService - INFO - ✅ SPEECH_STOPPED event published to queue
+2025-11-12 19:22:26,092 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 1)
+2025-11-12 19:22:26,092 - DictatorService - INFO - 🎯 Event-driven mode: Voice session will handle transcription via events
+2025-11-12 19:22:26,092 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:22:26,093 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:22:26,093 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: disabled, Buffer size: 74464 samples (4.65s)
+2025-11-12 19:22:26,165 - faster_whisper - INFO - Processing audio with duration 00:04.654
+2025-11-12 19:22:27,419 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 2)
+2025-11-12 19:22:27,419 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:22:27,420 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 3)
+2025-11-12 19:22:27,420 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 19:22:27,420 - DictatorService - INFO - 📝 Transcription complete, calling LLM...
+2025-11-12 19:22:27,420 - DictatorService - INFO - 📝 Transcribed text: 'Testando o teste de integração com o N8N'
+2025-11-12 19:22:27,420 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:22:27,464 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:22:27,464 - DictatorService - INFO - 📦 Payload: 2 messages
+2025-11-12 19:22:29,441 - DictatorService - INFO - ✅ N8N response: 431 chars
+2025-11-12 19:22:29,442 - DictatorService - INFO - 🟢 N8N returned: 431 chars
+2025-11-12 19:22:29,442 - DictatorService - INFO - 📄 Response text: <think>
+Okay, the user is testing the integration with N8N. I need to respond in a friendly and helpful manner. Let me make sure to keep it under three sentences. I should acknowledge their test and o...
+2025-11-12 19:22:29,443 - DictatorService - INFO - 🧹 Cleaned response: Entendo que está testando a integração com o N8N. Se precisar de ajuda com algo específico, estou aq...
+2025-11-12 19:22:29,443 - DictatorService - INFO - 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 19:22:29,443 - DictatorService - INFO - 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 19:22:29,443 - DictatorService - INFO - 📨 Event received: EventType.LLM_REQUEST (total events: 4)
+2025-11-12 19:22:29,443 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 19:22:29,444 - DictatorService - INFO - 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 5)
+2025-11-12 19:22:29,444 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 19:22:29,444 - DictatorService - INFO - 🔊 TTS sentence ready, synthesizing...
+2025-11-12 19:22:29,444 - DictatorService - INFO - 🎵 TTS handler received: 'Entendo que está testando a integração com o N8N. Se precisar de ajuda com algo específico, estou aq...'
+2025-11-12 19:22:29,444 - DictatorService - INFO - 🔊 Starting TTS synthesis...
+2025-11-12 19:22:29,444 - DictatorService - INFO - 🔊 Speaking: Entendo que está testando a integração com o N8N. ...
+2025-11-12 19:22:29,444 - KokoroTTS - INFO - 🔊 Speaking: Entendo que está testando a integração com o N8N. ...
+2025-11-12 19:22:29,587 - phonemizer - WARNING - words count mismatch on 100.0% of the lines (1/1)
+2025-11-12 19:22:30,543 - KokoroTTS - INFO - ⚡ Audio generated in 1.10s
+2025-11-12 19:22:38,210 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-12 19:22:38,211 - DictatorService - INFO - ✅ TTS synthesis completed
+2025-11-12 19:22:38,211 - DictatorService - INFO - 🎤 VAD re-enabled after TTS
+2025-11-12 19:22:38,211 - DictatorService - INFO - 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 6)
+2025-11-12 19:22:38,211 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 19:22:38,211 - DictatorService - INFO - 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 7)
+2025-11-12 19:22:38,211 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_AUDIO_GENERATED
+2025-11-12 19:22:41,990 - DictatorService - INFO - 🔴 Recording started...
+2025-11-12 19:22:41,991 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:22:43,075 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:22:45,438 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 19:22:45,438 - DictatorService - INFO - 🎤 VAD disabled: emitting manual SPEECH_STOPPED event
+2025-11-12 19:22:45,440 - DictatorService - INFO - 📢 Publishing SPEECH_STOPPED event to 1 subscribers
+2025-11-12 19:22:45,441 - DictatorService - INFO - ✅ SPEECH_STOPPED event published to queue
+2025-11-12 19:22:45,441 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 8)
+2025-11-12 19:22:45,441 - DictatorService - INFO - 🎯 Event-driven mode: Voice session will handle transcription via events
+2025-11-12 19:22:45,441 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:22:45,442 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:22:45,442 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: disabled, Buffer size: 54496 samples (3.41s)
+2025-11-12 19:22:45,501 - faster_whisper - INFO - Processing audio with duration 00:03.406
+2025-11-12 19:22:47,018 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 9)
+2025-11-12 19:22:47,018 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:22:47,019 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 10)
+2025-11-12 19:22:47,019 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 19:22:47,019 - DictatorService - INFO - 📝 Transcription complete, calling LLM...
+2025-11-12 19:22:47,019 - DictatorService - INFO - 📝 Transcribed text: 'Eu queria saber qual é a previsão do tempo na capital da Groenlândia.'
+2025-11-12 19:22:47,019 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:22:47,019 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:22:47,019 - DictatorService - INFO - 📦 Payload: 4 messages
+2025-11-12 19:22:53,867 - DictatorService - INFO - 🔧 Tools used: get_weather
+2025-11-12 19:22:53,867 - DictatorService - INFO - ✅ N8N response: 745 chars
+2025-11-12 19:22:53,868 - DictatorService - INFO - 🟢 N8N returned: 745 chars
+2025-11-12 19:22:53,868 - DictatorService - INFO - 📄 Response text: <think>
+Okay, the user asked for the weather in Nuuk, Greenland. I called the get_weather tool with the city name. The response came back with temperature, condition, humidity, and wind speed. Now I n...
+2025-11-12 19:22:53,869 - DictatorService - INFO - 🧹 Cleaned response: A previsão do tempo em Nuuk, Groenlândia, mostra 22°C com céu parcialmente nublado. A umidade está e...
+2025-11-12 19:22:53,869 - DictatorService - INFO - 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 19:22:53,869 - DictatorService - INFO - 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 19:22:53,869 - DictatorService - INFO - 📨 Event received: EventType.LLM_REQUEST (total events: 11)
+2025-11-12 19:22:53,869 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 19:22:53,869 - DictatorService - INFO - 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 12)
+2025-11-12 19:22:53,870 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 19:22:53,870 - DictatorService - INFO - 🔊 TTS sentence ready, synthesizing...
+2025-11-12 19:22:53,870 - DictatorService - INFO - 🎵 TTS handler received: 'A previsão do tempo em Nuuk, Groenlândia, mostra 22°C com céu parcialmente nublado. A umidade está e...'
+2025-11-12 19:22:53,870 - DictatorService - INFO - 🔊 Starting TTS synthesis...
+2025-11-12 19:22:53,870 - DictatorService - INFO - 🔊 Speaking: A previsão do tempo em Nuuk, Groenlândia, mostra 2...
+2025-11-12 19:22:53,870 - KokoroTTS - INFO - 🔊 Speaking: A previsão do tempo em Nuuk, Groenlândia, mostra 2...
+2025-11-12 19:22:53,874 - phonemizer - WARNING - words count mismatch on 200.0% of the lines (2/1)
+2025-11-12 19:22:55,026 - KokoroTTS - INFO - ⚡ Audio generated in 1.15s
+2025-11-12 19:23:04,027 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-12 19:23:09,420 - DictatorService - INFO - 🔴 Recording started...
+2025-11-12 19:23:36,883 - DictatorService - INFO - ✅ TTS synthesis completed
+2025-11-12 19:23:40,707 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:23:40,711 - DictatorService - INFO - 🎤 VAD re-enabled after TTS
+2025-11-12 19:23:40,711 - DictatorService - INFO - 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 13)
+2025-11-12 19:23:40,711 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 19:23:40,711 - DictatorService - INFO - 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 14)
+2025-11-12 19:23:40,712 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_AUDIO_GENERATED
+2025-11-12 19:23:41,797 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:23:52,958 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 19:23:56,942 - DictatorService - INFO - 🎤 VAD disabled: emitting manual SPEECH_STOPPED event
+2025-11-12 19:23:56,951 - DictatorService - INFO - 📢 Publishing SPEECH_STOPPED event to 1 subscribers
+2025-11-12 19:23:56,952 - DictatorService - INFO - ✅ SPEECH_STOPPED event published to queue
+2025-11-12 19:23:56,952 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 15)
+2025-11-12 19:23:56,952 - DictatorService - INFO - 🎯 Event-driven mode: Voice session will handle transcription via events
+2025-11-12 19:23:56,952 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:23:56,953 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:23:56,953 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: disabled, Buffer size: 258752 samples (16.17s)
+2025-11-12 19:23:57,016 - faster_whisper - INFO - Processing audio with duration 00:16.172
+2025-11-12 19:23:58,324 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 16)
+2025-11-12 19:23:58,324 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:24:09,412 - DictatorService - INFO - 🔴 Recording started...
+2025-11-12 19:24:09,413 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:24:09,714 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 19:24:09,714 - DictatorService - INFO - 🎤 VAD disabled: emitting manual SPEECH_STOPPED event
+2025-11-12 19:24:09,716 - DictatorService - INFO - 📢 Publishing SPEECH_STOPPED event to 1 subscribers
+2025-11-12 19:24:09,717 - DictatorService - INFO - ✅ SPEECH_STOPPED event published to queue
+2025-11-12 19:24:09,717 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 17)
+2025-11-12 19:24:09,717 - DictatorService - INFO - 🎯 Event-driven mode: Voice session will handle transcription via events
+2025-11-12 19:24:09,717 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:24:09,717 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:24:09,718 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: disabled, Buffer size: 3744 samples (0.23s)
+2025-11-12 19:24:09,718 - DictatorService - WARNING - ⚠️ Ignoring speech event with insufficient audio (3744 samples, need 8000)
+2025-11-12 19:24:09,718 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 18)
+2025-11-12 19:24:09,718 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:24:10,267 - DictatorService - INFO - 🔴 Recording started...
+2025-11-12 19:24:10,267 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:24:11,352 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:24:14,584 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 19:24:14,584 - DictatorService - INFO - 🎤 VAD disabled: emitting manual SPEECH_STOPPED event
+2025-11-12 19:24:14,587 - DictatorService - INFO - 📢 Publishing SPEECH_STOPPED event to 1 subscribers
+2025-11-12 19:24:14,587 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 19)
+2025-11-12 19:24:14,587 - DictatorService - INFO - ✅ SPEECH_STOPPED event published to queue
+2025-11-12 19:24:14,587 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:24:14,588 - DictatorService - INFO - 🎯 Event-driven mode: Voice session will handle transcription via events
+2025-11-12 19:24:14,588 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:24:14,588 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: disabled, Buffer size: 68224 samples (4.26s)
+2025-11-12 19:24:14,642 - faster_whisper - INFO - Processing audio with duration 00:04.264
+2025-11-12 19:24:15,915 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 20)
+2025-11-12 19:24:15,915 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:24:15,916 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 21)
+2025-11-12 19:24:15,916 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 19:24:15,916 - DictatorService - INFO - 📝 Transcription complete, calling LLM...
+2025-11-12 19:24:15,916 - DictatorService - INFO - 📝 Transcribed text: 'E a previsão na maior cidade da Sibéria?'
+2025-11-12 19:24:15,916 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:24:15,917 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:24:15,917 - DictatorService - INFO - 📦 Payload: 6 messages
+2025-11-12 19:24:20,488 - DictatorService - INFO - ✅ N8N response: 1374 chars
+2025-11-12 19:24:20,489 - DictatorService - INFO - 🟢 N8N returned: 1374 chars
+2025-11-12 19:24:20,489 - DictatorService - INFO - 📄 Response text: <think>
+Okay, the user asked for the weather forecast in the largest city in Siberia. First, I need to figure out which city that is. Siberia is a huge region in Russia, and the largest city there is ...
+2025-11-12 19:24:20,490 - DictatorService - INFO - 🧹 Cleaned response: A previsão do tempo em Novosibirsk, Sibéria, indica 18°C com céu nublado. A umidade está em 70% e o ...
+2025-11-12 19:24:20,490 - DictatorService - INFO - 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 19:24:20,490 - DictatorService - INFO - 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 19:24:20,490 - DictatorService - INFO - 📨 Event received: EventType.LLM_REQUEST (total events: 22)
+2025-11-12 19:24:20,490 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 19:24:20,490 - DictatorService - INFO - 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 23)
+2025-11-12 19:24:20,491 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 19:24:20,491 - DictatorService - INFO - 🔊 TTS sentence ready, synthesizing...
+2025-11-12 19:24:20,491 - DictatorService - INFO - 🎵 TTS handler received: 'A previsão do tempo em Novosibirsk, Sibéria, indica 18°C com céu nublado. A umidade está em 70% e o ...'
+2025-11-12 19:24:20,491 - DictatorService - INFO - 🔊 Starting TTS synthesis...
+2025-11-12 19:24:20,491 - DictatorService - INFO - 🔊 Speaking: A previsão do tempo em Novosibirsk, Sibéria, indic...
+2025-11-12 19:24:20,491 - KokoroTTS - INFO - 🔊 Speaking: A previsão do tempo em Novosibirsk, Sibéria, indic...
+2025-11-12 19:24:20,495 - phonemizer - WARNING - words count mismatch on 200.0% of the lines (2/1)
+2025-11-12 19:24:21,576 - KokoroTTS - INFO - ⚡ Audio generated in 1.08s
+2025-11-12 19:24:29,602 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-12 19:24:29,603 - DictatorService - INFO - ✅ TTS synthesis completed
+2025-11-12 19:24:29,603 - DictatorService - INFO - 🎤 VAD re-enabled after TTS
+2025-11-12 19:24:29,603 - DictatorService - INFO - 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 24)
+2025-11-12 19:24:29,604 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 19:24:29,604 - DictatorService - INFO - 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 25)
+2025-11-12 19:24:29,604 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_AUDIO_GENERATED
+2025-11-12 19:24:36,457 - DictatorService - INFO - 🔴 Recording started...
+2025-11-12 19:24:36,457 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:24:37,543 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:24:42,219 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 19:24:42,219 - DictatorService - INFO - 🎤 VAD disabled: emitting manual SPEECH_STOPPED event
+2025-11-12 19:24:42,222 - DictatorService - INFO - 📢 Publishing SPEECH_STOPPED event to 1 subscribers
+2025-11-12 19:24:42,222 - DictatorService - INFO - ✅ SPEECH_STOPPED event published to queue
+2025-11-12 19:24:42,222 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 26)
+2025-11-12 19:24:42,222 - DictatorService - INFO - 🎯 Event-driven mode: Voice session will handle transcription via events
+2025-11-12 19:24:42,222 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:24:42,222 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:24:42,223 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: disabled, Buffer size: 91104 samples (5.69s)
+2025-11-12 19:24:42,284 - faster_whisper - INFO - Processing audio with duration 00:05.694
+2025-11-12 19:24:43,456 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 27)
+2025-11-12 19:24:43,456 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:24:43,456 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 28)
+2025-11-12 19:24:43,456 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 19:24:43,456 - DictatorService - INFO - 📝 Transcription complete, calling LLM...
+2025-11-12 19:24:43,457 - DictatorService - INFO - 📝 Transcribed text: 'Qual foi a menor temperatura na Sibéria nesse ano?'
+2025-11-12 19:24:43,457 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:24:43,457 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:24:43,457 - DictatorService - INFO - 📦 Payload: 8 messages
+2025-11-12 19:24:46,394 - DictatorService - INFO - ✅ N8N response: 1026 chars
+2025-11-12 19:24:46,394 - DictatorService - INFO - 🟢 N8N returned: 1026 chars
+2025-11-12 19:24:46,395 - DictatorService - INFO - 📄 Response text: <think>
+Okay, the user is asking for the lowest temperature in Siberia this year. I need to check if I have that information. My available tools are get_weather and get_time. The get_weather tool give...
+2025-11-12 19:24:46,395 - DictatorService - INFO - 🧹 Cleaned response: Não tenho acesso a dados históricos de temperatura. Para informações sobre a menor temperatura regis...
+2025-11-12 19:24:46,395 - DictatorService - INFO - 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 19:24:46,395 - DictatorService - INFO - 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 19:24:46,396 - DictatorService - INFO - 📨 Event received: EventType.LLM_REQUEST (total events: 29)
+2025-11-12 19:24:46,396 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 19:24:46,396 - DictatorService - INFO - 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 30)
+2025-11-12 19:24:46,396 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 19:24:46,396 - DictatorService - INFO - 🔊 TTS sentence ready, synthesizing...
+2025-11-12 19:24:46,396 - DictatorService - INFO - 🎵 TTS handler received: 'Não tenho acesso a dados históricos de temperatura. Para informações sobre a menor temperatura regis...'
+2025-11-12 19:24:46,396 - DictatorService - INFO - 🔊 Starting TTS synthesis...
+2025-11-12 19:24:46,396 - DictatorService - INFO - 🔊 Speaking: Não tenho acesso a dados históricos de temperatura...
+2025-11-12 19:24:46,396 - KokoroTTS - INFO - 🔊 Speaking: Não tenho acesso a dados históricos de temperatura...
+2025-11-12 19:24:47,899 - KokoroTTS - INFO - ⚡ Audio generated in 1.50s
+2025-11-12 19:24:59,113 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-12 19:24:59,113 - DictatorService - INFO - ✅ TTS synthesis completed
+2025-11-12 19:24:59,114 - DictatorService - INFO - 🎤 VAD re-enabled after TTS
+2025-11-12 19:24:59,114 - DictatorService - INFO - 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 31)
+2025-11-12 19:24:59,114 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 19:24:59,114 - DictatorService - INFO - 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 32)
+2025-11-12 19:24:59,114 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_AUDIO_GENERATED
+2025-11-12 19:25:04,715 - DictatorService - INFO - 🔴 Recording started...
+2025-11-12 19:25:04,716 - DictatorService - INFO - 🧹 Cleared audio buffer
+2025-11-12 19:25:05,800 - DictatorService - INFO - ✅ Voice session healthy, processing audio
+2025-11-12 19:25:19,441 - DictatorService - INFO - ⏹️ Recording stopped
+2025-11-12 19:25:19,442 - DictatorService - INFO - 🎤 VAD disabled: emitting manual SPEECH_STOPPED event
+2025-11-12 19:25:19,444 - DictatorService - INFO - 📢 Publishing SPEECH_STOPPED event to 1 subscribers
+2025-11-12 19:25:19,445 - DictatorService - INFO - ✅ SPEECH_STOPPED event published to queue
+2025-11-12 19:25:19,445 - DictatorService - INFO - 📨 Event received: EventType.SPEECH_STOPPED (total events: 33)
+2025-11-12 19:25:19,445 - DictatorService - INFO - 🎯 Event-driven mode: Voice session will handle transcription via events
+2025-11-12 19:25:19,445 - DictatorService - INFO - 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 19:25:19,446 - DictatorService - INFO - 🛑 Speech ended, transcribing...
+2025-11-12 19:25:19,446 - DictatorService - INFO - 🎯 Speech stopped - VAD mode: disabled, Buffer size: 234624 samples (14.66s)
+2025-11-12 19:25:19,502 - faster_whisper - INFO - Processing audio with duration 00:14.664
+2025-11-12 19:25:22,820 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 34)
+2025-11-12 19:25:22,820 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 19:25:22,821 - DictatorService - INFO - 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 35)
+2025-11-12 19:25:22,821 - DictatorService - INFO - 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 19:25:22,821 - DictatorService - INFO - 📝 Transcription complete, calling LLM...
+2025-11-12 19:25:22,821 - DictatorService - INFO - 📝 Transcribed text: 'Às vezes o flow da aplicação trava e eu não sei porque, ele fica pendurado e eu fico apertando CTRL C diversas vezes aqui no console, aí eventualmente libera. Você teria ideia do que pode estar acontecendo?'
+2025-11-12 19:25:22,821 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:25:22,822 - DictatorService - INFO - 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 19:25:22,822 - DictatorService - INFO - 📦 Payload: 10 messages
+2025-11-12 19:25:28,730 - DictatorService - INFO - ✅ N8N response: 2140 chars
+2025-11-12 19:25:28,731 - DictatorService - INFO - 🟢 N8N returned: 2140 chars
+2025-11-12 19:25:28,731 - DictatorService - INFO - 📄 Response text: <think>
+Okay, the user is having trouble with their application flow getting stuck and needing to press CTRL+C multiple times to release it. Let me think about possible causes.
+
+First, maybe there's a...
+2025-11-12 19:25:28,731 - DictatorService - INFO - 🧹 Cleaned response: Seu fluxo pode estar travado devido a loops infinitos, bloqueios de recursos ou threads travados. Ve...
+2025-11-12 19:25:28,732 - DictatorService - INFO - 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 19:25:28,732 - DictatorService - INFO - 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 19:25:28,732 - DictatorService - INFO - 📨 Event received: EventType.LLM_REQUEST (total events: 36)
+2025-11-12 19:25:28,732 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 19:25:28,732 - DictatorService - INFO - 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 37)
+2025-11-12 19:25:28,732 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 19:25:28,733 - DictatorService - INFO - 🔊 TTS sentence ready, synthesizing...
+2025-11-12 19:25:28,733 - DictatorService - INFO - 🎵 TTS handler received: 'Seu fluxo pode estar travado devido a loops infinitos, bloqueios de recursos ou threads travados. Ve...'
+2025-11-12 19:25:28,733 - DictatorService - INFO - 🔊 Starting TTS synthesis...
+2025-11-12 19:25:28,733 - DictatorService - INFO - 🔊 Speaking: Seu fluxo pode estar travado devido a loops infini...
+2025-11-12 19:25:28,733 - KokoroTTS - INFO - 🔊 Speaking: Seu fluxo pode estar travado devido a loops infini...
+2025-11-12 19:25:30,577 - KokoroTTS - INFO - ⚡ Audio generated in 1.84s
+2025-11-12 19:25:44,421 - KokoroTTS - INFO - ✅ Speech completed
+2025-11-12 19:25:44,422 - DictatorService - INFO - ✅ TTS synthesis completed
+2025-11-12 19:25:44,423 - DictatorService - INFO - 🎤 VAD re-enabled after TTS
+2025-11-12 19:25:44,423 - DictatorService - INFO - 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 38)
+2025-11-12 19:25:44,423 - DictatorService - INFO - 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 19:25:44,423 - DictatorService - INFO - 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 39)
+2025-11-12 19:25:44,423 - DictatorService - INFO - 🎯 Handling event: EventType.TTS_AUDIO_GENERATED

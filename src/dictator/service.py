@@ -36,7 +36,8 @@ try:
         VADConfig,
         LLMCaller,
         DirectLLMCaller,
-        OllamaLLMCaller
+        OllamaLLMCaller,
+        N8NToolCallingLLMCaller
     )
     VOICE_SESSION_AVAILABLE = True
 except ImportError:
@@ -323,14 +324,27 @@ class DictatorService:
                 direct_config = llm_config.get('claude_direct', {})
                 api_key = direct_config.get('api_key')
                 model = direct_config.get('model', 'claude-sonnet-4-20250514')
-                
+
                 self.logger.info(f"🤖 Using Claude Direct API: {model}")
                 llm_caller = DirectLLMCaller(
                     pubsub=None,  # Will be set by session manager
                     api_key=api_key,
                     model=model
                 )
-                
+
+            elif provider == 'n8n_toolcalling':
+                # N8N Tool-Calling provider
+                n8n_config = llm_config.get('n8n_toolcalling', {})
+                webhook_url = n8n_config.get('webhook_url', 'http://localhost:15678/webhook/dictator-llm')
+                timeout = n8n_config.get('timeout', 120)
+
+                self.logger.info(f"🔗 Using N8N Tool-Calling provider: {webhook_url}")
+                llm_caller = N8NToolCallingLLMCaller(
+                    pubsub=None,  # Will be set by session manager
+                    webhook_url=webhook_url,
+                    timeout=timeout
+                )
+
             else:
                 # Default: Claude CLI
                 mcp_request_file = Path("temp/mcp_voice_request.json")

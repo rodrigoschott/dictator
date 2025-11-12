@@ -1,4 +1,4 @@
-Eu estou cancelando manualmente porque o processo está pendurando ali naquela parte. Aí eu tenho que cancelar.advanced:
+advanced:
   cache_dir: ''
   temp_dir: ''
 audio:
@@ -11,7 +11,7 @@ hotkey:
   mode: toggle
   mouse_button: side1
   type: mouse
-  vad_enabled: true
+  vad_enabled: false
   vad_threshold: 0.002
 mcp:
   claude:
@@ -51,7 +51,7 @@ tts:
     voices_path: voices-v1.0.bin
   volume: 0.8
 voice:
-  claude_mode: false
+  claude_mode: true
   event_loop:
     local: true
     pubsub_buffer_size: 100
@@ -63,10 +63,13 @@ voice:
     claude_direct:
       api_key: null
       model: claude-sonnet-4-20250514
+    n8n_toolcalling:
+      timeout: 120
+      webhook_url: http://localhost:15678/webhook/dictator-llm
     ollama:
       base_url: http://localhost:11434
       model: qwen3:14b
-    provider: ollama
+    provider: n8n_toolcalling
     sentence_chunking: true
     streaming: true
   mode: event_driven

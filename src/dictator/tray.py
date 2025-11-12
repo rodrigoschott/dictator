@@ -316,6 +316,11 @@ class DictatorTray:
                         'Ollama (Local)',
                         lambda icon, item: self.set_llm_provider('ollama'),
                         checked=lambda _: voice_config.get('llm', {}).get('provider', 'claude-cli') == 'ollama'
+                    ),
+                    item(
+                        'N8N Tool-Calling',
+                        lambda icon, item: self.set_llm_provider('n8n_toolcalling'),
+                        checked=lambda _: voice_config.get('llm', {}).get('provider', 'claude-cli') == 'n8n_toolcalling'
                     )
                 )
             ),
