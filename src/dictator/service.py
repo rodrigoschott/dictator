@@ -493,6 +493,12 @@ class DictatorService:
         vad_mode = " (VAD)" if vad_enabled else ""
         self.logger.info(f"🔴 Recording started{vad_mode}...")
 
+        # Interrupt TTS if playing (user wants to speak)
+        if self.tts_engine and self.tts_engine.is_speaking():
+            self.logger.info("🚨 Interrupting TTS - user pressed hotkey to speak")
+            self.tts_engine.stop()
+            time.sleep(0.1)  # Brief wait for TTS to fully stop
+
         self.is_recording = True
         self.recording_data = []
         self.last_sound_time = time.time()  # Track last time we heard sound

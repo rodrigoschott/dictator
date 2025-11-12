@@ -111,8 +111,9 @@ class VoiceSessionManager:
         # TTS lock to prevent sentence interruption
         self.tts_lock = asyncio.Lock()
 
-        # TTS speaking flag - used to pause VAD during TTS output
-        # This prevents the microphone from picking up TTS audio as user speech
+        # TTS speaking flag - used for state tracking and monitoring
+        # Note: VAD is NOT blocked during TTS to allow user interruption
+        # TTS is interrupted in start_recording() before audio capture begins
         self.tts_speaking = False
 
         # Audio state
@@ -203,10 +204,11 @@ class VoiceSessionManager:
         # Audio is processed inline here, no need for event loop
         # This prevents SPEECH_STOPPED from being delayed by 320+ queued AUDIO_CHUNK events
 
-        # Process with VAD ONLY if enabled AND TTS is not speaking
-        # VAD enabled: Detects silence for auto-stop
+        # Process with VAD if enabled
+        # VAD enabled: Detects silence for auto-stop (even during TTS - allows interruption)
         # VAD disabled: User must stop manually via hotkey
-        if self.vad_enabled and not self.tts_speaking:
+        # Note: TTS is interrupted in start_recording(), so no feedback loop risk
+        if self.vad_enabled:
             self.vad_processor.process_audio_chunk(audio_chunk, timestamp_ms)
 
         # Buffer audio
