@@ -30,6 +30,17 @@ try:
 except ImportError:
     TTS_AVAILABLE = False
 
+try:
+    from .voice import (
+        VoiceSessionManager,
+        VADConfig,
+        LLMCaller,
+        DirectLLMCaller
+    )
+    VOICE_SESSION_AVAILABLE = True
+except ImportError:
+    VOICE_SESSION_AVAILABLE = False
+
 
 class DictatorService:
     """Main service class for Dictator"""
@@ -51,6 +62,13 @@ class DictatorService:
         self.mouse_listener: Optional[mouse.Listener] = None
         self.running = False
 
+        # Event-driven voice session (NEW - replaces old polling system)
+        self.voice_session: Optional[VoiceSessionManager] = None
+        self.voice_session_thread: Optional[threading.Thread] = None
+        self.voice_session_loop: Optional['asyncio.AbstractEventLoop'] = None
+        self.use_event_driven_mode = False
+        self.audio_chunk_timestamp_ms = 0  # Track timestamp for audio chunks
+
         # State change callbacks
         self.state_callbacks = []
 
@@ -59,6 +77,9 @@ class DictatorService:
 
         # Load TTS engine if enabled
         self.load_tts()
+
+        # Load event-driven voice session if enabled
+        self.load_voice_session()
 
     def register_state_callback(self, callback):
         """Register a callback for state changes: callback(state: str)"""
@@ -209,6 +230,128 @@ class DictatorService:
             self.logger.error(f"❌ Failed to load TTS engine: {e}", exc_info=True)
             self.tts_engine = None
 
+    def load_voice_session(self):
+        """
+        Load event-driven voice session (NEW)
+
+        Replaces polling-based conversation manager with zero-token event system.
+        Based on Speaches.ai architecture.
+        """
+        voice_config = self.config.get('voice', {})
+
+        # Check BOTH flags: mode must be event_driven AND claude_mode must be enabled
+        is_event_driven = voice_config.get('mode') == 'event_driven'
+        is_claude_mode = voice_config.get('claude_mode', False)
+
+        self.use_event_driven_mode = is_event_driven and is_claude_mode
+
+        if not is_event_driven:
+            self.logger.info("📢 Event-driven mode disabled (using legacy mode)")
+            return
+
+        if not is_claude_mode:
+            self.logger.info("📢 Claude Mode disabled - using Dictation Mode (text only)")
+            return
+
+        if not VOICE_SESSION_AVAILABLE:
+            self.logger.warning("⚠️ Voice session requested but module not available")
+            return
+
+        if not self.tts_engine:
+            self.logger.warning("⚠️ Voice session requires TTS engine")
+            return
+
+        try:
+            self.logger.info("🎯 Loading event-driven voice session...")
+
+            # Create VAD config
+            vad_config_dict = voice_config.get('vad', {})
+            vad_config = VADConfig(
+                threshold=vad_config_dict.get('threshold', 0.5),
+                min_silence_duration_ms=vad_config_dict.get('silence_duration_ms', 500),
+                sample_rate=16000
+            )
+
+            # Create LLM caller
+            llm_config = voice_config.get('llm', {})
+            mcp_request_file = Path("temp/mcp_voice_request.json")
+            mcp_response_file = Path("temp/mcp_voice_response.json")
+
+            llm_caller = LLMCaller(
+                pubsub=None,  # Will be set by session manager
+                mcp_request_file=mcp_request_file,
+                mcp_response_file=mcp_response_file
+            )
+
+            # Create voice session manager
+            self.voice_session = VoiceSessionManager(
+                stt_callback=self.transcribe_audio,
+                tts_callback=self.speak_text,
+                llm_caller=llm_caller,
+                vad_config=vad_config
+            )
+
+            # Start session in background thread with asyncio loop
+            import asyncio
+
+            def run_voice_session():
+                """
+                Run voice session with error recovery
+
+                Runs in dedicated asyncio loop with retry logic.
+                """
+                retry_count = 0
+                max_retries = 3
+
+                while retry_count < max_retries:
+                    loop = asyncio.new_event_loop()
+                    asyncio.set_event_loop(loop)
+                    self.voice_session_loop = loop  # Store reference
+
+                    try:
+                        self.logger.info(f"🎤 Starting voice session (attempt {retry_count + 1}/{max_retries})")
+                        loop.run_until_complete(self.voice_session.start())
+                        self.logger.info("Voice session completed normally")
+                        break  # Completed successfully
+
+                    except asyncio.CancelledError:
+                        self.logger.info("Voice session cancelled")
+                        break
+
+                    except Exception as e:
+                        retry_count += 1
+                        self.logger.error(f"❌ Voice session crashed: {e}", exc_info=True)
+
+                        if retry_count < max_retries:
+                            self.logger.info(f"🔄 Retrying in 2s... ({retry_count}/{max_retries})")
+                            time.sleep(2)
+                        else:
+                            self.logger.error(f"❌ Max retries ({max_retries}) reached, giving up on voice session")
+                            self.use_event_driven_mode = False  # Fallback to dictation
+
+                    finally:
+                        try:
+                            loop.close()
+                        except Exception:
+                            pass
+                        self.voice_session_loop = None
+
+            self.voice_session_thread = threading.Thread(
+                target=run_voice_session,
+                daemon=True,
+                name="VoiceSessionThread"
+            )
+            self.voice_session_thread.start()
+
+            # Wait a moment for session to start
+            time.sleep(0.1)
+
+            self.logger.info("✅ Event-driven voice session loaded - ZERO polling!")
+
+        except Exception as e:
+            self.logger.error(f"❌ Failed to load voice session: {e}", exc_info=True)
+            self.voice_session = None
+
     def parse_hotkey(self, hotkey_str: str) -> str:
         """Parse hotkey string to pynput format"""
         # Convert "ctrl+alt+v" to "<ctrl>+<alt>+v"
@@ -278,6 +421,7 @@ class DictatorService:
         self.is_recording = True
         self.recording_data = []
         self.last_sound_time = time.time()  # Track last time we heard sound
+        self.audio_chunk_timestamp_ms = 0  # Reset timestamp for voice session
 
         # Emit state change
         self._emit_state("recording")
@@ -301,10 +445,51 @@ class DictatorService:
             if status:
                 self.logger.warning(f"Audio status: {status}")
             if self.is_recording:
-                self.recording_data.append(indata.copy())
+                audio_chunk = indata.copy()
+                self.recording_data.append(audio_chunk)
+
+                # Pass chunk to event-driven voice session if enabled
+                if self.use_event_driven_mode and self.voice_session:
+                    # Convert to float32 if needed
+                    if audio_chunk.dtype != np.float32:
+                        audio_chunk = audio_chunk.astype(np.float32)
+
+                    # Flatten to 1D if stereo
+                    if len(audio_chunk.shape) > 1:
+                        audio_chunk = audio_chunk.mean(axis=1)
+
+                    # Pass to voice session (synchronous wrapper for async call)
+                    import asyncio
+                    try:
+                        # Use the voice session's event loop
+                        if self.voice_session_loop:
+                            # Log first chunk for health check
+                            if self.audio_chunk_timestamp_ms == 0:
+                                self.logger.debug("🎵 Voice session started receiving audio chunks")
+
+                            asyncio.run_coroutine_threadsafe(
+                                self.voice_session.process_audio_chunk(
+                                    audio_chunk,
+                                    self.audio_chunk_timestamp_ms
+                                ),
+                                self.voice_session_loop
+                            )
+
+                            # Log after 1 second to confirm session is alive
+                            if self.audio_chunk_timestamp_ms == 0:
+                                self.last_health_check_time = time.time()
+                            elif self.audio_chunk_timestamp_ms >= 1000 and hasattr(self, 'last_health_check_time'):
+                                if time.time() - self.last_health_check_time < 2:
+                                    self.logger.info("✅ Voice session healthy, processing audio")
+                                    delattr(self, 'last_health_check_time')  # Log only once
+
+                            # Increment timestamp (assume chunks at 16kHz)
+                            self.audio_chunk_timestamp_ms += int(len(audio_chunk) * 1000 / sample_rate)
+                    except Exception as e:
+                        self.logger.warning(f"Failed to pass audio chunk to voice session: {e}")
 
                 # VAD: Check if audio contains sound (not silence)
-                if vad_enabled:
+                if vad_enabled and not self.use_event_driven_mode:
                     # Calculate RMS (root mean square) amplitude
                     rms = np.sqrt(np.mean(indata**2))
                     rms_samples.append(rms)
@@ -334,7 +519,8 @@ class DictatorService:
                     time.sleep(0.1)
 
                     # VAD auto-stop: check if silence duration exceeded
-                    if vad_enabled:
+                    # Skip in event-driven mode - VoiceSessionManager handles VAD
+                    if vad_enabled and not self.use_event_driven_mode:
                         silence_time = time.time() - self.last_sound_time
 
                         # Only check after minimum recording time (0.5s)
@@ -378,25 +564,27 @@ class DictatorService:
         # Process in background thread
         threading.Thread(target=self._process_recording, daemon=True).start()
 
-    def _process_recording(self):
-        """Process recorded audio"""
+    def transcribe_audio(self, audio_data: np.ndarray) -> str:
+        """
+        Transcribe audio data using Whisper
+
+        Args:
+            audio_data: Audio samples (float32, 16kHz)
+
+        Returns:
+            Transcribed text
+        """
+        # Save to temporary file
+        with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as temp_file:
+            temp_path = temp_file.name
+            sf.write(
+                temp_path,
+                audio_data,
+                self.config['audio']['sample_rate']
+            )
+
         try:
-            # Combine audio chunks
-            audio_data = np.concatenate(self.recording_data, axis=0)
-
-            # Save to temporary file
-            with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as temp_file:
-                temp_path = temp_file.name
-                sf.write(
-                    temp_path,
-                    audio_data,
-                    self.config['audio']['sample_rate']
-                )
-
-            self.logger.info("🤖 Transcribing...")
-
             # Transcribe with faster-whisper
-            # Note: VAD is applied during recording, not transcription
             segments, info = self.model.transcribe(
                 temp_path,
                 language=self.config['whisper']['language']
@@ -404,12 +592,33 @@ class DictatorService:
 
             # Collect all text from segments
             text = "".join([segment.text for segment in segments]).strip()
+            return text
+
+        finally:
+            # Clean up temp file
+            if os.path.exists(temp_path):
+                os.unlink(temp_path)
+
+    def _process_recording(self):
+        """Process recorded audio"""
+        try:
+            # Event-driven mode: voice session already handled everything during recording
+            if self.use_event_driven_mode and self.voice_session:
+                self.logger.info("🎯 Event-driven mode: Voice session processed speech automatically via events")
+                self._emit_state("idle")
+                return
+
+            # Legacy/Dictation mode: process manually
+            # Combine audio chunks
+            audio_data = np.concatenate(self.recording_data, axis=0)
+
+            self.logger.info("🤖 Transcribing...")
+
+            # Transcribe audio
+            text = self.transcribe_audio(audio_data)
             self.logger.info(f"📝 Transcribed: {text}")
 
-            # Clean up temp file
-            os.unlink(temp_path)
-
-            # Paste text
+            # Paste to clipboard
             if text:
                 self._paste_text(text)
 
@@ -447,7 +656,8 @@ class DictatorService:
 
         try:
             self.logger.info(f"🔊 Speaking: {text[:50]}{'...' if len(text) > 50 else ''}")
-            self.tts_engine.speak(text, blocking=False)
+            # Use blocking=True to ensure sentence completes before next one starts
+            self.tts_engine.speak(text, blocking=True)
         except Exception as e:
             self.logger.error(f"❌ TTS error: {e}", exc_info=True)
 
@@ -506,6 +716,20 @@ class DictatorService:
 
         if self.is_recording:
             self.stop_recording()
+
+        # Stop voice session if running (event-driven mode)
+        if self.voice_session:
+            try:
+                import asyncio
+                if self.voice_session_loop and self.voice_session_loop.is_running():
+                    # Schedule stop on the voice session's loop
+                    asyncio.run_coroutine_threadsafe(
+                        self.voice_session.stop(),
+                        self.voice_session_loop
+                    )
+                self.logger.info("Voice session stopped")
+            except Exception as e:
+                self.logger.error(f"Error stopping voice session: {e}")
 
         if self.hotkey_listener:
             self.hotkey_listener.stop()
