@@ -1,0 +1,167 @@
+{
+  "name": "Agent w Search",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "c7653a38-3aa9-4033-b108-aea8f374980d",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        -208,
+        -112
+      ],
+      "webhookId": "53c136fe-3e77-4709-a143-fe82746dd8b6",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {},
+      "id": "6218eca9-ee60-44d0-b844-6ea25cff174f",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        144,
+        112
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "63770cc1-c324-4254-8ea5-f370421fb6e5",
+      "name": "SerpAPI",
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "position": [
+        272,
+        112
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "serpApi": {
+          "id": "dLyaSSiDoEC7CO7a",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "bf4caa18-c975-4639-9761-ee0a97ba688c",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        32,
+        -112
+      ],
+      "typeVersion": 1.8
+    },
+    {
+      "parameters": {
+        "model": "qwen3:14b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        0,
+        112
+      ],
+      "id": "9b823c91-e8cc-4b1b-91f0-c97cc179ce10",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "xHuYe0MDGOs9IpBW",
+          "name": "Local Ollama service"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        384,
+        80
+      ],
+      "id": "5d8d11e2-d5a0-45d0-b174-b77437ef2429",
+      "name": "Calculator"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "430800bf-ddda-49d5-9eeb-157dd61e5ae8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "de7c34a0ffc751cb680913f6eb1511f1666846165dec6ec9a87b2d89e6b96864"
+  },
+  "id": "ZPH85D8yRRZhInHh",
+  "tags": []
+}

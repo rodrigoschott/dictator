@@ -1,0 +1,109 @@
+2025-11-12 21:16:31,936 | DEBUG | dictator.logging_setup | Logging initialized in logs\run-20251112-211631
+2025-11-12 21:16:31,937 | INFO | DictatorService | Logging initialized (run_dir=logs\run-20251112-211631, structured=True)
+2025-11-12 21:16:31,937 | DEBUG | DictatorService.ThreadMonitor | Thread monitor enabled (interval=30.0s)
+2025-11-12 21:16:31,937 | DEBUG | DictatorService.ThreadMonitor | Starting thread monitor (interval=30.0s)
+2025-11-12 21:16:31,968 | INFO | DictatorService | 🎙️ Dictator Service initializing...
+2025-11-12 21:16:31,968 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=42, top=[{'id': 11076, 'name': 'MainThread', 'cpu_ms': 3921.88}, {'id': 38620, 'name': 'unknown', 'cpu_ms': 46.88}, {'id': 36724, 'name': 'Thread-2 (_run)', 'cpu_ms': 46.88}, {'id': 19308, 'name': 'unknown', 'cpu_ms': 31.25}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 31.25}]
+2025-11-12 21:16:31,968 | INFO | DictatorService | 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-12 21:16:31,969 | INFO | DictatorService |    Using faster-whisper with compute_type=float16
+2025-11-12 21:16:31,969 | DEBUG | httpcore.connection | close.started
+2025-11-12 21:16:31,970 | DEBUG | httpcore.connection | close.complete
+2025-11-12 21:16:31,970 | DEBUG | httpcore.connection | connect_tcp.started host='huggingface.co' port=443 local_address=None timeout=None socket_options=None
+2025-11-12 21:16:31,972 | DEBUG | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000002092F1B0190>
+2025-11-12 21:16:31,973 | DEBUG | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x00000206A2627250> server_hostname='huggingface.co' timeout=None
+2025-11-12 21:16:31,977 | DEBUG | httpcore.connection | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x00000206A3A536F0>
+2025-11-12 21:16:31,977 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'GET']>
+2025-11-12 21:16:31,978 | DEBUG | httpcore.http11 | send_request_headers.complete
+2025-11-12 21:16:31,978 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'GET']>
+2025-11-12 21:16:31,978 | DEBUG | httpcore.http11 | send_request_body.complete
+2025-11-12 21:16:31,978 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'GET']>
+2025-11-12 21:16:32,117 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'4600'), (b'Connection', b'keep-alive'), (b'Date', b'Thu, 13 Nov 2025 00:16:31 GMT'), (b'ETag', b'W/"11f8-OdbdQ9ef6Cr/xpj0m27tBd+pzac"'), (b'X-Powered-By', b'huggingface-moon'), (b'X-Request-Id', b'Root=1-6915235f-0afe7e6e4208fef7135e677b;ac48d4ae-0cf8-46c4-a7de-e259e9ce6e2b'), (b'RateLimit', b'"api";r=498;t=48'), (b'RateLimit-Policy', b'"fixed window";"api";q=500;w=300'), (b'cross-origin-opener-policy', b'same-origin'), (b'Referrer-Policy', b'strict-origin-when-cross-origin'), (b'Access-Control-Max-Age', b'86400'), (b'Access-Control-Allow-Origin', b'https://huggingface.co'), (b'Vary', b'Origin'), (b'Access-Control-Expose-Headers', b'X-Repo-Commit,X-Request-Id,X-Error-Code,X-Error-Message,X-Total-Count,ETag,Link,Accept-Ranges,Content-Range,X-Linked-Size,X-Linked-ETag,X-Xet-Hash'), (b'X-Cache', b'Miss from cloudfront'), (b'Via', b'1.1 428fae74a8ea4f658d6320ad4c4f35f8.cloudfront.net (CloudFront)'), (b'X-Amz-Cf-Pop', b'GIG52-P2'), (b'X-Amz-Cf-Id', b'CMS2SQPjoC4b9azCNd31NieuzrgIsHc2xd9Yo2i0fmBcFkaBuLZXIg==')])
+2025-11-12 21:16:32,117 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-12 21:16:32,117 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'GET']>
+2025-11-12 21:16:32,118 | DEBUG | httpcore.http11 | receive_response_body.complete
+2025-11-12 21:16:32,118 | DEBUG | httpcore.http11 | response_closed.started
+2025-11-12 21:16:32,118 | DEBUG | httpcore.http11 | response_closed.complete
+2025-11-12 21:16:33,934 | INFO | DictatorService | ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-12 21:16:33,934 | INFO | DictatorService | 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-12 21:16:33,935 | INFO | DictatorService | 🎤 Loading TTS engine...
+2025-11-12 21:16:33,935 | INFO | KokoroTTS | 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-12 21:16:34,425 | INFO | KokoroTTS | ✅ Kokoro TTS loaded successfully!
+2025-11-12 21:16:34,425 | INFO | DictatorService | ✅ TTS engine loaded successfully!
+2025-11-12 21:16:34,426 | INFO | DictatorService | 📢 Claude Mode disabled - using Dictation Mode (text only)
+2025-11-12 21:16:34,426 | INFO | DictatorService | 🚀 Dictator Service started
+2025-11-12 21:16:34,427 | INFO | DictatorService | 🖱️  Listening for mouse button: side1
+2025-11-12 21:16:39,993 | INFO | DictatorService | 💾 Configuration saved
+2025-11-12 21:16:39,994 | INFO | DictatorService | Mode: toggle
+2025-11-12 21:16:48,646 | INFO | DictatorService | 🔴 Recording started...
+2025-11-12 21:17:01,970 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=54, top=[{'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 62.5}, {'id': 38620, 'name': 'unknown', 'cpu_ms': 46.88}, {'id': 36724, 'name': 'Thread-2 (_run)', 'cpu_ms': 46.88}, {'id': 31320, 'name': 'unknown', 'cpu_ms': 46.88}]
+2025-11-12 21:17:19,354 | INFO | DictatorService | ⏹️ Recording stopped
+2025-11-12 21:17:19,356 | INFO | DictatorService | 🤖 Transcribing...
+2025-11-12 21:17:19,467 | INFO | faster_whisper | Processing audio with duration 00:30.654
+2025-11-12 21:17:19,478 | DEBUG | faster_whisper | Processing segment at 00:00.000
+2025-11-12 21:17:24,311 | DEBUG | faster_whisper | Processing segment at 00:30.000
+2025-11-12 21:17:24,844 | INFO | DictatorService | 📝 Transcribed: Vamos lá, é isso que eu quero. Eu tenho o nosso container docker, na verdade uma série de containers, e tenho dentro do container do n8n, três workflows que eu criei. Primeira pergunta, você consegue acessar esse container via command line ou API e validar a presença desses workflows e talvez até verificar conteúdo? Obrigada.
+2025-11-12 21:17:24,850 | INFO | DictatorService | 📋 Copied to clipboard
+2025-11-12 21:17:25,152 | INFO | DictatorService | ✅ Text pasted!
+2025-11-12 21:17:31,970 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=42, top=[{'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 19428, 'name': 'unknown', 'cpu_ms': 5281.25}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 93.75}, {'id': 36724, 'name': 'Thread-2 (_run)', 'cpu_ms': 46.88}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 31.25}]
+2025-11-12 21:17:48,991 | INFO | DictatorService | 🔴 Recording started...
+2025-11-12 21:18:01,971 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=45, top=[{'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 19428, 'name': 'unknown', 'cpu_ms': 5281.25}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 125.0}, {'id': 36724, 'name': 'Thread-2 (_run)', 'cpu_ms': 46.88}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 31.25}]
+2025-11-12 21:18:26,353 | INFO | DictatorService | ⏹️ Recording stopped
+2025-11-12 21:18:26,355 | INFO | DictatorService | 🤖 Transcribing...
+2025-11-12 21:18:26,427 | INFO | faster_whisper | Processing audio with duration 00:37.310
+2025-11-12 21:18:26,440 | DEBUG | faster_whisper | Processing segment at 00:00.000
+2025-11-12 21:18:31,985 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=43, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 10781.25}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 171.88}, {'id': 32028, 'name': 'Thread-12 (_process_recording)', 'cpu_ms': 62.5}, {'id': 36724, 'name': 'Thread-2 (_run)', 'cpu_ms': 46.88}]
+2025-11-12 21:18:32,172 | DEBUG | faster_whisper | Processing segment at 00:28.520
+2025-11-12 21:18:34,100 | INFO | DictatorService | 📝 Transcribed: Se você não conseguir verificar o conteúdo desses workflows pelo diretório ou pela API do próprio N8n, eu colo ele aqui pra você. Mas eu criei um workflow agêntico normal que utiliza, por exemplo, a ferramenta de busca do SERP AI. Eu gostaria de dar mais ferramentas pra ele via MCP Server e queria que ele pudesse escolher qual ferramenta chamar dinamicamente. O que você acha dessa ideia e como a gente conseguiria fazer? Pode fazer buscas à vontade pra planejar essa atividade.
+2025-11-12 21:18:34,107 | INFO | DictatorService | 📋 Copied to clipboard
+2025-11-12 21:18:34,408 | INFO | DictatorService | ✅ Text pasted!
+2025-11-12 21:18:50,010 | INFO | DictatorService | 🔴 Recording started...
+2025-11-12 21:19:01,987 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=45, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 12875.0}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 203.12}, {'id': 36724, 'name': 'Thread-2 (_run)', 'cpu_ms': 46.88}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 46.88}]
+2025-11-12 21:19:05,129 | INFO | DictatorService | ⏹️ Recording stopped
+2025-11-12 21:19:05,130 | INFO | DictatorService | 🤖 Transcribing...
+2025-11-12 21:19:05,195 | INFO | faster_whisper | Processing audio with duration 00:15.054
+2025-11-12 21:19:05,201 | DEBUG | faster_whisper | Processing segment at 00:00.000
+2025-11-12 21:19:08,803 | INFO | DictatorService | 📝 Transcribed: Se tiver necessidade, avalie o nosso histórico git para ver as últimas modificações e reavalie a estrutura de diretórios abaixo do nosso barra dev, mas não tem tantas alterações drásticas desde a nossa última interação.
+2025-11-12 21:19:08,809 | INFO | DictatorService | 📋 Copied to clipboard
+2025-11-12 21:19:09,111 | INFO | DictatorService | ✅ Text pasted!
+2025-11-12 21:19:32,004 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=42, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 16312.5}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 234.38}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 62.5}, {'id': 36724, 'name': 'Thread-2 (_run)', 'cpu_ms': 46.88}]
+2025-11-12 21:19:37,720 | INFO | DictatorService | 🔴 Recording started...
+2025-11-12 21:19:52,715 | INFO | DictatorService | ⏹️ Recording stopped
+2025-11-12 21:19:52,716 | INFO | DictatorService | 🤖 Transcribing...
+2025-11-12 21:19:52,781 | INFO | faster_whisper | Processing audio with duration 00:14.950
+2025-11-12 21:19:52,787 | DEBUG | faster_whisper | Processing segment at 00:00.000
+2025-11-12 21:19:56,334 | INFO | DictatorService | 📝 Transcribed: O cara mandou eu olhar pra cima e eu fiquei todo torto, porque aí doeu mais. Aí ele percebeu e veio todo bolado perguntar se eu tava com dor, se eu tava sentindo alguma coisa. Foi uma coisa terrível.
+2025-11-12 21:19:56,339 | INFO | DictatorService | 📋 Copied to clipboard
+2025-11-12 21:19:56,643 | INFO | DictatorService | ✅ Text pasted!
+2025-11-12 21:20:02,011 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=42, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 19796.88}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 265.62}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 62.5}, {'id': 36724, 'name': 'Thread-2 (_run)', 'cpu_ms': 46.88}]
+2025-11-12 21:20:09,344 | INFO | DictatorService | 🔴 Recording started...
+2025-11-12 21:20:22,947 | INFO | DictatorService | ⏹️ Recording stopped
+2025-11-12 21:20:22,948 | INFO | DictatorService | 🤖 Transcribing...
+2025-11-12 21:20:23,014 | INFO | faster_whisper | Processing audio with duration 00:13.546
+2025-11-12 21:20:23,019 | DEBUG | faster_whisper | Processing segment at 00:00.000
+2025-11-12 21:20:26,836 | INFO | DictatorService | 📝 Transcribed: Se parecer que eu tô mais falador agora é porque eu tô editando minhas mensagens pro meu computador Que tem uma inteligência artificial que já tá integrada com todas as coisas e faz as coisas sozinha pra mim, tá? É... só pra te avisar
+2025-11-12 21:20:26,842 | INFO | DictatorService | 📋 Copied to clipboard
+2025-11-12 21:20:27,146 | INFO | DictatorService | ✅ Text pasted!
+2025-11-12 21:20:32,022 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=42, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 23531.25}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 296.88}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 62.5}, {'id': 13920, 'name': 'unknown', 'cpu_ms': 46.88}]
+2025-11-12 21:21:02,028 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=42, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 23531.25}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 328.12}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 109.38}, {'id': 13920, 'name': 'unknown', 'cpu_ms': 46.88}]
+2025-11-12 21:21:31,621 | INFO | DictatorService | 🔴 Recording started...
+2025-11-12 21:21:32,026 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=45, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 23531.25}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 343.75}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 156.25}, {'id': 13920, 'name': 'unknown', 'cpu_ms': 46.88}]
+2025-11-12 21:22:02,036 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=44, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 23531.25}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 390.62}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 218.75}, {'id': 9388, 'name': 'unknown', 'cpu_ms': 109.38}]
+2025-11-12 21:22:31,725 | WARNING | DictatorService | ⏰ Max duration (60s) reached, stopping...
+2025-11-12 21:22:31,726 | INFO | DictatorService | ⏹️ Recording stopped
+2025-11-12 21:22:31,728 | INFO | DictatorService | 🤖 Transcribing...
+2025-11-12 21:22:31,808 | INFO | faster_whisper | Processing audio with duration 01:00.060
+2025-11-12 21:22:31,828 | DEBUG | faster_whisper | Processing segment at 00:00.000
+2025-11-12 21:22:32,051 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=43, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 23750.0}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 421.88}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 265.62}, {'id': 17892, 'name': 'Thread-20 (_process_recording)', 'cpu_ms': 93.75}]
+2025-11-12 21:22:32,446 | DEBUG | faster_whisper | Processing segment at 00:30.000
+2025-11-12 21:22:32,971 | DEBUG | faster_whisper | Processing segment at 01:00.000
+2025-11-12 21:22:33,441 | INFO | DictatorService | 📝 Transcribed: E aí E aí E aí
+2025-11-12 21:22:33,447 | INFO | DictatorService | 📋 Copied to clipboard
+2025-11-12 21:22:33,750 | INFO | DictatorService | ✅ Text pasted!
+2025-11-12 21:23:02,057 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=41, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 25062.5}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 437.5}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 265.62}, {'id': 13920, 'name': 'unknown', 'cpu_ms': 62.5}]
+2025-11-12 21:23:32,061 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=39, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 25062.5}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 484.38}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 296.88}, {'id': 13920, 'name': 'unknown', 'cpu_ms': 62.5}]
+2025-11-12 21:24:02,068 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=39, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 25062.5}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 515.62}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 296.88}, {'id': 13920, 'name': 'unknown', 'cpu_ms': 62.5}]
+2025-11-12 21:24:32,079 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=38, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 25062.5}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 546.88}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 312.5}, {'id': 13920, 'name': 'unknown', 'cpu_ms': 62.5}]
+2025-11-12 21:25:02,077 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=38, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 25062.5}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 578.12}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 328.12}, {'id': 13920, 'name': 'unknown', 'cpu_ms': 62.5}]
+2025-11-12 21:25:32,085 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=38, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 25062.5}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 593.75}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 328.12}, {'id': 13164, 'name': 'unknown', 'cpu_ms': 78.12}]
+2025-11-12 21:26:02,096 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=38, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 25062.5}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 625.0}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 343.75}, {'id': 13164, 'name': 'unknown', 'cpu_ms': 93.75}]
+2025-11-12 21:26:32,102 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=39, top=[{'id': 19428, 'name': 'unknown', 'cpu_ms': 25062.5}, {'id': 11076, 'name': 'MainThread', 'cpu_ms': 6234.38}, {'id': 29672, 'name': 'ThreadMonitor', 'cpu_ms': 640.62}, {'id': 37464, 'name': 'Thread-7', 'cpu_ms': 343.75}, {'id': 13164, 'name': 'unknown', 'cpu_ms': 109.38}]

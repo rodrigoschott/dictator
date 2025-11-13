@@ -1,0 +1,95 @@
+2025-11-12 21:16:25,081 | DEBUG | dictator.logging_setup | Logging initialized in logs\run-20251112-211625
+2025-11-12 21:16:25,081 | INFO | DictatorService | Logging initialized (run_dir=logs\run-20251112-211625, structured=True)
+2025-11-12 21:16:25,081 | DEBUG | DictatorService.ThreadMonitor | Thread monitor enabled (interval=30.0s)
+2025-11-12 21:16:25,082 | DEBUG | DictatorService.ThreadMonitor | Starting thread monitor (interval=30.0s)
+2025-11-12 21:16:25,112 | INFO | DictatorService | 🎙️ Dictator Service initializing...
+2025-11-12 21:16:25,113 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=24, top=[{'id': 11076, 'name': 'MainThread', 'cpu_ms': 1312.5}, {'id': 38620, 'name': 'unknown', 'cpu_ms': 46.88}, {'id': 19308, 'name': 'unknown', 'cpu_ms': 31.25}, {'id': 28260, 'name': 'ThreadMonitor', 'cpu_ms': 31.25}, {'id': 22696, 'name': 'unknown', 'cpu_ms': 15.62}]
+2025-11-12 21:16:25,113 | INFO | DictatorService | 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-12 21:16:25,114 | INFO | DictatorService |    Using faster-whisper with compute_type=float16
+2025-11-12 21:16:25,353 | DEBUG | httpcore.connection | connect_tcp.started host='huggingface.co' port=443 local_address=None timeout=None socket_options=None
+2025-11-12 21:16:25,371 | DEBUG | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x00000206A3ADCD70>
+2025-11-12 21:16:25,371 | DEBUG | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x00000206A2627250> server_hostname='huggingface.co' timeout=None
+2025-11-12 21:16:25,376 | DEBUG | httpcore.connection | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x00000206A39B3250>
+2025-11-12 21:16:25,376 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'GET']>
+2025-11-12 21:16:25,376 | DEBUG | httpcore.http11 | send_request_headers.complete
+2025-11-12 21:16:25,376 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'GET']>
+2025-11-12 21:16:25,377 | DEBUG | httpcore.http11 | send_request_body.complete
+2025-11-12 21:16:25,377 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'GET']>
+2025-11-12 21:16:25,512 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'4600'), (b'Connection', b'keep-alive'), (b'Date', b'Thu, 13 Nov 2025 00:16:25 GMT'), (b'ETag', b'W/"11f8-OdbdQ9ef6Cr/xpj0m27tBd+pzac"'), (b'X-Powered-By', b'huggingface-moon'), (b'X-Request-Id', b'Root=1-69152359-35650deb048962f872a0b3a6;a99d31bb-aeb6-4c03-a5c0-acc59bab53b3'), (b'RateLimit', b'"api";r=499;t=54'), (b'RateLimit-Policy', b'"fixed window";"api";q=500;w=300'), (b'cross-origin-opener-policy', b'same-origin'), (b'Referrer-Policy', b'strict-origin-when-cross-origin'), (b'Access-Control-Max-Age', b'86400'), (b'Access-Control-Allow-Origin', b'https://huggingface.co'), (b'Vary', b'Origin'), (b'Access-Control-Expose-Headers', b'X-Repo-Commit,X-Request-Id,X-Error-Code,X-Error-Message,X-Total-Count,ETag,Link,Accept-Ranges,Content-Range,X-Linked-Size,X-Linked-ETag,X-Xet-Hash'), (b'X-Cache', b'Miss from cloudfront'), (b'Via', b'1.1 cf939d138097957daca356f5a921c090.cloudfront.net (CloudFront)'), (b'X-Amz-Cf-Pop', b'GIG52-P2'), (b'X-Amz-Cf-Id', b'GNsAPo_pNHTyDiMMT5Ac1zX8xfFTO6t38PdZESYKV_eRzL_4Lf3YQw==')])
+2025-11-12 21:16:25,513 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-12 21:16:25,514 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'GET']>
+2025-11-12 21:16:25,514 | DEBUG | httpcore.http11 | receive_response_body.complete
+2025-11-12 21:16:25,514 | DEBUG | httpcore.http11 | response_closed.started
+2025-11-12 21:16:25,514 | DEBUG | httpcore.http11 | response_closed.complete
+2025-11-12 21:16:27,337 | INFO | DictatorService | ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-12 21:16:27,351 | INFO | DictatorService | 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-12 21:16:27,351 | INFO | DictatorService | 🎤 Loading TTS engine...
+2025-11-12 21:16:27,351 | INFO | KokoroTTS | 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-12 21:16:27,873 | INFO | KokoroTTS | ✅ Kokoro TTS loaded successfully!
+2025-11-12 21:16:27,873 | INFO | DictatorService | ✅ TTS engine loaded successfully!
+2025-11-12 21:16:27,874 | INFO | DictatorService | 🎯 Loading event-driven voice session...
+2025-11-12 21:16:27,874 | INFO | DictatorService | 🎤 VAD enabled: False
+2025-11-12 21:16:27,874 | INFO | DictatorService | 🔗 Using N8N Tool-Calling provider: http://localhost:15678/webhook/dictator-llm
+2025-11-12 21:16:27,875 | DEBUG | asyncio | Using proactor: IocpProactor
+2025-11-12 21:16:27,875 | INFO | DictatorService | 🎤 Starting voice session (attempt 1/3)
+2025-11-12 21:16:27,876 | INFO | DictatorService | 🔗 Event loop configured for thread-safe publishing
+2025-11-12 21:16:27,876 | INFO | DictatorService | 🔄 Event processor started
+2025-11-12 21:16:27,975 | INFO | DictatorService | ✅ Event-driven voice session loaded - ZERO polling!
+2025-11-12 21:16:28,203 | INFO | DictatorService | 🚀 Dictator Service started
+2025-11-12 21:16:28,203 | INFO | DictatorService | 🖱️  Listening for mouse button: side1
+2025-11-12 21:16:28,213 | DEBUG | PIL.Image | Importing BlpImagePlugin
+2025-11-12 21:16:28,214 | DEBUG | PIL.Image | Importing BmpImagePlugin
+2025-11-12 21:16:28,214 | DEBUG | PIL.Image | Importing BufrStubImagePlugin
+2025-11-12 21:16:28,214 | DEBUG | PIL.Image | Importing CurImagePlugin
+2025-11-12 21:16:28,215 | DEBUG | PIL.Image | Importing DcxImagePlugin
+2025-11-12 21:16:28,215 | DEBUG | PIL.Image | Importing DdsImagePlugin
+2025-11-12 21:16:28,217 | DEBUG | PIL.Image | Importing EpsImagePlugin
+2025-11-12 21:16:28,218 | DEBUG | PIL.Image | Importing FitsImagePlugin
+2025-11-12 21:16:28,218 | DEBUG | PIL.Image | Importing FliImagePlugin
+2025-11-12 21:16:28,218 | DEBUG | PIL.Image | Importing FpxImagePlugin
+2025-11-12 21:16:28,219 | DEBUG | PIL.Image | Image: failed to import FpxImagePlugin: No module named 'olefile'
+2025-11-12 21:16:28,219 | DEBUG | PIL.Image | Importing FtexImagePlugin
+2025-11-12 21:16:28,219 | DEBUG | PIL.Image | Importing GbrImagePlugin
+2025-11-12 21:16:28,220 | DEBUG | PIL.Image | Importing GifImagePlugin
+2025-11-12 21:16:28,220 | DEBUG | PIL.Image | Importing GribStubImagePlugin
+2025-11-12 21:16:28,220 | DEBUG | PIL.Image | Importing Hdf5StubImagePlugin
+2025-11-12 21:16:28,220 | DEBUG | PIL.Image | Importing IcnsImagePlugin
+2025-11-12 21:16:28,221 | DEBUG | PIL.Image | Importing IcoImagePlugin
+2025-11-12 21:16:28,222 | DEBUG | PIL.Image | Importing ImImagePlugin
+2025-11-12 21:16:28,222 | DEBUG | PIL.Image | Importing ImtImagePlugin
+2025-11-12 21:16:28,223 | DEBUG | PIL.Image | Importing IptcImagePlugin
+2025-11-12 21:16:28,223 | DEBUG | PIL.Image | Importing JpegImagePlugin
+2025-11-12 21:16:28,223 | DEBUG | PIL.Image | Importing Jpeg2KImagePlugin
+2025-11-12 21:16:28,224 | DEBUG | PIL.Image | Importing McIdasImagePlugin
+2025-11-12 21:16:28,224 | DEBUG | PIL.Image | Importing MicImagePlugin
+2025-11-12 21:16:28,224 | DEBUG | PIL.Image | Image: failed to import MicImagePlugin: No module named 'olefile'
+2025-11-12 21:16:28,225 | DEBUG | PIL.Image | Importing MpegImagePlugin
+2025-11-12 21:16:28,225 | DEBUG | PIL.Image | Importing MpoImagePlugin
+2025-11-12 21:16:28,226 | DEBUG | PIL.Image | Importing MspImagePlugin
+2025-11-12 21:16:28,226 | DEBUG | PIL.Image | Importing PalmImagePlugin
+2025-11-12 21:16:28,227 | DEBUG | PIL.Image | Importing PcdImagePlugin
+2025-11-12 21:16:28,227 | DEBUG | PIL.Image | Importing PcxImagePlugin
+2025-11-12 21:16:28,227 | DEBUG | PIL.Image | Importing PdfImagePlugin
+2025-11-12 21:16:28,230 | DEBUG | PIL.Image | Importing PixarImagePlugin
+2025-11-12 21:16:28,230 | DEBUG | PIL.Image | Importing PngImagePlugin
+2025-11-12 21:16:28,230 | DEBUG | PIL.Image | Importing PpmImagePlugin
+2025-11-12 21:16:28,230 | DEBUG | PIL.Image | Importing PsdImagePlugin
+2025-11-12 21:16:28,231 | DEBUG | PIL.Image | Importing QoiImagePlugin
+2025-11-12 21:16:28,231 | DEBUG | PIL.Image | Importing SgiImagePlugin
+2025-11-12 21:16:28,231 | DEBUG | PIL.Image | Importing SpiderImagePlugin
+2025-11-12 21:16:28,232 | DEBUG | PIL.Image | Importing SunImagePlugin
+2025-11-12 21:16:28,232 | DEBUG | PIL.Image | Importing TgaImagePlugin
+2025-11-12 21:16:28,233 | DEBUG | PIL.Image | Importing TiffImagePlugin
+2025-11-12 21:16:28,233 | DEBUG | PIL.Image | Importing WebPImagePlugin
+2025-11-12 21:16:28,234 | DEBUG | PIL.Image | Importing WmfImagePlugin
+2025-11-12 21:16:28,234 | DEBUG | PIL.Image | Importing XbmImagePlugin
+2025-11-12 21:16:28,235 | DEBUG | PIL.Image | Importing XpmImagePlugin
+2025-11-12 21:16:28,235 | DEBUG | PIL.Image | Importing XVThumbImagePlugin
+2025-11-12 21:16:31,931 | INFO | DictatorService | 💾 Configuration saved
+2025-11-12 21:16:31,931 | INFO | DictatorService | 🤖 LLM Mode: Disabled
+2025-11-12 21:16:31,932 | INFO | DictatorService | 🔄 Restarting service to apply LLM Mode changes...
+2025-11-12 21:16:31,932 | INFO | DictatorService | 🔄 Restarting service...
+2025-11-12 21:16:31,932 | INFO | DictatorService | 🛑 Dictator Service stopping...
+2025-11-12 21:16:31,932 | INFO | DictatorService | Voice session stopped
+2025-11-12 21:16:31,932 | INFO | DictatorService | Voice session completed normally
+2025-11-12 21:16:31,933 | INFO | DictatorService | 👋 Dictator Service stopped
