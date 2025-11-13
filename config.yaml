@@ -8,11 +8,17 @@ hotkey:
   auto_stop_silence: 2.0
   keyboard_trigger: ctrl+alt+v
   max_duration: 60
-  mode: toggle
+  mode: push_to_talk
   mouse_button: side1
   type: mouse
   vad_enabled: false
   vad_threshold: 0.002
+logging:
+  level: DEBUG
+  run_retention: 5
+  structured: true
+  trace_main_loop: true
+  trace_threads: true
 mcp:
   claude:
     max_tokens: 4096
@@ -31,6 +37,9 @@ overlay:
 paste:
   auto_paste: true
   delay: 0.2
+profiling:
+  freeze_timeout: 10
+  thread_monitor_interval: 30
 service:
   auto_start: true
   log_file: ''

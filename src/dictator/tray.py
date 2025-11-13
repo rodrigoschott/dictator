@@ -367,9 +367,24 @@ class DictatorTray:
     def open_logs(self):
         """Open log file"""
         import subprocess
-        log_file = Path('logs/dictator.log').absolute()
-        if log_file.exists():
-            subprocess.Popen(['notepad', str(log_file)])
+        run_dir = getattr(self.service, 'run_dir', None)
+        log_name = self.service.config.get('service', {}).get('log_file') or 'dictator.log'
+        log_path = None
+
+        if run_dir:
+            candidate = Path(run_dir) / Path(log_name).name
+            if candidate.exists():
+                log_path = candidate
+
+        if log_path is None:
+            legacy_candidate = Path('logs') / Path(log_name).name
+            if legacy_candidate.exists():
+                log_path = legacy_candidate
+
+        if log_path is None:
+            return
+
+        subprocess.Popen(['notepad', str(log_path.absolute())])
 
     def test_tts_from_menu(self):
         """Test TTS functionality from tray menu"""

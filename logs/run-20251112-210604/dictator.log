@@ -1,0 +1,115 @@
+2025-11-12 21:06:04,635 | DEBUG | dictator.logging_setup | Logging initialized in logs\run-20251112-210604
+2025-11-12 21:06:04,635 | INFO | DictatorService | Logging initialized (run_dir=logs\run-20251112-210604, structured=True)
+2025-11-12 21:06:04,635 | DEBUG | DictatorService.ThreadMonitor | Thread monitor enabled (interval=30.0s)
+2025-11-12 21:06:04,635 | DEBUG | DictatorService.ThreadMonitor | Starting thread monitor (interval=30.0s)
+2025-11-12 21:06:04,665 | INFO | DictatorService | 🎙️ Dictator Service initializing...
+2025-11-12 21:06:04,666 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=43, top=[{'id': 30868, 'name': 'unknown', 'cpu_ms': 13890.62}, {'id': 30432, 'name': 'MainThread', 'cpu_ms': 9218.75}, {'id': 35992, 'name': 'unknown', 'cpu_ms': 3343.75}, {'id': 3172, 'name': 'unknown', 'cpu_ms': 3328.12}, {'id': 33844, 'name': 'unknown', 'cpu_ms': 3312.5}]
+2025-11-12 21:06:04,666 | INFO | DictatorService | 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-12 21:06:04,667 | INFO | DictatorService |    Using faster-whisper with compute_type=float16
+2025-11-12 21:06:04,667 | DEBUG | httpcore.connection | close.started
+2025-11-12 21:06:04,667 | DEBUG | httpcore.connection | close.complete
+2025-11-12 21:06:04,667 | DEBUG | httpcore.connection | connect_tcp.started host='huggingface.co' port=443 local_address=None timeout=None socket_options=None
+2025-11-12 21:06:04,682 | DEBUG | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000002B4D43AE030>
+2025-11-12 21:06:04,682 | DEBUG | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x000002B4D2F6B070> server_hostname='huggingface.co' timeout=None
+2025-11-12 21:06:04,687 | DEBUG | httpcore.connection | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000002B4D43AD6A0>
+2025-11-12 21:06:04,687 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'GET']>
+2025-11-12 21:06:04,687 | DEBUG | httpcore.http11 | send_request_headers.complete
+2025-11-12 21:06:04,687 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'GET']>
+2025-11-12 21:06:04,688 | DEBUG | httpcore.http11 | send_request_body.complete
+2025-11-12 21:06:04,688 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'GET']>
+2025-11-12 21:06:04,835 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'4600'), (b'Connection', b'keep-alive'), (b'Date', b'Thu, 13 Nov 2025 00:06:04 GMT'), (b'ETag', b'W/"11f8-OdbdQ9ef6Cr/xpj0m27tBd+pzac"'), (b'X-Powered-By', b'huggingface-moon'), (b'X-Request-Id', b'Root=1-691520ec-65d185946be67b0f4455c28d;62e8a559-262c-46a4-9e66-89ca5d8fdd0c'), (b'RateLimit', b'"api";r=497;t=75'), (b'RateLimit-Policy', b'"fixed window";"api";q=500;w=300'), (b'cross-origin-opener-policy', b'same-origin'), (b'Referrer-Policy', b'strict-origin-when-cross-origin'), (b'Access-Control-Max-Age', b'86400'), (b'Access-Control-Allow-Origin', b'https://huggingface.co'), (b'Vary', b'Origin'), (b'Access-Control-Expose-Headers', b'X-Repo-Commit,X-Request-Id,X-Error-Code,X-Error-Message,X-Total-Count,ETag,Link,Accept-Ranges,Content-Range,X-Linked-Size,X-Linked-ETag,X-Xet-Hash'), (b'X-Cache', b'Miss from cloudfront'), (b'Via', b'1.1 b0e7fe05f29015beab5ce1b62381ef16.cloudfront.net (CloudFront)'), (b'X-Amz-Cf-Pop', b'GIG52-P2'), (b'X-Amz-Cf-Id', b'kgjBnU2cl6l40nk1HAe10aI8gz1RsGbx_1Uc0M4qXJDspI0nj29olw==')])
+2025-11-12 21:06:04,835 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-12 21:06:04,836 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'GET']>
+2025-11-12 21:06:04,836 | DEBUG | httpcore.http11 | receive_response_body.complete
+2025-11-12 21:06:04,836 | DEBUG | httpcore.http11 | response_closed.started
+2025-11-12 21:06:04,836 | DEBUG | httpcore.http11 | response_closed.complete
+2025-11-12 21:06:07,195 | INFO | DictatorService | ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-12 21:06:07,195 | INFO | DictatorService | 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-12 21:06:07,196 | INFO | DictatorService | 🎤 Loading TTS engine...
+2025-11-12 21:06:07,196 | INFO | KokoroTTS | 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-12 21:06:07,686 | INFO | KokoroTTS | ✅ Kokoro TTS loaded successfully!
+2025-11-12 21:06:07,686 | INFO | DictatorService | ✅ TTS engine loaded successfully!
+2025-11-12 21:06:07,687 | INFO | DictatorService | 🎯 Loading event-driven voice session...
+2025-11-12 21:06:07,687 | INFO | DictatorService | 🎤 VAD enabled: True
+2025-11-12 21:06:07,687 | INFO | DictatorService | 🦙 Using Ollama provider: qwen3:14b @ http://localhost:11434
+2025-11-12 21:06:07,688 | DEBUG | asyncio | Using proactor: IocpProactor
+2025-11-12 21:06:07,688 | INFO | DictatorService | 🎤 Starting voice session (attempt 1/3)
+2025-11-12 21:06:07,689 | INFO | DictatorService | 🔗 Event loop configured for thread-safe publishing
+2025-11-12 21:06:07,689 | INFO | DictatorService | 🔄 Event processor started
+2025-11-12 21:06:07,788 | INFO | DictatorService | ✅ Event-driven voice session loaded - ZERO polling!
+2025-11-12 21:06:07,789 | INFO | DictatorService | 🚀 Dictator Service started
+2025-11-12 21:06:07,790 | INFO | DictatorService | 🖱️  Listening for mouse button: side1
+2025-11-12 21:06:07,790 | DEBUG | urllib3.connectionpool | Starting new HTTP connection (1): localhost:11434
+2025-11-12 21:06:07,817 | DEBUG | urllib3.connectionpool | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 1041
+2025-11-12 21:06:07,818 | DEBUG | urllib3.connectionpool | Starting new HTTP connection (1): localhost:11434
+2025-11-12 21:06:07,832 | DEBUG | urllib3.connectionpool | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 1041
+2025-11-12 21:06:07,833 | DEBUG | urllib3.connectionpool | Starting new HTTP connection (1): localhost:11434
+2025-11-12 21:06:07,847 | DEBUG | urllib3.connectionpool | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 1041
+2025-11-12 21:06:07,848 | DEBUG | urllib3.connectionpool | Starting new HTTP connection (1): localhost:11434
+2025-11-12 21:06:07,863 | DEBUG | urllib3.connectionpool | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 1041
+2025-11-12 21:06:07,864 | DEBUG | urllib3.connectionpool | Starting new HTTP connection (1): localhost:11434
+2025-11-12 21:06:07,879 | DEBUG | urllib3.connectionpool | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 1041
+2025-11-12 21:06:09,940 | INFO | DictatorService | 🔴 Recording started (VAD)...
+2025-11-12 21:06:09,940 | INFO | DictatorService | 🧹 Cleared audio buffer
+2025-11-12 21:06:10,003 | DEBUG | DictatorService | 🎵 Voice session started receiving audio chunks
+2025-11-12 21:06:10,634 | DEBUG | DictatorService | VAD: Speech STARTED (window=1400ms)
+2025-11-12 21:06:10,634 | INFO | DictatorService | 📨 Event received: EventType.SPEECH_STARTED (total events: 1)
+2025-11-12 21:06:10,634 | INFO | DictatorService | 🎯 Handling event: EventType.SPEECH_STARTED
+2025-11-12 21:06:10,634 | INFO | DictatorService | 🎤 Speech detected by VAD
+2025-11-12 21:06:11,023 | INFO | DictatorService | ✅ Voice session healthy, processing audio
+2025-11-12 21:06:15,495 | DEBUG | DictatorService | VAD: Silence detected, starting debounce timer
+2025-11-12 21:06:16,195 | DEBUG | DictatorService | VAD: Speech STOPPED after 702ms of silence
+2025-11-12 21:06:16,196 | INFO | DictatorService | 📨 Event received: EventType.SPEECH_STOPPED (total events: 2)
+2025-11-12 21:06:16,196 | INFO | DictatorService | 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 21:06:16,196 | INFO | DictatorService | 🛑 Speech ended, transcribing...
+2025-11-12 21:06:16,196 | INFO | DictatorService | 🎯 VAD detected speech stop, resetting recording state
+2025-11-12 21:06:16,196 | INFO | DictatorService | 🎯 Speech stopped - VAD mode: enabled, Buffer size: 99424 samples (6.21s)
+2025-11-12 21:06:16,353 | INFO | faster_whisper | Processing audio with duration 00:06.214
+2025-11-12 21:06:16,356 | DEBUG | faster_whisper | Processing segment at 00:00.000
+2025-11-12 21:06:17,994 | INFO | DictatorService | 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 3)
+2025-11-12 21:06:17,994 | INFO | DictatorService | 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 21:06:17,995 | INFO | DictatorService | 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 4)
+2025-11-12 21:06:17,995 | INFO | DictatorService | 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 21:06:17,995 | INFO | DictatorService | 📝 Transcription complete, calling LLM...
+2025-11-12 21:06:17,996 | INFO | DictatorService | 📝 Transcribed text: 'Mudei novamente para o programa local, não estou mais usando o workflow do N8n.'
+2025-11-12 21:06:17,996 | INFO | DictatorService | 🦙 Calling Ollama API (qwen3:14b)...
+2025-11-12 21:06:17,996 | INFO | DictatorService | 🔗 Calling Ollama: http://localhost:11434/api/chat
+2025-11-12 21:06:17,996 | INFO | DictatorService | 📦 Payload: 2 messages, model=qwen3:14b
+2025-11-12 21:06:20,545 | INFO | DictatorService | ✅ Ollama response: 740 chars
+2025-11-12 21:06:20,545 | INFO | DictatorService | 🟢 Ollama returned: 740 chars
+2025-11-12 21:06:20,546 | INFO | DictatorService | 📄 Response text: <think>
+Okay, the user just said they've switched back to the local program and aren't using the N8n workflow anymore. Let me process this.
+
+First, I need to acknowledge their change. They might be lo...
+2025-11-12 21:06:20,546 | INFO | DictatorService | 🧹 Cleaned response: Entendo, voltei para o programa local. Se precisar de ajuda com algo específico, posso assisti-lo....
+2025-11-12 21:06:20,547 | INFO | DictatorService | 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 21:06:20,547 | INFO | DictatorService | 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 21:06:20,547 | INFO | DictatorService | 📨 Event received: EventType.LLM_REQUEST (total events: 5)
+2025-11-12 21:06:20,547 | INFO | DictatorService | 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 21:06:20,547 | INFO | DictatorService | 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 6)
+2025-11-12 21:06:20,547 | INFO | DictatorService | 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 21:06:20,547 | INFO | DictatorService | 🔊 TTS sentence ready, synthesizing...
+2025-11-12 21:06:20,548 | INFO | DictatorService | 🎵 TTS handler received: 'Entendo, voltei para o programa local. Se precisar de ajuda com algo específico, posso assisti-lo....'
+2025-11-12 21:06:20,548 | INFO | DictatorService | 🔊 Starting TTS synthesis...
+2025-11-12 21:06:20,548 | INFO | DictatorService | 🔊 Speaking: Entendo, voltei para o programa local. Se precisar...
+2025-11-12 21:06:20,548 | INFO | KokoroTTS | 🔊 Speaking: Entendo, voltei para o programa local. Se precisar...
+2025-11-12 21:06:21,166 | INFO | KokoroTTS | ⚡ Audio generated in 0.62s
+2025-11-12 21:06:25,583 | INFO | DictatorService | 💾 Configuration saved
+2025-11-12 21:06:25,584 | DEBUG | urllib3.connectionpool | Starting new HTTP connection (1): localhost:11434
+2025-11-12 21:06:25,587 | DEBUG | urllib3.connectionpool | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 1041
+2025-11-12 21:06:25,588 | DEBUG | urllib3.connectionpool | Starting new HTTP connection (1): localhost:11434
+2025-11-12 21:06:25,611 | DEBUG | urllib3.connectionpool | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 1041
+2025-11-12 21:06:25,613 | DEBUG | urllib3.connectionpool | Starting new HTTP connection (1): localhost:11434
+2025-11-12 21:06:25,627 | DEBUG | urllib3.connectionpool | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 1041
+2025-11-12 21:06:25,627 | DEBUG | urllib3.connectionpool | Starting new HTTP connection (1): localhost:11434
+2025-11-12 21:06:25,642 | DEBUG | urllib3.connectionpool | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 1041
+2025-11-12 21:06:25,643 | DEBUG | urllib3.connectionpool | Starting new HTTP connection (1): localhost:11434
+2025-11-12 21:06:25,657 | DEBUG | urllib3.connectionpool | http://localhost:11434 "GET /api/tags HTTP/1.1" 200 1041
+2025-11-12 21:06:25,658 | INFO | DictatorService | VAD: Disabled
+2025-11-12 21:06:25,658 | INFO | DictatorService | ⚠️ Restarting service to apply VAD changes in LLM Mode
+2025-11-12 21:06:25,658 | INFO | DictatorService | 🔄 Restarting service...
+2025-11-12 21:06:25,658 | INFO | DictatorService | 🛑 Dictator Service stopping...
+2025-11-12 21:06:25,659 | INFO | DictatorService | Voice session stopped
+2025-11-12 21:06:25,659 | INFO | DictatorService | 🎤 VAD re-enabled after TTS
+2025-11-12 21:06:25,659 | INFO | DictatorService | Voice session completed normally
+2025-11-12 21:06:25,659 | INFO | DictatorService | 👋 Dictator Service stopped

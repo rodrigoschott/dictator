@@ -1,0 +1,149 @@
+2025-11-12 21:08:09,272 | DEBUG | dictator.logging_setup | Logging initialized in logs\run-20251112-210809
+2025-11-12 21:08:09,273 | INFO | DictatorService | Logging initialized (run_dir=logs\run-20251112-210809, structured=True)
+2025-11-12 21:08:09,273 | DEBUG | DictatorService.ThreadMonitor | Thread monitor enabled (interval=30.0s)
+2025-11-12 21:08:09,273 | DEBUG | DictatorService.ThreadMonitor | Starting thread monitor (interval=30.0s)
+2025-11-12 21:08:09,303 | INFO | DictatorService | 🎙️ Dictator Service initializing...
+2025-11-12 21:08:09,303 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=41, top=[{'id': 30432, 'name': 'MainThread', 'cpu_ms': 17312.5}, {'id': 27552, 'name': 'unknown', 'cpu_ms': 1968.75}, {'id': 17812, 'name': 'unknown', 'cpu_ms': 1062.5}, {'id': 31144, 'name': 'unknown', 'cpu_ms': 1062.5}, {'id': 35076, 'name': 'unknown', 'cpu_ms': 1046.88}]
+2025-11-12 21:08:09,304 | INFO | DictatorService | 📦 Loading Whisper model 'large-v3' on cuda...
+2025-11-12 21:08:09,304 | INFO | DictatorService |    Using faster-whisper with compute_type=float16
+2025-11-12 21:08:09,305 | DEBUG | httpcore.connection | close.started
+2025-11-12 21:08:09,305 | DEBUG | httpcore.connection | close.complete
+2025-11-12 21:08:09,305 | DEBUG | httpcore.connection | connect_tcp.started host='huggingface.co' port=443 local_address=None timeout=None socket_options=None
+2025-11-12 21:08:09,308 | DEBUG | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000002B7CAE584B0>
+2025-11-12 21:08:09,308 | DEBUG | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x000002B4D2F6B070> server_hostname='huggingface.co' timeout=None
+2025-11-12 21:08:09,315 | DEBUG | httpcore.connection | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000002B4D43CF690>
+2025-11-12 21:08:09,315 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'GET']>
+2025-11-12 21:08:09,315 | DEBUG | httpcore.http11 | send_request_headers.complete
+2025-11-12 21:08:09,315 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'GET']>
+2025-11-12 21:08:09,315 | DEBUG | httpcore.http11 | send_request_body.complete
+2025-11-12 21:08:09,315 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'GET']>
+2025-11-12 21:08:09,453 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'4600'), (b'Connection', b'keep-alive'), (b'Date', b'Thu, 13 Nov 2025 00:08:09 GMT'), (b'ETag', b'W/"11f8-OdbdQ9ef6Cr/xpj0m27tBd+pzac"'), (b'X-Powered-By', b'huggingface-moon'), (b'X-Request-Id', b'Root=1-69152169-2e34a38209fa201e7619d324;065b9d8c-8415-430f-913f-03c22f7fe93d'), (b'RateLimit', b'"api";r=498;t=250'), (b'RateLimit-Policy', b'"fixed window";"api";q=500;w=300'), (b'cross-origin-opener-policy', b'same-origin'), (b'Referrer-Policy', b'strict-origin-when-cross-origin'), (b'Access-Control-Max-Age', b'86400'), (b'Access-Control-Allow-Origin', b'https://huggingface.co'), (b'Vary', b'Origin'), (b'Access-Control-Expose-Headers', b'X-Repo-Commit,X-Request-Id,X-Error-Code,X-Error-Message,X-Total-Count,ETag,Link,Accept-Ranges,Content-Range,X-Linked-Size,X-Linked-ETag,X-Xet-Hash'), (b'X-Cache', b'Miss from cloudfront'), (b'Via', b'1.1 3f0333517098f50ad0dbe5a864534ad4.cloudfront.net (CloudFront)'), (b'X-Amz-Cf-Pop', b'GIG52-P2'), (b'X-Amz-Cf-Id', b'huQ0yQvRn38GDr-wh-HMtb_y_Za0qXqBT4VctYtSgDFbMRSqXDmepA==')])
+2025-11-12 21:08:09,454 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main "HTTP/1.1 200 OK"
+2025-11-12 21:08:09,454 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'GET']>
+2025-11-12 21:08:09,454 | DEBUG | httpcore.http11 | receive_response_body.complete
+2025-11-12 21:08:09,454 | DEBUG | httpcore.http11 | response_closed.started
+2025-11-12 21:08:09,454 | DEBUG | httpcore.http11 | response_closed.complete
+2025-11-12 21:08:11,412 | INFO | DictatorService | ✅ Model 'large-v3' loaded successfully on cuda!
+2025-11-12 21:08:11,412 | INFO | DictatorService | 🎮 Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)
+2025-11-12 21:08:11,413 | INFO | DictatorService | 🎤 Loading TTS engine...
+2025-11-12 21:08:11,413 | INFO | KokoroTTS | 🎤 Loading Kokoro TTS (model=kokoro-v1.0.onnx)...
+2025-11-12 21:08:11,928 | INFO | KokoroTTS | ✅ Kokoro TTS loaded successfully!
+2025-11-12 21:08:11,928 | INFO | DictatorService | ✅ TTS engine loaded successfully!
+2025-11-12 21:08:11,929 | INFO | DictatorService | 🎯 Loading event-driven voice session...
+2025-11-12 21:08:11,929 | INFO | DictatorService | 🎤 VAD enabled: False
+2025-11-12 21:08:11,929 | INFO | DictatorService | 🔗 Using N8N Tool-Calling provider: http://localhost:15678/webhook/dictator-llm
+2025-11-12 21:08:11,930 | DEBUG | asyncio | Using proactor: IocpProactor
+2025-11-12 21:08:11,930 | INFO | DictatorService | 🎤 Starting voice session (attempt 1/3)
+2025-11-12 21:08:11,930 | INFO | DictatorService | 🔗 Event loop configured for thread-safe publishing
+2025-11-12 21:08:11,930 | INFO | DictatorService | 🔄 Event processor started
+2025-11-12 21:08:12,030 | INFO | DictatorService | ✅ Event-driven voice session loaded - ZERO polling!
+2025-11-12 21:08:12,031 | INFO | DictatorService | 🚀 Dictator Service started
+2025-11-12 21:08:12,031 | INFO | DictatorService | 🖱️  Listening for mouse button: side1
+2025-11-12 21:08:14,533 | INFO | DictatorService | 🔴 Recording started...
+2025-11-12 21:08:14,533 | INFO | DictatorService | 🧹 Cleared audio buffer
+2025-11-12 21:08:14,597 | DEBUG | DictatorService | 🎵 Voice session started receiving audio chunks
+2025-11-12 21:08:15,587 | DEBUG | DictatorService | 📊 Buffer size: 16224 samples (1.01s)
+2025-11-12 21:08:15,617 | INFO | DictatorService | ✅ Voice session healthy, processing audio
+2025-11-12 21:08:16,578 | DEBUG | DictatorService | 📊 Buffer size: 32032 samples (2.00s)
+2025-11-12 21:08:17,588 | DEBUG | DictatorService | 📊 Buffer size: 48256 samples (3.02s)
+2025-11-12 21:08:20,888 | INFO | DictatorService | ⏹️ Recording stopped
+2025-11-12 21:08:20,888 | INFO | DictatorService | 🎤 VAD disabled: emitting manual SPEECH_STOPPED event
+2025-11-12 21:08:20,889 | INFO | DictatorService | 📢 Publishing SPEECH_STOPPED event to 1 subscribers
+2025-11-12 21:08:20,889 | INFO | DictatorService | ✅ SPEECH_STOPPED event published to queue
+2025-11-12 21:08:20,889 | INFO | DictatorService | 📨 Event received: EventType.SPEECH_STOPPED (total events: 1)
+2025-11-12 21:08:20,889 | INFO | DictatorService | 🎯 Event-driven mode: Voice session will handle transcription via events
+2025-11-12 21:08:20,889 | INFO | DictatorService | 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 21:08:20,889 | INFO | DictatorService | 🛑 Speech ended, transcribing...
+2025-11-12 21:08:20,890 | INFO | DictatorService | 🎯 Speech stopped - VAD mode: disabled, Buffer size: 101088 samples (6.32s)
+2025-11-12 21:08:21,008 | INFO | faster_whisper | Processing audio with duration 00:06.318
+2025-11-12 21:08:21,012 | DEBUG | faster_whisper | Processing segment at 00:00.000
+2025-11-12 21:08:23,210 | INFO | DictatorService | 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 2)
+2025-11-12 21:08:23,211 | INFO | DictatorService | 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 21:08:23,211 | INFO | DictatorService | 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 3)
+2025-11-12 21:08:23,211 | INFO | DictatorService | 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 21:08:23,211 | INFO | DictatorService | 📝 Transcription complete, calling LLM...
+2025-11-12 21:08:23,212 | INFO | DictatorService | 📝 Transcribed text: 'De volta no N8N. E aí, será que vai travar agora? Eu acho que parou de travar. Ai meu Deus do céu.'
+2025-11-12 21:08:23,212 | INFO | DictatorService | 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 21:08:23,212 | INFO | DictatorService | 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 21:08:23,212 | INFO | DictatorService | 📦 Payload: 2 messages
+2025-11-12 21:08:26,784 | INFO | DictatorService | ✅ N8N response: 1015 chars
+2025-11-12 21:08:26,784 | INFO | DictatorService | 🟢 N8N returned: 1015 chars
+2025-11-12 21:08:26,785 | INFO | DictatorService | 📄 Response text: <think>
+Okay, the user is talking about N8N and whether it's going to crash now. They mentioned it stopped crashing. First, I need to understand what they're referring to. N8N is a workflow automation...
+2025-11-12 21:08:26,785 | INFO | DictatorService | 🧹 Cleaned response: Você parece aliviado! Se o N8N está estável agora, é um bom sinal. Precisa de ajuda com algo específ...
+2025-11-12 21:08:26,785 | INFO | DictatorService | 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 21:08:26,785 | INFO | DictatorService | 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 21:08:26,785 | INFO | DictatorService | 📨 Event received: EventType.LLM_REQUEST (total events: 4)
+2025-11-12 21:08:26,785 | INFO | DictatorService | 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 21:08:26,786 | INFO | DictatorService | 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 5)
+2025-11-12 21:08:26,786 | INFO | DictatorService | 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 21:08:26,786 | INFO | DictatorService | 🔊 TTS sentence ready, synthesizing...
+2025-11-12 21:08:26,786 | INFO | DictatorService | 🎵 TTS handler received: 'Você parece aliviado! Se o N8N está estável agora, é um bom sinal. Precisa de ajuda com algo específ...'
+2025-11-12 21:08:26,786 | INFO | DictatorService | 🔊 Starting TTS synthesis...
+2025-11-12 21:08:26,786 | INFO | DictatorService | 🔊 Speaking: Você parece aliviado! Se o N8N está estável agora,...
+2025-11-12 21:08:26,786 | INFO | KokoroTTS | 🔊 Speaking: Você parece aliviado! Se o N8N está estável agora,...
+2025-11-12 21:08:26,787 | WARNING | phonemizer | words count mismatch on 100.0% of the lines (1/1)
+2025-11-12 21:08:27,503 | INFO | KokoroTTS | ⚡ Audio generated in 0.72s
+2025-11-12 21:08:33,229 | INFO | KokoroTTS | ✅ Speech completed
+2025-11-12 21:08:33,230 | INFO | DictatorService | ✅ TTS synthesis completed
+2025-11-12 21:08:33,230 | INFO | DictatorService | 🎤 VAD re-enabled after TTS
+2025-11-12 21:08:33,230 | INFO | DictatorService | 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 6)
+2025-11-12 21:08:33,230 | INFO | DictatorService | 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 21:08:33,230 | INFO | DictatorService | 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 7)
+2025-11-12 21:08:33,230 | INFO | DictatorService | 🎯 Handling event: EventType.TTS_AUDIO_GENERATED
+2025-11-12 21:08:39,316 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=44, top=[{'id': 30432, 'name': 'MainThread', 'cpu_ms': 19765.62}, {'id': 34796, 'name': 'unknown', 'cpu_ms': 2140.62}, {'id': 3068, 'name': 'asyncio_0', 'cpu_ms': 796.88}, {'id': 36000, 'name': 'unknown', 'cpu_ms': 625.0}, {'id': 29328, 'name': 'unknown', 'cpu_ms': 625.0}]
+2025-11-12 21:08:40,409 | INFO | DictatorService | 🔴 Recording started...
+2025-11-12 21:08:40,409 | INFO | DictatorService | 🧹 Cleared audio buffer
+2025-11-12 21:08:40,473 | DEBUG | DictatorService | 🎵 Voice session started receiving audio chunks
+2025-11-12 21:08:41,463 | DEBUG | DictatorService | 📊 Buffer size: 16224 samples (1.01s)
+2025-11-12 21:08:41,493 | INFO | DictatorService | ✅ Voice session healthy, processing audio
+2025-11-12 21:08:42,454 | DEBUG | DictatorService | 📊 Buffer size: 32032 samples (2.00s)
+2025-11-12 21:08:43,464 | DEBUG | DictatorService | 📊 Buffer size: 48256 samples (3.02s)
+2025-11-12 21:08:49,996 | INFO | DictatorService | ⏹️ Recording stopped
+2025-11-12 21:08:49,996 | INFO | DictatorService | 🎤 VAD disabled: emitting manual SPEECH_STOPPED event
+2025-11-12 21:08:49,996 | INFO | DictatorService | 📢 Publishing SPEECH_STOPPED event to 1 subscribers
+2025-11-12 21:08:49,997 | INFO | DictatorService | ✅ SPEECH_STOPPED event published to queue
+2025-11-12 21:08:49,997 | INFO | DictatorService | 📨 Event received: EventType.SPEECH_STOPPED (total events: 8)
+2025-11-12 21:08:49,997 | INFO | DictatorService | 🎯 Event-driven mode: Voice session will handle transcription via events
+2025-11-12 21:08:49,997 | INFO | DictatorService | 🎯 Handling event: EventType.SPEECH_STOPPED
+2025-11-12 21:08:49,997 | INFO | DictatorService | 🛑 Speech ended, transcribing...
+2025-11-12 21:08:49,997 | INFO | DictatorService | 🎯 Speech stopped - VAD mode: disabled, Buffer size: 152672 samples (9.54s)
+2025-11-12 21:08:50,061 | INFO | faster_whisper | Processing audio with duration 00:09.542
+2025-11-12 21:08:50,066 | DEBUG | faster_whisper | Processing segment at 00:00.000
+2025-11-12 21:08:53,202 | INFO | DictatorService | 📨 Event received: EventType.TRANSCRIPTION_STARTED (total events: 9)
+2025-11-12 21:08:53,202 | INFO | DictatorService | 🎯 Handling event: EventType.TRANSCRIPTION_STARTED
+2025-11-12 21:08:53,203 | INFO | DictatorService | 📨 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 10)
+2025-11-12 21:08:53,203 | INFO | DictatorService | 🎯 Handling event: EventType.TRANSCRIPTION_COMPLETED
+2025-11-12 21:08:53,203 | INFO | DictatorService | 📝 Transcription complete, calling LLM...
+2025-11-12 21:08:53,203 | INFO | DictatorService | 📝 Transcribed text: 'Como eu descubro todo o suíte de ferramentas disponíveis no N8N pra mim, eu gostaria de adicionar algumas outras ferramentas além de Google Search pros meus agentes.'
+2025-11-12 21:08:53,203 | INFO | DictatorService | 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 21:08:53,203 | INFO | DictatorService | 🔗 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm
+2025-11-12 21:08:53,203 | INFO | DictatorService | 📦 Payload: 4 messages
+2025-11-12 21:08:57,284 | INFO | DictatorService | ✅ N8N response: 1287 chars
+2025-11-12 21:08:57,285 | INFO | DictatorService | 🟢 N8N returned: 1287 chars
+2025-11-12 21:08:57,285 | INFO | DictatorService | 📄 Response text: <think>
+Okay, the user is asking about discovering all the available tools in N8N and wants to add more tools beyond Google Search for their agents. Let me break this down.
+
+First, I need to recall ho...
+2025-11-12 21:08:57,285 | INFO | DictatorService | 🧹 Cleaned response: No N8N, você pode explorar a N8N Marketplace para descobrir ferramentas integráveis. Busque por cate...
+2025-11-12 21:08:57,286 | INFO | DictatorService | 📢 Publishing TTS_SENTENCE_READY event...
+2025-11-12 21:08:57,286 | INFO | DictatorService | 📢 Publishing LLM_RESPONSE_COMPLETED event
+2025-11-12 21:08:57,286 | INFO | DictatorService | 📨 Event received: EventType.LLM_REQUEST (total events: 11)
+2025-11-12 21:08:57,286 | INFO | DictatorService | 🎯 Handling event: EventType.LLM_REQUEST
+2025-11-12 21:08:57,287 | INFO | DictatorService | 📨 Event received: EventType.TTS_SENTENCE_READY (total events: 12)
+2025-11-12 21:08:57,287 | INFO | DictatorService | 🎯 Handling event: EventType.TTS_SENTENCE_READY
+2025-11-12 21:08:57,287 | INFO | DictatorService | 🔊 TTS sentence ready, synthesizing...
+2025-11-12 21:08:57,287 | INFO | DictatorService | 🎵 TTS handler received: 'No N8N, você pode explorar a N8N Marketplace para descobrir ferramentas integráveis. Busque por cate...'
+2025-11-12 21:08:57,287 | INFO | DictatorService | 🔊 Starting TTS synthesis...
+2025-11-12 21:08:57,287 | INFO | DictatorService | 🔊 Speaking: No N8N, você pode explorar a N8N Marketplace para ...
+2025-11-12 21:08:57,287 | INFO | KokoroTTS | 🔊 Speaking: No N8N, você pode explorar a N8N Marketplace para ...
+2025-11-12 21:08:57,288 | WARNING | phonemizer | words count mismatch on 200.0% of the lines (2/1)
+2025-11-12 21:08:58,964 | INFO | KokoroTTS | ⚡ Audio generated in 1.68s
+2025-11-12 21:09:09,321 | INFO | DictatorService.ThreadMonitor | Thread snapshot: total=46, top=[{'id': 30432, 'name': 'MainThread', 'cpu_ms': 19765.62}, {'id': 34796, 'name': 'unknown', 'cpu_ms': 5250.0}, {'id': 3068, 'name': 'asyncio_0', 'cpu_ms': 2484.38}, {'id': 9220, 'name': 'unknown', 'cpu_ms': 2031.25}, {'id': 19792, 'name': 'unknown', 'cpu_ms': 2031.25}]
+2025-11-12 21:09:11,108 | INFO | KokoroTTS | ✅ Speech completed
+2025-11-12 21:09:11,108 | INFO | DictatorService | ✅ TTS synthesis completed
+2025-11-12 21:09:11,109 | INFO | DictatorService | 🎤 VAD re-enabled after TTS
+2025-11-12 21:09:11,109 | INFO | DictatorService | 📨 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 13)
+2025-11-12 21:09:11,109 | INFO | DictatorService | 🎯 Handling event: EventType.LLM_RESPONSE_COMPLETED
+2025-11-12 21:09:11,109 | INFO | DictatorService | 📨 Event received: EventType.TTS_AUDIO_GENERATED (total events: 14)
+2025-11-12 21:09:11,109 | INFO | DictatorService | 🎯 Handling event: EventType.TTS_AUDIO_GENERATED

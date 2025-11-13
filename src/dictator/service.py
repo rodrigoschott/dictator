@@ -24,6 +24,8 @@ from pynput import keyboard, mouse
 from pynput.keyboard import Key, KeyCode
 from pynput.mouse import Button
 
+from . import logging_setup
+from .monitoring.thread_monitor import ThreadMonitor
 try:
     from .tts_engine import KokoroTTSEngine
     TTS_AVAILABLE = True
@@ -51,6 +53,10 @@ class DictatorService:
         """Initialize the service"""
         self.config_path = config_path
         self.config = self.load_config()
+        self.ensure_config_defaults()
+        self.thread_monitor: Optional[ThreadMonitor] = None
+        self.logging_state: Optional[logging_setup.LoggingState] = None
+        self.run_dir: Optional[Path] = None
         self.setup_logging()
 
         self.logger.info("🎙️ Dictator Service initializing...")
@@ -142,6 +148,17 @@ class DictatorService:
                 'log_level': 'INFO',
                 'log_file': ''
             },
+            'logging': {
+                'level': 'INFO',
+                'structured': False,
+                'run_retention': 5,
+                'trace_main_loop': False,
+                'trace_threads': False,
+            },
+            'profiling': {
+                'freeze_timeout': 10,
+                'thread_monitor_interval': 30,
+            },
             'tray': {
                 'enabled': True,
                 'tooltip': 'Dictator - Voice to Text (Mouse Side Button)'
@@ -174,26 +191,67 @@ class DictatorService:
             }
         }
 
-    def setup_logging(self):
-        """Setup logging"""
-        log_level = getattr(logging, self.config['service']['log_level'], logging.INFO)
+    def ensure_config_defaults(self) -> None:
+        """Ensure new logging/profiling defaults exist without overwriting user values."""
 
-        # Create logs directory
-        log_dir = Path('logs')
-        log_dir.mkdir(exist_ok=True)
+        logging_defaults = {
+            'level': self.config.get('service', {}).get('log_level', 'INFO'),
+            'structured': False,
+            'run_retention': 5,
+            'trace_main_loop': False,
+            'trace_threads': False,
+        }
+        logging_cfg = self.config.setdefault('logging', {})
+        for key, value in logging_defaults.items():
+            logging_cfg.setdefault(key, value)
 
-        log_file = self.config['service'].get('log_file') or log_dir / 'dictator.log'
+        profiling_defaults = {
+            'freeze_timeout': 10,
+            'thread_monitor_interval': 30,
+        }
+        profiling_cfg = self.config.setdefault('profiling', {})
+        for key, value in profiling_defaults.items():
+            profiling_cfg.setdefault(key, value)
 
-        logging.basicConfig(
-            level=log_level,
-            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-            handlers=[
-                logging.FileHandler(log_file, encoding='utf-8'),
-                logging.StreamHandler(sys.stdout)
-            ]
-        )
+    def setup_logging(self) -> None:
+        """Bootstrap logging configuration and optional monitors."""
+
+        if self.thread_monitor:
+            self.thread_monitor.stop()
+            self.thread_monitor = None
+
+        state = logging_setup.bootstrap_logging(self.config)
+        self.logging_state = state
+        self.run_dir = state.run_dir
 
         self.logger = logging.getLogger('DictatorService')
+        self.logger.info(
+            "Logging initialized (run_dir=%s, structured=%s)",
+            state.run_dir,
+            state.structured,
+        )
+
+        if state.trace_threads:
+            monitor_logger = logging.getLogger('DictatorService.ThreadMonitor')
+            interval = self._resolve_thread_monitor_interval()
+            self.thread_monitor = ThreadMonitor(
+                interval_seconds=interval,
+                logger=monitor_logger,
+                run_dir=state.run_dir,
+            )
+            monitor_logger.debug("Thread monitor enabled (interval=%.1fs)", interval)
+            self.thread_monitor.start()
+
+    def _resolve_thread_monitor_interval(self) -> float:
+        """Read and sanitize thread monitor interval from config."""
+
+        profiling_cfg = self.config.get('profiling', {}) or {}
+        raw_value = profiling_cfg.get('thread_monitor_interval', 30)
+        try:
+            interval = float(raw_value)
+        except (TypeError, ValueError):
+            interval = 30.0
+        return max(interval, 1.0)
 
     def load_model(self):
         """Load Whisper model using faster-whisper"""
@@ -878,6 +936,10 @@ class DictatorService:
 
         if self.mouse_listener:
             self.mouse_listener.stop()
+
+        if self.thread_monitor:
+            self.thread_monitor.stop()
+            self.thread_monitor = None
 
         self.logger.info("👋 Dictator Service stopped")
 

@@ -3,13 +3,35 @@
 Test script to validate thinking tag removal
 """
 
+import ast
 import sys
 from pathlib import Path
+from typing import Callable
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT / 'src'))
 
-from dictator.voice.llm_caller import remove_thinking_tags
+def _load_remove_thinking_tags() -> Callable[[str], str]:
+    """Load the remove_thinking_tags function without importing heavy deps."""
+
+    module_path = REPO_ROOT / 'src' / 'dictator' / 'voice' / 'llm_caller.py'
+    source = module_path.read_text(encoding='utf-8')
+    module_ast = ast.parse(source, filename=str(module_path))
+
+    func_def = next(
+        node for node in module_ast.body if isinstance(node, ast.FunctionDef) and node.name == 'remove_thinking_tags'
+    )
+
+    import_re = ast.Import(names=[ast.alias(name='re', asname=None)])
+    func_module = ast.Module(body=[import_re, func_def], type_ignores=[])
+    ast.fix_missing_locations(func_module)
+
+    namespace: dict[str, object] = {}
+    compiled = compile(func_module, str(module_path), 'exec')
+    exec(compiled, namespace)
+    return namespace['remove_thinking_tags']  # type: ignore[return-value]
+
+
+remove_thinking_tags = _load_remove_thinking_tags()
 
 
 def test_thinking_tag_removal():

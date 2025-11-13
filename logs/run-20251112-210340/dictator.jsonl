@@ -1,0 +1,334 @@
+{"timestamp": "2025-11-12T21:03:40.592848", "level": "DEBUG", "name": "dictator.logging_setup", "message": "Logging initialized in logs\\run-20251112-210340"}
+{"timestamp": "2025-11-12T21:03:40.593011", "level": "INFO", "name": "DictatorService", "message": "Logging initialized (run_dir=logs\\run-20251112-210340, structured=True)"}
+{"timestamp": "2025-11-12T21:03:40.593120", "level": "DEBUG", "name": "DictatorService.ThreadMonitor", "message": "Thread monitor enabled (interval=30.0s)"}
+{"timestamp": "2025-11-12T21:03:40.593257", "level": "DEBUG", "name": "DictatorService.ThreadMonitor", "message": "Starting thread monitor (interval=30.0s)"}
+{"timestamp": "2025-11-12T21:03:40.624450", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udf99\ufe0f Dictator Service initializing..."}
+{"timestamp": "2025-11-12T21:03:40.624618", "level": "INFO", "name": "DictatorService.ThreadMonitor", "message": "Thread snapshot: total=42, top=[{'id': 30432, 'name': 'MainThread', 'cpu_ms': 6734.38}, {'id': 33176, 'name': 'unknown', 'cpu_ms': 5156.25}, {'id': 33444, 'name': 'unknown', 'cpu_ms': 1218.75}, {'id': 9604, 'name': 'unknown', 'cpu_ms': 1218.75}, {'id': 19048, 'name': 'unknown', 'cpu_ms': 1218.75}]"}
+{"timestamp": "2025-11-12T21:03:40.624979", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce6 Loading Whisper model 'large-v3' on cuda..."}
+{"timestamp": "2025-11-12T21:03:40.625579", "level": "INFO", "name": "DictatorService", "message": "   Using faster-whisper with compute_type=float16"}
+{"timestamp": "2025-11-12T21:03:40.626039", "level": "DEBUG", "name": "httpcore.connection", "message": "close.started"}
+{"timestamp": "2025-11-12T21:03:40.626322", "level": "DEBUG", "name": "httpcore.connection", "message": "close.complete"}
+{"timestamp": "2025-11-12T21:03:40.626484", "level": "DEBUG", "name": "httpcore.connection", "message": "connect_tcp.started host='huggingface.co' port=443 local_address=None timeout=None socket_options=None"}
+{"timestamp": "2025-11-12T21:03:40.643246", "level": "DEBUG", "name": "httpcore.connection", "message": "connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000002B4D2AF7A80>"}
+{"timestamp": "2025-11-12T21:03:40.643386", "level": "DEBUG", "name": "httpcore.connection", "message": "start_tls.started ssl_context=<ssl.SSLContext object at 0x000002B4D2F6B070> server_hostname='huggingface.co' timeout=None"}
+{"timestamp": "2025-11-12T21:03:40.648047", "level": "DEBUG", "name": "httpcore.connection", "message": "start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000002B7D7012330>"}
+{"timestamp": "2025-11-12T21:03:40.648216", "level": "DEBUG", "name": "httpcore.http11", "message": "send_request_headers.started request=<Request [b'GET']>"}
+{"timestamp": "2025-11-12T21:03:40.648360", "level": "DEBUG", "name": "httpcore.http11", "message": "send_request_headers.complete"}
+{"timestamp": "2025-11-12T21:03:40.648497", "level": "DEBUG", "name": "httpcore.http11", "message": "send_request_body.started request=<Request [b'GET']>"}
+{"timestamp": "2025-11-12T21:03:40.648637", "level": "DEBUG", "name": "httpcore.http11", "message": "send_request_body.complete"}
+{"timestamp": "2025-11-12T21:03:40.648730", "level": "DEBUG", "name": "httpcore.http11", "message": "receive_response_headers.started request=<Request [b'GET']>"}
+{"timestamp": "2025-11-12T21:03:40.802073", "level": "DEBUG", "name": "httpcore.http11", "message": "receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'4600'), (b'Connection', b'keep-alive'), (b'Date', b'Thu, 13 Nov 2025 00:03:40 GMT'), (b'ETag', b'W/\"11f8-OdbdQ9ef6Cr/xpj0m27tBd+pzac\"'), (b'X-Powered-By', b'huggingface-moon'), (b'X-Request-Id', b'Root=1-6915205c-31016f4602229fc0263ce77f;eaa264e1-b7fc-4d75-8b14-8914ac4e14f3'), (b'RateLimit', b'\"api\";r=498;t=219'), (b'RateLimit-Policy', b'\"fixed window\";\"api\";q=500;w=300'), (b'cross-origin-opener-policy', b'same-origin'), (b'Referrer-Policy', b'strict-origin-when-cross-origin'), (b'Access-Control-Max-Age', b'86400'), (b'Access-Control-Allow-Origin', b'https://huggingface.co'), (b'Vary', b'Origin'), (b'Access-Control-Expose-Headers', b'X-Repo-Commit,X-Request-Id,X-Error-Code,X-Error-Message,X-Total-Count,ETag,Link,Accept-Ranges,Content-Range,X-Linked-Size,X-Linked-ETag,X-Xet-Hash'), (b'X-Cache', b'Miss from cloudfront'), (b'Via', b'1.1 d8dc5b9cc653c7adcc3e58a56d490bf0.cloudfront.net (CloudFront)'), (b'X-Amz-Cf-Pop', b'GIG52-P2'), (b'X-Amz-Cf-Id', b'8EbWvqTmT7nXeEWAsOpp-N1uBuMoEn3BUg-z3ewroPHI2aXnbe5DPQ==')])"}
+{"timestamp": "2025-11-12T21:03:40.802690", "level": "INFO", "name": "httpx", "message": "HTTP Request: GET https://huggingface.co/api/models/Systran/faster-whisper-large-v3/revision/main \"HTTP/1.1 200 OK\""}
+{"timestamp": "2025-11-12T21:03:40.802951", "level": "DEBUG", "name": "httpcore.http11", "message": "receive_response_body.started request=<Request [b'GET']>"}
+{"timestamp": "2025-11-12T21:03:40.803050", "level": "DEBUG", "name": "httpcore.http11", "message": "receive_response_body.complete"}
+{"timestamp": "2025-11-12T21:03:40.803130", "level": "DEBUG", "name": "httpcore.http11", "message": "response_closed.started"}
+{"timestamp": "2025-11-12T21:03:40.803182", "level": "DEBUG", "name": "httpcore.http11", "message": "response_closed.complete"}
+{"timestamp": "2025-11-12T21:03:42.769624", "level": "INFO", "name": "DictatorService", "message": "\u2705 Model 'large-v3' loaded successfully on cuda!"}
+{"timestamp": "2025-11-12T21:03:42.769983", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfae Using GPU: NVIDIA GeForce RTX 5080 (15.9 GB VRAM)"}
+{"timestamp": "2025-11-12T21:03:42.770726", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfa4 Loading TTS engine..."}
+{"timestamp": "2025-11-12T21:03:42.770866", "level": "INFO", "name": "KokoroTTS", "message": "\ud83c\udfa4 Loading Kokoro TTS (model=kokoro-v1.0.onnx)..."}
+{"timestamp": "2025-11-12T21:03:43.237192", "level": "INFO", "name": "KokoroTTS", "message": "\u2705 Kokoro TTS loaded successfully!"}
+{"timestamp": "2025-11-12T21:03:43.237445", "level": "INFO", "name": "DictatorService", "message": "\u2705 TTS engine loaded successfully!"}
+{"timestamp": "2025-11-12T21:03:43.237982", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Loading event-driven voice session..."}
+{"timestamp": "2025-11-12T21:03:43.238119", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfa4 VAD enabled: True"}
+{"timestamp": "2025-11-12T21:03:43.238253", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd17 Using N8N Tool-Calling provider: http://localhost:15678/webhook/dictator-llm"}
+{"timestamp": "2025-11-12T21:03:43.238877", "level": "DEBUG", "name": "asyncio", "message": "Using proactor: IocpProactor"}
+{"timestamp": "2025-11-12T21:03:43.239431", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfa4 Starting voice session (attempt 1/3)"}
+{"timestamp": "2025-11-12T21:03:43.239573", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd17 Event loop configured for thread-safe publishing"}
+{"timestamp": "2025-11-12T21:03:43.239681", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd04 Event processor started"}
+{"timestamp": "2025-11-12T21:03:43.339371", "level": "INFO", "name": "DictatorService", "message": "\u2705 Event-driven voice session loaded - ZERO polling!"}
+{"timestamp": "2025-11-12T21:03:43.340651", "level": "INFO", "name": "DictatorService", "message": "\ud83d\ude80 Dictator Service started"}
+{"timestamp": "2025-11-12T21:03:43.341053", "level": "INFO", "name": "DictatorService", "message": "\ud83d\uddb1\ufe0f  Listening for mouse button: side1"}
+{"timestamp": "2025-11-12T21:03:45.804322", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd34 Recording started (VAD)..."}
+{"timestamp": "2025-11-12T21:03:45.804610", "level": "INFO", "name": "DictatorService", "message": "\ud83e\uddf9 Cleared audio buffer"}
+{"timestamp": "2025-11-12T21:03:45.866123", "level": "DEBUG", "name": "DictatorService", "message": "\ud83c\udfb5 Voice session started receiving audio chunks"}
+{"timestamp": "2025-11-12T21:03:46.677318", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Speech STARTED (window=1400ms)"}
+{"timestamp": "2025-11-12T21:03:46.677684", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.SPEECH_STARTED (total events: 1)"}
+{"timestamp": "2025-11-12T21:03:46.677925", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.SPEECH_STARTED"}
+{"timestamp": "2025-11-12T21:03:46.678000", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfa4 Speech detected by VAD"}
+{"timestamp": "2025-11-12T21:03:46.886326", "level": "INFO", "name": "DictatorService", "message": "\u2705 Voice session healthy, processing audio"}
+{"timestamp": "2025-11-12T21:03:53.487973", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:03:54.738349", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:03:56.478221", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:03:57.178257", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Speech STOPPED after 702ms of silence"}
+{"timestamp": "2025-11-12T21:03:57.178649", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.SPEECH_STOPPED (total events: 2)"}
+{"timestamp": "2025-11-12T21:03:57.178868", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.SPEECH_STOPPED"}
+{"timestamp": "2025-11-12T21:03:57.178943", "level": "INFO", "name": "DictatorService", "message": "\ud83d\uded1 Speech ended, transcribing..."}
+{"timestamp": "2025-11-12T21:03:57.178992", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf VAD detected speech stop, resetting recording state"}
+{"timestamp": "2025-11-12T21:03:57.179091", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Speech stopped - VAD mode: enabled, Buffer size: 181376 samples (11.34s)"}
+{"timestamp": "2025-11-12T21:03:57.325302", "level": "INFO", "name": "faster_whisper", "message": "Processing audio with duration 00:11.336"}
+{"timestamp": "2025-11-12T21:03:57.330601", "level": "DEBUG", "name": "faster_whisper", "message": "Processing segment at 00:00.000"}
+{"timestamp": "2025-11-12T21:04:00.102087", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TRANSCRIPTION_STARTED (total events: 3)"}
+{"timestamp": "2025-11-12T21:04:00.102324", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TRANSCRIPTION_STARTED"}
+{"timestamp": "2025-11-12T21:04:00.102958", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 4)"}
+{"timestamp": "2025-11-12T21:04:00.103099", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TRANSCRIPTION_COMPLETED"}
+{"timestamp": "2025-11-12T21:04:00.103223", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcdd Transcription complete, calling LLM..."}
+{"timestamp": "2025-11-12T21:04:00.103360", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcdd Transcribed text: 'Olha, na verdade eu me enganei, eu j\u00e1 estava usando o modelo Yama, agora que eu estou usando direto a integra\u00e7\u00e3o do N8n. Vamos ver o que acontece.'"}
+{"timestamp": "2025-11-12T21:04:00.103593", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd17 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm"}
+{"timestamp": "2025-11-12T21:04:00.103814", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd17 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm"}
+{"timestamp": "2025-11-12T21:04:00.104299", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce6 Payload: 2 messages"}
+{"timestamp": "2025-11-12T21:04:03.023789", "level": "INFO", "name": "DictatorService", "message": "\u2705 N8N response: 678 chars"}
+{"timestamp": "2025-11-12T21:04:03.024206", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udfe2 N8N returned: 678 chars"}
+{"timestamp": "2025-11-12T21:04:03.024687", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcc4 Response text: <think>\nOkay, the user mentioned they were using the Yama model before and are now switching to N8n integration. They want to see what happens. I need to respond in Portuguese since their message is i..."}
+{"timestamp": "2025-11-12T21:04:03.024820", "level": "INFO", "name": "DictatorService", "message": "\ud83e\uddf9 Cleaned response: Entendo, est\u00e1 tudo bem! Se precisar de ajuda com a integra\u00e7\u00e3o do N8n ou tiver d\u00favidas, \u00e9 s\u00f3 me avisa..."}
+{"timestamp": "2025-11-12T21:04:03.024984", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce2 Publishing TTS_SENTENCE_READY event..."}
+{"timestamp": "2025-11-12T21:04:03.025168", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce2 Publishing LLM_RESPONSE_COMPLETED event"}
+{"timestamp": "2025-11-12T21:04:03.025383", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.LLM_REQUEST (total events: 5)"}
+{"timestamp": "2025-11-12T21:04:03.025474", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.LLM_REQUEST"}
+{"timestamp": "2025-11-12T21:04:03.025656", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TTS_SENTENCE_READY (total events: 6)"}
+{"timestamp": "2025-11-12T21:04:03.025773", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TTS_SENTENCE_READY"}
+{"timestamp": "2025-11-12T21:04:03.025894", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a TTS sentence ready, synthesizing..."}
+{"timestamp": "2025-11-12T21:04:03.026022", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfb5 TTS handler received: 'Entendo, est\u00e1 tudo bem! Se precisar de ajuda com a integra\u00e7\u00e3o do N8n ou tiver d\u00favidas, \u00e9 s\u00f3 me avisa...'"}
+{"timestamp": "2025-11-12T21:04:03.026162", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a Starting TTS synthesis..."}
+{"timestamp": "2025-11-12T21:04:03.026371", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a Speaking: Entendo, est\u00e1 tudo bem! Se precisar de ajuda com a..."}
+{"timestamp": "2025-11-12T21:04:03.026569", "level": "INFO", "name": "KokoroTTS", "message": "\ud83d\udd0a Speaking: Entendo, est\u00e1 tudo bem! Se precisar de ajuda com a..."}
+{"timestamp": "2025-11-12T21:04:03.027447", "level": "WARNING", "name": "phonemizer", "message": "words count mismatch on 100.0% of the lines (1/1)"}
+{"timestamp": "2025-11-12T21:04:03.943524", "level": "INFO", "name": "KokoroTTS", "message": "\u26a1 Audio generated in 0.92s"}
+{"timestamp": "2025-11-12T21:04:07.567616", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd34 Recording started (VAD)..."}
+{"timestamp": "2025-11-12T21:04:07.567897", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udea8 Interrupting TTS - user pressed hotkey to speak"}
+{"timestamp": "2025-11-12T21:04:07.568533", "level": "INFO", "name": "KokoroTTS", "message": "\u23f9\ufe0f Stopping TTS playback..."}
+{"timestamp": "2025-11-12T21:04:07.765329", "level": "INFO", "name": "KokoroTTS", "message": "\u2705 TTS stopped"}
+{"timestamp": "2025-11-12T21:04:07.766577", "level": "INFO", "name": "KokoroTTS", "message": "\u2705 Speech completed"}
+{"timestamp": "2025-11-12T21:04:07.766912", "level": "INFO", "name": "DictatorService", "message": "\u2705 TTS synthesis completed"}
+{"timestamp": "2025-11-12T21:04:07.767190", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfa4 VAD re-enabled after TTS"}
+{"timestamp": "2025-11-12T21:04:07.767346", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 7)"}
+{"timestamp": "2025-11-12T21:04:07.767555", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.LLM_RESPONSE_COMPLETED"}
+{"timestamp": "2025-11-12T21:04:07.767753", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TTS_AUDIO_GENERATED (total events: 8)"}
+{"timestamp": "2025-11-12T21:04:07.767841", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TTS_AUDIO_GENERATED"}
+{"timestamp": "2025-11-12T21:04:07.866080", "level": "INFO", "name": "DictatorService", "message": "\ud83e\uddf9 Cleared audio buffer"}
+{"timestamp": "2025-11-12T21:04:07.929044", "level": "DEBUG", "name": "DictatorService", "message": "\ud83c\udfb5 Voice session started receiving audio chunks"}
+{"timestamp": "2025-11-12T21:04:08.450415", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Speech STARTED (window=1400ms)"}
+{"timestamp": "2025-11-12T21:04:08.450753", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.SPEECH_STARTED (total events: 9)"}
+{"timestamp": "2025-11-12T21:04:08.451000", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.SPEECH_STARTED"}
+{"timestamp": "2025-11-12T21:04:08.451071", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfa4 Speech detected by VAD"}
+{"timestamp": "2025-11-12T21:04:08.949078", "level": "INFO", "name": "DictatorService", "message": "\u2705 Voice session healthy, processing audio"}
+{"timestamp": "2025-11-12T21:04:10.635127", "level": "INFO", "name": "DictatorService.ThreadMonitor", "message": "Thread snapshot: total=48, top=[{'id': 30432, 'name': 'MainThread', 'cpu_ms': 9156.25}, {'id': 30868, 'name': 'unknown', 'cpu_ms': 2718.75}, {'id': 37096, 'name': 'asyncio_0', 'cpu_ms': 968.75}, {'id': 30248, 'name': 'VoiceSessionThread', 'cpu_ms': 843.75}, {'id': 35992, 'name': 'unknown', 'cpu_ms': 796.88}]"}
+{"timestamp": "2025-11-12T21:04:11.440684", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:04:13.650850", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:04:13.780816", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:04:13.940605", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:04:14.220634", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:04:14.350812", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:04:14.720798", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:04:14.770713", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:04:15.470942", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Speech STOPPED after 702ms of silence"}
+{"timestamp": "2025-11-12T21:04:15.471330", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.SPEECH_STOPPED (total events: 10)"}
+{"timestamp": "2025-11-12T21:04:15.471574", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.SPEECH_STOPPED"}
+{"timestamp": "2025-11-12T21:04:15.471648", "level": "INFO", "name": "DictatorService", "message": "\ud83d\uded1 Speech ended, transcribing..."}
+{"timestamp": "2025-11-12T21:04:15.471696", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf VAD detected speech stop, resetting recording state"}
+{"timestamp": "2025-11-12T21:04:15.471830", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Speech stopped - VAD mode: enabled, Buffer size: 121056 samples (7.57s)"}
+{"timestamp": "2025-11-12T21:04:15.539625", "level": "INFO", "name": "faster_whisper", "message": "Processing audio with duration 00:07.566"}
+{"timestamp": "2025-11-12T21:04:15.543302", "level": "DEBUG", "name": "faster_whisper", "message": "Processing segment at 00:00.000"}
+{"timestamp": "2025-11-12T21:04:17.813447", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TRANSCRIPTION_STARTED (total events: 11)"}
+{"timestamp": "2025-11-12T21:04:17.813785", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TRANSCRIPTION_STARTED"}
+{"timestamp": "2025-11-12T21:04:17.814492", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 12)"}
+{"timestamp": "2025-11-12T21:04:17.814583", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TRANSCRIPTION_COMPLETED"}
+{"timestamp": "2025-11-12T21:04:17.814662", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcdd Transcription complete, calling LLM..."}
+{"timestamp": "2025-11-12T21:04:17.814710", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcdd Transcribed text: 'N\u00e3o, n\u00e3o preciso de ajuda n\u00e3o, obrigado, eu vou continuar mandando mensagem at\u00e9 travar, vamos ver o que acontece.'"}
+{"timestamp": "2025-11-12T21:04:17.814799", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd17 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm"}
+{"timestamp": "2025-11-12T21:04:17.814909", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd17 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm"}
+{"timestamp": "2025-11-12T21:04:17.815117", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce6 Payload: 4 messages"}
+{"timestamp": "2025-11-12T21:04:20.731712", "level": "INFO", "name": "DictatorService", "message": "\u2705 N8N response: 965 chars"}
+{"timestamp": "2025-11-12T21:04:20.732370", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udfe2 N8N returned: 965 chars"}
+{"timestamp": "2025-11-12T21:04:20.732647", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcc4 Response text: <think>\nOkay, the user is talking about using the Yama model and now switching to N8n integration. They mentioned they'll keep sending messages until it crashes. I need to respond in a way that's frie..."}
+{"timestamp": "2025-11-12T21:04:20.732912", "level": "INFO", "name": "DictatorService", "message": "\ud83e\uddf9 Cleaned response: Entendo, est\u00e1 tudo bem! Se precisar de ajuda a qualquer momento, estou aqui. Vamos ver o que acontec..."}
+{"timestamp": "2025-11-12T21:04:20.733056", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce2 Publishing TTS_SENTENCE_READY event..."}
+{"timestamp": "2025-11-12T21:04:20.733195", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce2 Publishing LLM_RESPONSE_COMPLETED event"}
+{"timestamp": "2025-11-12T21:04:20.733392", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.LLM_REQUEST (total events: 13)"}
+{"timestamp": "2025-11-12T21:04:20.733561", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.LLM_REQUEST"}
+{"timestamp": "2025-11-12T21:04:20.733745", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TTS_SENTENCE_READY (total events: 14)"}
+{"timestamp": "2025-11-12T21:04:20.733914", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TTS_SENTENCE_READY"}
+{"timestamp": "2025-11-12T21:04:20.734036", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a TTS sentence ready, synthesizing..."}
+{"timestamp": "2025-11-12T21:04:20.734131", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfb5 TTS handler received: 'Entendo, est\u00e1 tudo bem! Se precisar de ajuda a qualquer momento, estou aqui. Vamos ver o que acontec...'"}
+{"timestamp": "2025-11-12T21:04:20.734263", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a Starting TTS synthesis..."}
+{"timestamp": "2025-11-12T21:04:20.734483", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a Speaking: Entendo, est\u00e1 tudo bem! Se precisar de ajuda a qua..."}
+{"timestamp": "2025-11-12T21:04:20.734658", "level": "INFO", "name": "KokoroTTS", "message": "\ud83d\udd0a Speaking: Entendo, est\u00e1 tudo bem! Se precisar de ajuda a qua..."}
+{"timestamp": "2025-11-12T21:04:21.397635", "level": "INFO", "name": "KokoroTTS", "message": "\u26a1 Audio generated in 0.66s"}
+{"timestamp": "2025-11-12T21:04:26.451351", "level": "INFO", "name": "KokoroTTS", "message": "\u2705 Speech completed"}
+{"timestamp": "2025-11-12T21:04:26.451731", "level": "INFO", "name": "DictatorService", "message": "\u2705 TTS synthesis completed"}
+{"timestamp": "2025-11-12T21:04:26.451853", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfa4 VAD re-enabled after TTS"}
+{"timestamp": "2025-11-12T21:04:26.451925", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 15)"}
+{"timestamp": "2025-11-12T21:04:26.451984", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.LLM_RESPONSE_COMPLETED"}
+{"timestamp": "2025-11-12T21:04:26.452061", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TTS_AUDIO_GENERATED (total events: 16)"}
+{"timestamp": "2025-11-12T21:04:26.452142", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TTS_AUDIO_GENERATED"}
+{"timestamp": "2025-11-12T21:04:28.368831", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd34 Recording started (VAD)..."}
+{"timestamp": "2025-11-12T21:04:28.369215", "level": "INFO", "name": "DictatorService", "message": "\ud83e\uddf9 Cleared audio buffer"}
+{"timestamp": "2025-11-12T21:04:28.431666", "level": "DEBUG", "name": "DictatorService", "message": "\ud83c\udfb5 Voice session started receiving audio chunks"}
+{"timestamp": "2025-11-12T21:04:29.192871", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Speech STARTED (window=1400ms)"}
+{"timestamp": "2025-11-12T21:04:29.193213", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.SPEECH_STARTED (total events: 17)"}
+{"timestamp": "2025-11-12T21:04:29.193455", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.SPEECH_STARTED"}
+{"timestamp": "2025-11-12T21:04:29.193522", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfa4 Speech detected by VAD"}
+{"timestamp": "2025-11-12T21:04:29.451694", "level": "INFO", "name": "DictatorService", "message": "\u2705 Voice session healthy, processing audio"}
+{"timestamp": "2025-11-12T21:04:31.452376", "level": "INFO", "name": "DictatorService", "message": "\u23f9\ufe0f Recording stopped"}
+{"timestamp": "2025-11-12T21:04:31.453325", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Event-driven mode: Voice session processed speech automatically via events"}
+{"timestamp": "2025-11-12T21:04:37.773574", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd34 Recording started (VAD)..."}
+{"timestamp": "2025-11-12T21:04:37.773912", "level": "INFO", "name": "DictatorService", "message": "\ud83e\uddf9 Cleared audio buffer"}
+{"timestamp": "2025-11-12T21:04:37.837009", "level": "DEBUG", "name": "DictatorService", "message": "\ud83c\udfb5 Voice session started receiving audio chunks"}
+{"timestamp": "2025-11-12T21:04:38.488456", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:04:38.857027", "level": "INFO", "name": "DictatorService", "message": "\u2705 Voice session healthy, processing audio"}
+{"timestamp": "2025-11-12T21:04:40.645968", "level": "INFO", "name": "DictatorService.ThreadMonitor", "message": "Thread snapshot: total=48, top=[{'id': 30432, 'name': 'MainThread', 'cpu_ms': 9156.25}, {'id': 30868, 'name': 'unknown', 'cpu_ms': 4937.5}, {'id': 37096, 'name': 'asyncio_0', 'cpu_ms': 1656.25}, {'id': 30248, 'name': 'VoiceSessionThread', 'cpu_ms': 1453.12}, {'id': 35992, 'name': 'unknown', 'cpu_ms': 1343.75}]"}
+{"timestamp": "2025-11-12T21:04:48.218982", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:04:48.919758", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Speech STOPPED after 702ms of silence"}
+{"timestamp": "2025-11-12T21:04:48.920165", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.SPEECH_STOPPED (total events: 18)"}
+{"timestamp": "2025-11-12T21:04:48.920473", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.SPEECH_STOPPED"}
+{"timestamp": "2025-11-12T21:04:48.920548", "level": "INFO", "name": "DictatorService", "message": "\ud83d\uded1 Speech ended, transcribing..."}
+{"timestamp": "2025-11-12T21:04:48.920595", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf VAD detected speech stop, resetting recording state"}
+{"timestamp": "2025-11-12T21:04:48.920735", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Speech stopped - VAD mode: enabled, Buffer size: 226304 samples (14.14s)"}
+{"timestamp": "2025-11-12T21:04:48.991699", "level": "INFO", "name": "faster_whisper", "message": "Processing audio with duration 00:14.144"}
+{"timestamp": "2025-11-12T21:04:48.997489", "level": "DEBUG", "name": "faster_whisper", "message": "Processing segment at 00:00.000"}
+{"timestamp": "2025-11-12T21:04:53.201886", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TRANSCRIPTION_STARTED (total events: 19)"}
+{"timestamp": "2025-11-12T21:04:53.202268", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TRANSCRIPTION_STARTED"}
+{"timestamp": "2025-11-12T21:04:53.202858", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 20)"}
+{"timestamp": "2025-11-12T21:04:53.202928", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TRANSCRIPTION_COMPLETED"}
+{"timestamp": "2025-11-12T21:04:53.203033", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcdd Transcription complete, calling LLM..."}
+{"timestamp": "2025-11-12T21:04:53.203083", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcdd Transcribed text: 'Voc\u00ea ainda tem acesso a alguma ferramenta? Olha, acabei de testar que se eu clicar novamente na hotkey enquanto eu estou com o vibe ativado, ele interrompe a grava\u00e7\u00e3o. Eu n\u00e3o sei se isso \u00e9 bom ou se \u00e9 ruim. O que voc\u00ea acha?'"}
+{"timestamp": "2025-11-12T21:04:53.203164", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd17 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm"}
+{"timestamp": "2025-11-12T21:04:53.203301", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd17 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm"}
+{"timestamp": "2025-11-12T21:04:53.203375", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce6 Payload: 6 messages"}
+{"timestamp": "2025-11-12T21:04:56.737899", "level": "INFO", "name": "DictatorService", "message": "\u2705 N8N response: 1098 chars"}
+{"timestamp": "2025-11-12T21:04:56.738306", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udfe2 N8N returned: 1098 chars"}
+{"timestamp": "2025-11-12T21:04:56.738875", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcc4 Response text: <think>\nOkay, the user is asking if I still have access to any tools. Let me check the previous messages. The user mentioned using N8n integration and testing hotkey interruptions. The tools available..."}
+{"timestamp": "2025-11-12T21:04:56.739050", "level": "INFO", "name": "DictatorService", "message": "\ud83e\uddf9 Cleaned response: Ainda tenho acesso \u00e0s ferramentas de tempo e clima, mas seu teste com a hotkey parece ser uma caract..."}
+{"timestamp": "2025-11-12T21:04:56.739204", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce2 Publishing TTS_SENTENCE_READY event..."}
+{"timestamp": "2025-11-12T21:04:56.739421", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce2 Publishing LLM_RESPONSE_COMPLETED event"}
+{"timestamp": "2025-11-12T21:04:56.739566", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.LLM_REQUEST (total events: 21)"}
+{"timestamp": "2025-11-12T21:04:56.739726", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.LLM_REQUEST"}
+{"timestamp": "2025-11-12T21:04:56.739913", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TTS_SENTENCE_READY (total events: 22)"}
+{"timestamp": "2025-11-12T21:04:56.740040", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TTS_SENTENCE_READY"}
+{"timestamp": "2025-11-12T21:04:56.740136", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a TTS sentence ready, synthesizing..."}
+{"timestamp": "2025-11-12T21:04:56.740208", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfb5 TTS handler received: 'Ainda tenho acesso \u00e0s ferramentas de tempo e clima, mas seu teste com a hotkey parece ser uma caract...'"}
+{"timestamp": "2025-11-12T21:04:56.740262", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a Starting TTS synthesis..."}
+{"timestamp": "2025-11-12T21:04:56.740417", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a Speaking: Ainda tenho acesso \u00e0s ferramentas de tempo e clima..."}
+{"timestamp": "2025-11-12T21:04:56.740540", "level": "INFO", "name": "KokoroTTS", "message": "\ud83d\udd0a Speaking: Ainda tenho acesso \u00e0s ferramentas de tempo e clima..."}
+{"timestamp": "2025-11-12T21:04:57.890247", "level": "INFO", "name": "KokoroTTS", "message": "\u26a1 Audio generated in 1.15s"}
+{"timestamp": "2025-11-12T21:05:06.438648", "level": "INFO", "name": "KokoroTTS", "message": "\u2705 Speech completed"}
+{"timestamp": "2025-11-12T21:05:06.439057", "level": "INFO", "name": "DictatorService", "message": "\u2705 TTS synthesis completed"}
+{"timestamp": "2025-11-12T21:05:06.439439", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfa4 VAD re-enabled after TTS"}
+{"timestamp": "2025-11-12T21:05:06.439528", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 23)"}
+{"timestamp": "2025-11-12T21:05:06.439644", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.LLM_RESPONSE_COMPLETED"}
+{"timestamp": "2025-11-12T21:05:06.439790", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TTS_AUDIO_GENERATED (total events: 24)"}
+{"timestamp": "2025-11-12T21:05:06.439929", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TTS_AUDIO_GENERATED"}
+{"timestamp": "2025-11-12T21:05:10.653089", "level": "INFO", "name": "DictatorService.ThreadMonitor", "message": "Thread snapshot: total=44, top=[{'id': 30432, 'name': 'MainThread', 'cpu_ms': 9156.25}, {'id': 30868, 'name': 'unknown', 'cpu_ms': 9093.75}, {'id': 37096, 'name': 'asyncio_0', 'cpu_ms': 2890.62}, {'id': 35992, 'name': 'unknown', 'cpu_ms': 2296.88}, {'id': 3172, 'name': 'unknown', 'cpu_ms': 2296.88}]"}
+{"timestamp": "2025-11-12T21:05:16.995851", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd34 Recording started (VAD)..."}
+{"timestamp": "2025-11-12T21:05:16.996410", "level": "INFO", "name": "DictatorService", "message": "\ud83e\uddf9 Cleared audio buffer"}
+{"timestamp": "2025-11-12T21:05:17.062397", "level": "DEBUG", "name": "DictatorService", "message": "\ud83c\udfb5 Voice session started receiving audio chunks"}
+{"timestamp": "2025-11-12T21:05:17.694160", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Speech STARTED (window=1400ms)"}
+{"timestamp": "2025-11-12T21:05:17.694559", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.SPEECH_STARTED (total events: 25)"}
+{"timestamp": "2025-11-12T21:05:17.694966", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.SPEECH_STARTED"}
+{"timestamp": "2025-11-12T21:05:17.695098", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfa4 Speech detected by VAD"}
+{"timestamp": "2025-11-12T21:05:18.082550", "level": "INFO", "name": "DictatorService", "message": "\u2705 Voice session healthy, processing audio"}
+{"timestamp": "2025-11-12T21:05:22.214219", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:05:22.264229", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:05:22.964426", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:05:23.094939", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:05:23.154303", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:05:27.854294", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:05:28.554476", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Speech STOPPED after 702ms of silence"}
+{"timestamp": "2025-11-12T21:05:28.554858", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.SPEECH_STOPPED (total events: 26)"}
+{"timestamp": "2025-11-12T21:05:28.555079", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.SPEECH_STOPPED"}
+{"timestamp": "2025-11-12T21:05:28.555171", "level": "INFO", "name": "DictatorService", "message": "\ud83d\uded1 Speech ended, transcribing..."}
+{"timestamp": "2025-11-12T21:05:28.555233", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf VAD detected speech stop, resetting recording state"}
+{"timestamp": "2025-11-12T21:05:28.555440", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Speech stopped - VAD mode: enabled, Buffer size: 184288 samples (11.52s)"}
+{"timestamp": "2025-11-12T21:05:28.622711", "level": "INFO", "name": "faster_whisper", "message": "Processing audio with duration 00:11.518"}
+{"timestamp": "2025-11-12T21:05:28.627922", "level": "DEBUG", "name": "faster_whisper", "message": "Processing segment at 00:00.000"}
+{"timestamp": "2025-11-12T21:05:31.595067", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TRANSCRIPTION_STARTED (total events: 27)"}
+{"timestamp": "2025-11-12T21:05:31.595323", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TRANSCRIPTION_STARTED"}
+{"timestamp": "2025-11-12T21:05:31.595936", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 28)"}
+{"timestamp": "2025-11-12T21:05:31.596035", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TRANSCRIPTION_COMPLETED"}
+{"timestamp": "2025-11-12T21:05:31.596180", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcdd Transcription complete, calling LLM..."}
+{"timestamp": "2025-11-12T21:05:31.596310", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcdd Transcribed text: 'Eita, eu acho que aconteceu alguma coisa errada e voc\u00ea perdeu a \u00faltima coisa que eu falei. Bom, vamos tentar falar novamente. Vai, validando o sil\u00eancio.'"}
+{"timestamp": "2025-11-12T21:05:31.596493", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd17 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm"}
+{"timestamp": "2025-11-12T21:05:31.596630", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd17 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm"}
+{"timestamp": "2025-11-12T21:05:31.596710", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce6 Payload: 8 messages"}
+{"timestamp": "2025-11-12T21:05:34.836503", "level": "INFO", "name": "DictatorService", "message": "\u2705 N8N response: 1053 chars"}
+{"timestamp": "2025-11-12T21:05:34.836997", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udfe2 N8N returned: 1053 chars"}
+{"timestamp": "2025-11-12T21:05:34.837418", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcc4 Response text: <think>\nOkay, the user mentioned that something went wrong and I lost the last thing they said. They want to try again and validate the silence. Let me check the previous messages.\n\nIn the last intera..."}
+{"timestamp": "2025-11-12T21:05:34.837642", "level": "INFO", "name": "DictatorService", "message": "\ud83e\uddf9 Cleaned response: Entendi, estou aqui ouvindo. Repita o que voc\u00ea disse, por favor. Vamos validar o sil\u00eancio juntos...."}
+{"timestamp": "2025-11-12T21:05:34.837775", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce2 Publishing TTS_SENTENCE_READY event..."}
+{"timestamp": "2025-11-12T21:05:34.837968", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce2 Publishing LLM_RESPONSE_COMPLETED event"}
+{"timestamp": "2025-11-12T21:05:34.838158", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.LLM_REQUEST (total events: 29)"}
+{"timestamp": "2025-11-12T21:05:34.838341", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.LLM_REQUEST"}
+{"timestamp": "2025-11-12T21:05:34.838554", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TTS_SENTENCE_READY (total events: 30)"}
+{"timestamp": "2025-11-12T21:05:34.838706", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TTS_SENTENCE_READY"}
+{"timestamp": "2025-11-12T21:05:34.838837", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a TTS sentence ready, synthesizing..."}
+{"timestamp": "2025-11-12T21:05:34.838977", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfb5 TTS handler received: 'Entendi, estou aqui ouvindo. Repita o que voc\u00ea disse, por favor. Vamos validar o sil\u00eancio juntos....'"}
+{"timestamp": "2025-11-12T21:05:34.839060", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a Starting TTS synthesis..."}
+{"timestamp": "2025-11-12T21:05:34.839166", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a Speaking: Entendi, estou aqui ouvindo. Repita o que voc\u00ea dis..."}
+{"timestamp": "2025-11-12T21:05:34.839290", "level": "INFO", "name": "KokoroTTS", "message": "\ud83d\udd0a Speaking: Entendi, estou aqui ouvindo. Repita o que voc\u00ea dis..."}
+{"timestamp": "2025-11-12T21:05:35.466910", "level": "INFO", "name": "KokoroTTS", "message": "\u26a1 Audio generated in 0.63s"}
+{"timestamp": "2025-11-12T21:05:40.389849", "level": "INFO", "name": "KokoroTTS", "message": "\u2705 Speech completed"}
+{"timestamp": "2025-11-12T21:05:40.390245", "level": "INFO", "name": "DictatorService", "message": "\u2705 TTS synthesis completed"}
+{"timestamp": "2025-11-12T21:05:40.390623", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfa4 VAD re-enabled after TTS"}
+{"timestamp": "2025-11-12T21:05:40.390716", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 31)"}
+{"timestamp": "2025-11-12T21:05:40.390870", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.LLM_RESPONSE_COMPLETED"}
+{"timestamp": "2025-11-12T21:05:40.390981", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TTS_AUDIO_GENERATED (total events: 32)"}
+{"timestamp": "2025-11-12T21:05:40.391039", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TTS_AUDIO_GENERATED"}
+{"timestamp": "2025-11-12T21:05:40.666313", "level": "INFO", "name": "DictatorService.ThreadMonitor", "message": "Thread snapshot: total=46, top=[{'id': 30868, 'name': 'unknown', 'cpu_ms': 12046.88}, {'id': 30432, 'name': 'MainThread', 'cpu_ms': 9156.25}, {'id': 37096, 'name': 'asyncio_0', 'cpu_ms': 3578.12}, {'id': 35992, 'name': 'unknown', 'cpu_ms': 2828.12}, {'id': 3172, 'name': 'unknown', 'cpu_ms': 2828.12}]"}
+{"timestamp": "2025-11-12T21:05:42.277561", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd34 Recording started (VAD)..."}
+{"timestamp": "2025-11-12T21:05:42.277936", "level": "INFO", "name": "DictatorService", "message": "\ud83e\uddf9 Cleared audio buffer"}
+{"timestamp": "2025-11-12T21:05:42.340291", "level": "DEBUG", "name": "DictatorService", "message": "\ud83c\udfb5 Voice session started receiving audio chunks"}
+{"timestamp": "2025-11-12T21:05:42.841221", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Speech STARTED (window=1400ms)"}
+{"timestamp": "2025-11-12T21:05:42.841574", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.SPEECH_STARTED (total events: 33)"}
+{"timestamp": "2025-11-12T21:05:42.841811", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.SPEECH_STARTED"}
+{"timestamp": "2025-11-12T21:05:42.841883", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfa4 Speech detected by VAD"}
+{"timestamp": "2025-11-12T21:05:43.360515", "level": "INFO", "name": "DictatorService", "message": "\u2705 Voice session healthy, processing audio"}
+{"timestamp": "2025-11-12T21:05:48.952213", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:05:49.021971", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Silence detected, starting debounce timer"}
+{"timestamp": "2025-11-12T21:05:49.732063", "level": "DEBUG", "name": "DictatorService", "message": "VAD: Speech STOPPED after 702ms of silence"}
+{"timestamp": "2025-11-12T21:05:49.732457", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.SPEECH_STOPPED (total events: 34)"}
+{"timestamp": "2025-11-12T21:05:49.732674", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.SPEECH_STOPPED"}
+{"timestamp": "2025-11-12T21:05:49.732747", "level": "INFO", "name": "DictatorService", "message": "\ud83d\uded1 Speech ended, transcribing..."}
+{"timestamp": "2025-11-12T21:05:49.732794", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf VAD detected speech stop, resetting recording state"}
+{"timestamp": "2025-11-12T21:05:49.732943", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Speech stopped - VAD mode: enabled, Buffer size: 118560 samples (7.41s)"}
+{"timestamp": "2025-11-12T21:05:49.804143", "level": "INFO", "name": "faster_whisper", "message": "Processing audio with duration 00:07.410"}
+{"timestamp": "2025-11-12T21:05:49.807724", "level": "DEBUG", "name": "faster_whisper", "message": "Processing segment at 00:00.000"}
+{"timestamp": "2025-11-12T21:05:51.667102", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TRANSCRIPTION_STARTED (total events: 35)"}
+{"timestamp": "2025-11-12T21:05:51.667431", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TRANSCRIPTION_STARTED"}
+{"timestamp": "2025-11-12T21:05:51.667907", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TRANSCRIPTION_COMPLETED (total events: 36)"}
+{"timestamp": "2025-11-12T21:05:51.667987", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TRANSCRIPTION_COMPLETED"}
+{"timestamp": "2025-11-12T21:05:51.668052", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcdd Transcription complete, calling LLM..."}
+{"timestamp": "2025-11-12T21:05:51.668098", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcdd Transcribed text: 'Obrigado pelo seu suporte N\u00e3o foi exatamente o que eu quis dizer Mas obrigado mesmo assim'"}
+{"timestamp": "2025-11-12T21:05:51.668195", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd17 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm"}
+{"timestamp": "2025-11-12T21:05:51.668292", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd17 Calling N8N webhook: http://localhost:15678/webhook/dictator-llm"}
+{"timestamp": "2025-11-12T21:05:51.668448", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce6 Payload: 10 messages"}
+{"timestamp": "2025-11-12T21:05:53.648538", "level": "INFO", "name": "DictatorService", "message": "\u2705 N8N response: 622 chars"}
+{"timestamp": "2025-11-12T21:05:53.649087", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udfe2 N8N returned: 622 chars"}
+{"timestamp": "2025-11-12T21:05:53.649498", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcc4 Response text: <think>\nOkay, the user just thanked me, but they mentioned it wasn't exactly what they meant. I need to acknowledge their thanks while being open to further assistance. Let me keep it friendly and con..."}
+{"timestamp": "2025-11-12T21:05:53.649688", "level": "INFO", "name": "DictatorService", "message": "\ud83e\uddf9 Cleaned response: Voc\u00ea \u00e9 bem-vindo! Se precisar de ajuda com algo espec\u00edfico, \u00e9 s\u00f3 dizer. Estou aqui para o que precis..."}
+{"timestamp": "2025-11-12T21:05:53.649851", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce2 Publishing TTS_SENTENCE_READY event..."}
+{"timestamp": "2025-11-12T21:05:53.650084", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce2 Publishing LLM_RESPONSE_COMPLETED event"}
+{"timestamp": "2025-11-12T21:05:53.650302", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.LLM_REQUEST (total events: 37)"}
+{"timestamp": "2025-11-12T21:05:53.650392", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.LLM_REQUEST"}
+{"timestamp": "2025-11-12T21:05:53.650567", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TTS_SENTENCE_READY (total events: 38)"}
+{"timestamp": "2025-11-12T21:05:53.650718", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TTS_SENTENCE_READY"}
+{"timestamp": "2025-11-12T21:05:53.650839", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a TTS sentence ready, synthesizing..."}
+{"timestamp": "2025-11-12T21:05:53.650966", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfb5 TTS handler received: 'Voc\u00ea \u00e9 bem-vindo! Se precisar de ajuda com algo espec\u00edfico, \u00e9 s\u00f3 dizer. Estou aqui para o que precis...'"}
+{"timestamp": "2025-11-12T21:05:53.651060", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a Starting TTS synthesis..."}
+{"timestamp": "2025-11-12T21:05:53.651246", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd0a Speaking: Voc\u00ea \u00e9 bem-vindo! Se precisar de ajuda com algo es..."}
+{"timestamp": "2025-11-12T21:05:53.651381", "level": "INFO", "name": "KokoroTTS", "message": "\ud83d\udd0a Speaking: Voc\u00ea \u00e9 bem-vindo! Se precisar de ajuda com algo es..."}
+{"timestamp": "2025-11-12T21:05:54.267735", "level": "INFO", "name": "KokoroTTS", "message": "\u26a1 Audio generated in 0.62s"}
+{"timestamp": "2025-11-12T21:05:59.234373", "level": "INFO", "name": "KokoroTTS", "message": "\u2705 Speech completed"}
+{"timestamp": "2025-11-12T21:05:59.234900", "level": "INFO", "name": "DictatorService", "message": "\u2705 TTS synthesis completed"}
+{"timestamp": "2025-11-12T21:05:59.235359", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfa4 VAD re-enabled after TTS"}
+{"timestamp": "2025-11-12T21:05:59.235470", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.LLM_RESPONSE_COMPLETED (total events: 39)"}
+{"timestamp": "2025-11-12T21:05:59.235621", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.LLM_RESPONSE_COMPLETED"}
+{"timestamp": "2025-11-12T21:05:59.235776", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udce8 Event received: EventType.TTS_AUDIO_GENERATED (total events: 40)"}
+{"timestamp": "2025-11-12T21:05:59.235868", "level": "INFO", "name": "DictatorService", "message": "\ud83c\udfaf Handling event: EventType.TTS_AUDIO_GENERATED"}
+{"timestamp": "2025-11-12T21:06:04.553047", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udcbe Configuration saved"}
+{"timestamp": "2025-11-12T21:06:04.554034", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:11434"}
+{"timestamp": "2025-11-12T21:06:04.556725", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:11434 \"GET /api/tags HTTP/1.1\" 200 1041"}
+{"timestamp": "2025-11-12T21:06:04.557408", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:11434"}
+{"timestamp": "2025-11-12T21:06:04.583001", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:11434 \"GET /api/tags HTTP/1.1\" 200 1041"}
+{"timestamp": "2025-11-12T21:06:04.584122", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:11434"}
+{"timestamp": "2025-11-12T21:06:04.598508", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:11434 \"GET /api/tags HTTP/1.1\" 200 1041"}
+{"timestamp": "2025-11-12T21:06:04.599214", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:11434"}
+{"timestamp": "2025-11-12T21:06:04.613572", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:11434 \"GET /api/tags HTTP/1.1\" 200 1041"}
+{"timestamp": "2025-11-12T21:06:04.614631", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:11434"}
+{"timestamp": "2025-11-12T21:06:04.629176", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:11434 \"GET /api/tags HTTP/1.1\" 200 1041"}
+{"timestamp": "2025-11-12T21:06:04.629699", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd04 LLM Provider changed to: ollama"}
+{"timestamp": "2025-11-12T21:06:04.629865", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd04 Restarting service to apply provider changes..."}
+{"timestamp": "2025-11-12T21:06:04.630038", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udd04 Restarting service..."}
+{"timestamp": "2025-11-12T21:06:04.630178", "level": "INFO", "name": "DictatorService", "message": "\ud83d\uded1 Dictator Service stopping..."}
+{"timestamp": "2025-11-12T21:06:04.630428", "level": "INFO", "name": "DictatorService", "message": "Voice session stopped"}
+{"timestamp": "2025-11-12T21:06:04.630582", "level": "INFO", "name": "DictatorService", "message": "Voice session completed normally"}
+{"timestamp": "2025-11-12T21:06:04.631134", "level": "INFO", "name": "DictatorService", "message": "\ud83d\udc4b Dictator Service stopped"}

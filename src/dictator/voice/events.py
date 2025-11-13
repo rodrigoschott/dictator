@@ -179,3 +179,8 @@ class EventPubSub:
     def subscriber_count(self) -> int:
         """Number of active subscribers"""
         return len(self.subscribers)
+
+    def get_subscriber_depths(self) -> list[int]:
+        """Return queue sizes for each subscriber (for diagnostics)."""
+
+        return [queue.qsize() for queue in list(self.subscribers)]

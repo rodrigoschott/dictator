@@ -28,6 +28,7 @@ kokoro-onnx = {extras = ["gpu"], version = "^0.4.9"}
 # LLM integration
 aiohttp = "^3.9.0"  # For Ollama API calls
 requests = "^2.31.0"  # For synchronous API calls in tray
+psutil = "^5.9.8"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
