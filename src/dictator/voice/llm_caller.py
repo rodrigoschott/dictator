@@ -70,6 +70,10 @@ class LLMCaller:
         self.conversation_history: list[dict] = []
         self.max_history = 10
 
+        # ADDED - Phase 3: Call serialization
+        self._call_lock = asyncio.Lock()  # Prevent concurrent LLM calls
+        self._processing = False  # Flag to track if currently processing
+
     async def process_transcription(self, transcription: str) -> None:
         """
         Process user transcription and get LLM response
@@ -77,9 +81,35 @@ class LLMCaller:
         This is the ONLY LLM call per utterance.
         Calls Claude Code CLI directly (subprocess).
 
+        ADDED - Phase 3: Uses lock to serialize concurrent calls.
+        If already processing, the new call waits in queue.
+
         Args:
             transcription: User's transcribed speech
         """
+        import logging
+        logger = logging.getLogger("DictatorService")
+
+        # ADDED - Phase 3: Check if already processing
+        if self._processing:
+            logger.warning(f"⚠️ LLM call already in progress, queueing new request: '{transcription[:50]}...'")
+
+        # ADDED - Phase 3: Acquire lock (blocks if another call is in progress)
+        async with self._call_lock:
+            self._processing = True
+            logger.debug(f"🔒 LLM lock acquired for: '{transcription[:50]}...'")
+
+            try:
+                await self._process_transcription_internal(transcription)
+            finally:
+                self._processing = False
+                logger.debug("🔓 LLM lock released")
+
+    async def _process_transcription_internal(self, transcription: str) -> None:
+        """Internal implementation of transcription processing (called within lock)"""
+        import logging
+        logger = logging.getLogger("DictatorService")
+
         # Add to history
         self.conversation_history.append({
             "role": "user",
@@ -95,8 +125,6 @@ class LLMCaller:
 
         try:
             # Call Claude Code CLI directly (subprocess)
-            import logging
-            logger = logging.getLogger("DictatorService")
             logger.info("🔵 About to call _call_claude_cli...")
             response = await self._call_claude_cli(transcription)
             logger.info(f"🟢 _call_claude_cli returned: {len(response)} chars")
@@ -451,15 +479,18 @@ class OllamaLLMCaller(LLMCaller):
         self.base_url = base_url
         self.model = model
 
-    async def process_transcription(self, transcription: str) -> None:
+    async def _process_transcription_internal(self, transcription: str) -> None:
         """
-        Process user transcription with Ollama
+        Process user transcription with Ollama (internal implementation)
 
         Overrides parent method to use Ollama API instead of Claude CLI.
 
         Args:
             transcription: User's transcribed speech
         """
+        import logging
+        logger = logging.getLogger("DictatorService")
+
         # Add to history
         self.conversation_history.append({
             "role": "user",
@@ -474,8 +505,6 @@ class OllamaLLMCaller(LLMCaller):
         ))
 
         try:
-            import logging
-            logger = logging.getLogger("DictatorService")
             logger.info(f"🦙 Calling Ollama API ({self.model})...")
 
             # Call Ollama API
@@ -665,9 +694,9 @@ class N8NToolCallingLLMCaller(LLMCaller):
         self.webhook_url = webhook_url
         self.timeout = timeout
 
-    async def process_transcription(self, transcription: str) -> None:
+    async def _process_transcription_internal(self, transcription: str) -> None:
         """
-        Process user transcription with N8N orchestration
+        Process user transcription with N8N orchestration (internal implementation)
 
         Overrides parent method to use N8N webhook instead of direct LLM calls.
         N8N handles the complete flow: LLM → tool calls → tool execution → final response.
@@ -675,6 +704,9 @@ class N8NToolCallingLLMCaller(LLMCaller):
         Args:
             transcription: User's transcribed speech
         """
+        import logging
+        logger = logging.getLogger("DictatorService")
+
         # Add to history
         self.conversation_history.append({
             "role": "user",
@@ -689,8 +721,6 @@ class N8NToolCallingLLMCaller(LLMCaller):
         ))
 
         try:
-            import logging
-            logger = logging.getLogger("DictatorService")
             logger.info(f"🔗 Calling N8N webhook: {self.webhook_url}")
 
             # Call N8N webhook

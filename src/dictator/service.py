@@ -10,6 +10,7 @@ import time
 import tempfile
 import threading
 import logging
+from enum import Enum
 from pathlib import Path
 from typing import Optional
 
@@ -46,6 +47,26 @@ except ImportError:
     VOICE_SESSION_AVAILABLE = False
 
 
+class ServiceState(str, Enum):
+    """
+    Service states for voice interaction
+
+    State transitions:
+    - IDLE → RECORDING (user presses hotkey)
+    - RECORDING → PROCESSING (user stops or VAD detects silence)
+    - PROCESSING → SPEAKING (LLM response ready)
+    - PROCESSING → IDLE (dictation mode, no TTS)
+    - SPEAKING → IDLE (TTS finished)
+    - ANY → INTERRUPTED (user presses hotkey during processing/speaking)
+    - INTERRUPTED → RECORDING (new recording starts)
+    """
+    IDLE = "idle"
+    RECORDING = "recording"
+    PROCESSING = "processing"  # Transcription + LLM
+    SPEAKING = "speaking"      # TTS playback
+    INTERRUPTED = "interrupted"  # User interrupted during processing/speaking
+
+
 class DictatorService:
     """Main service class for Dictator"""
 
@@ -66,7 +87,8 @@ class DictatorService:
         self._recording_data_lock = threading.Lock()  # Lock for recording_data list
 
         # State (protected by _state_lock)
-        self.is_recording = False
+        self._state = ServiceState.IDLE  # CHANGED - Phase 2: State machine
+        self.is_recording = False  # DEPRECATED - kept for backward compat, will be removed
         self.recording_data = []
         self.model: Optional[WhisperModel] = None
         self.tts_engine: Optional[KokoroTTSEngine] = None
@@ -104,6 +126,37 @@ class DictatorService:
                 callback(state)
             except Exception as e:
                 self.logger.error(f"Error in state callback: {e}")
+
+    def _transition_state(self, from_states: list[ServiceState], to_state: ServiceState) -> bool:
+        """
+        Attempt state transition with validation (ADDED - Phase 2.3)
+
+        Args:
+            from_states: Allowed current states
+            to_state: Target state
+
+        Returns:
+            True if transition succeeded, False if invalid
+        """
+        with self._state_lock:
+            if self._state not in from_states:
+                self.logger.warning(
+                    f"Invalid state transition: {self._state} -> {to_state} "
+                    f"(expected one of {from_states})"
+                )
+                return False
+
+            old_state = self._state
+            self._state = to_state
+
+            # Update deprecated flag for backward compat
+            self.is_recording = (to_state == ServiceState.RECORDING)
+
+            self.logger.debug(f"State transition: {old_state} -> {to_state}")
+
+        # Emit state change to UI (outside lock)
+        self._emit_state(to_state.value)
+        return True
 
     def load_config(self) -> dict:
         """Load configuration from YAML file"""
@@ -544,12 +597,14 @@ class DictatorService:
     def toggle_recording(self):
         """Toggle recording on/off"""
         with self._state_lock:
-            is_currently_recording = self.is_recording
+            current_state = self._state
 
-        if is_currently_recording:
+        if current_state == ServiceState.RECORDING:
             self.stop_recording()
-        else:
+        elif current_state in (ServiceState.IDLE, ServiceState.INTERRUPTED):
             self.start_recording()
+        else:
+            self.logger.warning(f"Cannot toggle recording in state: {current_state}")
 
     def _on_vad_stop(self):
         """
@@ -558,30 +613,38 @@ class DictatorService:
         Resets recording state so that next hotkey press starts a new recording
         instead of trying to stop an already-stopped recording.
         """
-        with self._state_lock:
-            if self.is_recording:
-                self.logger.info("🎯 VAD detected speech stop, resetting recording state")
-                self.is_recording = False
+        self.logger.info("🎯 VAD detected speech stop, resetting recording state")
+        # Transition to PROCESSING (transcription will happen)
+        self._transition_state([ServiceState.RECORDING], ServiceState.PROCESSING)
 
     def start_recording(self):
         """Start recording audio"""
-        with self._state_lock:
-            if self.is_recording:
-                self.logger.warning("Already recording!")
-                return
+        # Transition to RECORDING state
+        # Allow interrupting from SPEAKING (TTS) or PROCESSING (LLM) states
+        if not self._transition_state(
+            [ServiceState.IDLE, ServiceState.INTERRUPTED, ServiceState.SPEAKING, ServiceState.PROCESSING],
+            ServiceState.RECORDING
+        ):
+            return
 
         vad_enabled = self.config['hotkey'].get('vad_enabled', False)
         vad_mode = " (VAD)" if vad_enabled else ""
+
+        # Log interrupt if applicable
+        with self._state_lock:
+            old_state = self._state
+
+        if old_state in [ServiceState.SPEAKING, ServiceState.PROCESSING]:
+            self.logger.info(f"🚨 Interrupting {old_state.value} - user pressed hotkey to speak")
+
         self.logger.info(f"🔴 Recording started{vad_mode}...")
 
         # Interrupt TTS if playing (user wants to speak)
         if self.tts_engine and self.tts_engine.is_speaking():
-            self.logger.info("🚨 Interrupting TTS - user pressed hotkey to speak")
+            self.logger.info("⏹️ Stopping TTS playback...")
             self.tts_engine.stop()
             time.sleep(0.1)  # Brief wait for TTS to fully stop
 
-        with self._state_lock:
-            self.is_recording = True
         with self._recording_data_lock:
             self.recording_data = []
         self.last_sound_time = time.time()  # Track last time we heard sound
@@ -591,9 +654,6 @@ class DictatorService:
         if self.use_event_driven_mode and self.voice_session:
             self.voice_session.current_audio_buffer = np.array([], dtype=np.float32)
             self.logger.info("🧹 Cleared audio buffer")
-
-        # Emit state change
-        self._emit_state("recording")
 
         # Start recording in background thread
         threading.Thread(target=self._record_audio, daemon=True).start()
@@ -723,19 +783,16 @@ class DictatorService:
 
         except Exception as e:
             self.logger.error(f"❌ Recording error: {e}")
-            with self._state_lock:
-                self.is_recording = False
+            # Reset to IDLE on error
+            self._transition_state([ServiceState.RECORDING], ServiceState.IDLE)
 
     def stop_recording(self):
         """Stop recording and transcribe"""
-        with self._state_lock:
-            if not self.is_recording:
-                return
+        # Transition to PROCESSING state
+        if not self._transition_state([ServiceState.RECORDING], ServiceState.PROCESSING):
+            return
 
         self.logger.info("⏹️ Recording stopped")
-
-        with self._state_lock:
-            self.is_recording = False
 
         # Event-driven mode with VAD disabled: emit SPEECH_STOPPED manually
         if self.use_event_driven_mode and self.voice_session:
@@ -852,11 +909,11 @@ class DictatorService:
                 self._paste_text(text)
 
             # Return to idle state
-            self._emit_state("idle")
+            self._transition_state([ServiceState.PROCESSING], ServiceState.IDLE)
 
         except Exception as e:
             self.logger.error(f"❌ Processing error: {e}", exc_info=True)
-            self._emit_state("idle")
+            self._transition_state([ServiceState.PROCESSING], ServiceState.IDLE)
 
     def _paste_text(self, text: str):
         """Paste text to active window"""
@@ -881,14 +938,23 @@ class DictatorService:
         """Speak text using TTS engine"""
         if not self.tts_engine:
             self.logger.warning("⚠️ TTS engine not available")
+            # No TTS, go straight to IDLE
+            self._transition_state([ServiceState.PROCESSING], ServiceState.IDLE)
+            return
+
+        # Transition to SPEAKING
+        if not self._transition_state([ServiceState.PROCESSING], ServiceState.SPEAKING):
             return
 
         try:
             self.logger.info(f"🔊 Speaking: {text[:50]}{'...' if len(text) > 50 else ''}")
             # Use blocking=True to ensure sentence completes before next one starts
             self.tts_engine.speak(text, blocking=True)
+            # After speaking, return to IDLE
+            self._transition_state([ServiceState.SPEAKING], ServiceState.IDLE)
         except Exception as e:
             self.logger.error(f"❌ TTS error: {e}", exc_info=True)
+            self._transition_state([ServiceState.SPEAKING], ServiceState.IDLE)
 
     def test_tts(self):
         """Test TTS functionality (for debugging)"""
