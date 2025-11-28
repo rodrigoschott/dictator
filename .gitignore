@@ -35,6 +35,7 @@ poetry.lock
 *.swp
 *.swo
 *~
+/logs/*
 
 # OS
 .DS_Store

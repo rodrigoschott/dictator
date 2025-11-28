@@ -61,7 +61,11 @@ class DictatorService:
 
         self.logger.info("🎙️ Dictator Service initializing...")
 
-        # State
+        # Thread synchronization (ADDED - Phase 1.1)
+        self._state_lock = threading.RLock()  # Recursive lock for state
+        self._recording_data_lock = threading.Lock()  # Lock for recording_data list
+
+        # State (protected by _state_lock)
         self.is_recording = False
         self.recording_data = []
         self.model: Optional[WhisperModel] = None
@@ -539,7 +543,10 @@ class DictatorService:
 
     def toggle_recording(self):
         """Toggle recording on/off"""
-        if self.is_recording:
+        with self._state_lock:
+            is_currently_recording = self.is_recording
+
+        if is_currently_recording:
             self.stop_recording()
         else:
             self.start_recording()
@@ -547,19 +554,21 @@ class DictatorService:
     def _on_vad_stop(self):
         """
         Callback when VAD detects speech stopped
-        
+
         Resets recording state so that next hotkey press starts a new recording
         instead of trying to stop an already-stopped recording.
         """
-        if self.is_recording:
-            self.logger.info("🎯 VAD detected speech stop, resetting recording state")
-            self.is_recording = False
+        with self._state_lock:
+            if self.is_recording:
+                self.logger.info("🎯 VAD detected speech stop, resetting recording state")
+                self.is_recording = False
 
     def start_recording(self):
         """Start recording audio"""
-        if self.is_recording:
-            self.logger.warning("Already recording!")
-            return
+        with self._state_lock:
+            if self.is_recording:
+                self.logger.warning("Already recording!")
+                return
 
         vad_enabled = self.config['hotkey'].get('vad_enabled', False)
         vad_mode = " (VAD)" if vad_enabled else ""
@@ -571,8 +580,10 @@ class DictatorService:
             self.tts_engine.stop()
             time.sleep(0.1)  # Brief wait for TTS to fully stop
 
-        self.is_recording = True
-        self.recording_data = []
+        with self._state_lock:
+            self.is_recording = True
+        with self._recording_data_lock:
+            self.recording_data = []
         self.last_sound_time = time.time()  # Track last time we heard sound
         self.audio_chunk_timestamp_ms = 0  # Reset timestamp for voice session
 
@@ -602,9 +613,15 @@ class DictatorService:
         def callback(indata, frames, time_info, status):
             if status:
                 self.logger.warning(f"Audio status: {status}")
-            if self.is_recording:
+
+            # Thread-safe check of recording state
+            with self._state_lock:
+                is_currently_recording = self.is_recording
+
+            if is_currently_recording:
                 audio_chunk = indata.copy()
-                self.recording_data.append(audio_chunk)
+                with self._recording_data_lock:
+                    self.recording_data.append(audio_chunk)
 
                 # Pass chunk to event-driven voice session if enabled
                 if self.use_event_driven_mode and self.voice_session:
@@ -673,7 +690,12 @@ class DictatorService:
                 start_time = time.time()
 
                 # Record until stopped
-                while self.is_recording:
+                while True:
+                    # Thread-safe check
+                    with self._state_lock:
+                        if not self.is_recording:
+                            break
+
                     time.sleep(0.1)
 
                     # VAD auto-stop: check if silence duration exceeded
@@ -701,15 +723,19 @@ class DictatorService:
 
         except Exception as e:
             self.logger.error(f"❌ Recording error: {e}")
-            self.is_recording = False
+            with self._state_lock:
+                self.is_recording = False
 
     def stop_recording(self):
         """Stop recording and transcribe"""
-        if not self.is_recording:
-            return
+        with self._state_lock:
+            if not self.is_recording:
+                return
 
         self.logger.info("⏹️ Recording stopped")
-        self.is_recording = False
+
+        with self._state_lock:
+            self.is_recording = False
 
         # Event-driven mode with VAD disabled: emit SPEECH_STOPPED manually
         if self.use_event_driven_mode and self.voice_session:
@@ -809,8 +835,11 @@ class DictatorService:
                 return
 
             # Legacy/Dictation mode: process manually
-            # Combine audio chunks
-            audio_data = np.concatenate(self.recording_data, axis=0)
+            # Combine audio chunks (thread-safe copy)
+            with self._recording_data_lock:
+                recording_data_copy = self.recording_data.copy()
+
+            audio_data = np.concatenate(recording_data_copy, axis=0)
 
             self.logger.info("🤖 Transcribing...")
 

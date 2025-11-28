@@ -39,7 +39,10 @@ class KokoroTTSEngine:
         self.config = config
         self.logger = logging.getLogger('KokoroTTS')
 
-        # State
+        # Thread synchronization (ADDED - Phase 1.2)
+        self._state_lock = threading.Lock()
+
+        # State (protected by _state_lock)
         self.state = TTSState.IDLE
         self.current_audio = None
         self.playback_thread = None
@@ -79,7 +82,9 @@ class KokoroTTSEngine:
 
     def _emit_state(self, state: str):
         """Emit state change to all callbacks"""
-        self.state = state
+        with self._state_lock:
+            self.state = state
+
         for callback in self.state_callbacks:
             try:
                 callback(state)
@@ -194,7 +199,8 @@ class KokoroTTSEngine:
 
     def is_speaking(self) -> bool:
         """Check if currently speaking"""
-        return self.state == TTSState.SPEAKING
+        with self._state_lock:
+            return self.state == TTSState.SPEAKING
 
     def get_available_voices(self) -> list[str]:
         """Get list of available voices for current language"""

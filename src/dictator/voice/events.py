@@ -6,6 +6,8 @@ instead of polling loops. Zero polling overhead.
 """
 
 import asyncio
+import threading
+from collections import deque
 from enum import Enum
 from typing import Any, AsyncGenerator
 from collections.abc import Set
@@ -100,9 +102,10 @@ class EventPubSub:
     def __init__(self):
         self.subscribers: set[asyncio.Queue[Event]] = set()
         self._lock = asyncio.Lock()
-        self.event_history: list[Event] = []  # For debugging
+        self.event_history: deque[Event] = deque(maxlen=1000)  # Auto-trimming queue (CHANGED - Phase 1.3)
         self.max_history = 1000
         self._loop: asyncio.AbstractEventLoop | None = None  # Event loop reference for thread-safe publishing
+        self._loop_lock = threading.Lock()  # ADDED - Phase 1.3: Protect loop reference
 
     def set_event_loop(self, loop: asyncio.AbstractEventLoop) -> None:
         """
@@ -122,24 +125,27 @@ class EventPubSub:
         Args:
             event: Event to publish
         """
-        # Store in history for debugging
+        # Store in history for debugging (deque auto-trims)
         self.event_history.append(event)
-        if len(self.event_history) > self.max_history:
-            self.event_history = self.event_history[-self.max_history:]
+
+        # Get loop reference (thread-safe)
+        with self._loop_lock:
+            loop = self._loop
 
         # Distribute to all subscribers
         for subscriber in self.subscribers:
             try:
                 # Check if we need thread-safe call
-                if self._loop is not None:
+                if loop is not None and not loop.is_closed():
                     # Use call_soon_threadsafe to safely put item from any thread
-                    self._loop.call_soon_threadsafe(subscriber.put_nowait, event.model_copy())
+                    loop.call_soon_threadsafe(subscriber.put_nowait, event.model_copy())
                 else:
                     # No loop set, use direct put (legacy behavior)
                     subscriber.put_nowait(event.model_copy())
             except (asyncio.QueueFull, RuntimeError) as e:
                 # If queue is full or runtime error, skip this subscriber
-                pass
+                import logging
+                logging.getLogger("EventPubSub").warning(f"Failed to publish {event.type}: {e}")
 
     async def poll(self) -> AsyncGenerator[Event, None]:
         """
@@ -151,8 +157,8 @@ class EventPubSub:
         Yields:
             Event objects as they arrive
         """
-        # Create subscriber queue
-        subscriber_queue: asyncio.Queue[Event] = asyncio.Queue()
+        # Create subscriber queue with max size (CHANGED - Phase 1.3)
+        subscriber_queue: asyncio.Queue[Event] = asyncio.Queue(maxsize=1000)
 
         async with self._lock:
             self.subscribers.add(subscriber_queue)
