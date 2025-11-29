@@ -60,7 +60,7 @@ tts:
     voices_path: voices-v1.0.bin
   volume: 0.8
 voice:
-  claude_mode: false
+  claude_mode: true
   event_loop:
     local: true
     pubsub_buffer_size: 100
@@ -78,7 +78,7 @@ voice:
     ollama:
       base_url: http://localhost:11434
       model: qwen3:14b
-    provider: n8n_toolcalling
+    provider: ollama
     sentence_chunking: true
     streaming: true
   mode: event_driven

@@ -74,6 +74,26 @@ class LLMCaller:
         self._call_lock = asyncio.Lock()  # Prevent concurrent LLM calls
         self._processing = False  # Flag to track if currently processing
 
+        # ADDED - Phase 4: Interrupt handling
+        self._current_task: asyncio.Task | None = None  # Track current LLM task for cancellation
+        self._cancel_requested = False  # Flag to signal cancellation
+
+    def cancel_current_call(self) -> None:
+        """
+        Cancel the current LLM call if one is in progress
+
+        ADDED - Phase 4: Allow interrupting LLM calls when user presses hotkey.
+        """
+        import logging
+        logger = logging.getLogger("DictatorService")
+
+        if self._current_task and not self._current_task.done():
+            logger.info("🛑 Cancelling current LLM call...")
+            self._cancel_requested = True
+            self._current_task.cancel()
+        else:
+            logger.debug("No active LLM call to cancel")
+
     async def process_transcription(self, transcription: str) -> None:
         """
         Process user transcription and get LLM response
@@ -84,25 +104,43 @@ class LLMCaller:
         ADDED - Phase 3: Uses lock to serialize concurrent calls.
         If already processing, the new call waits in queue.
 
+        ADDED - Phase 4: Cancels previous call if one is in progress.
+
         Args:
             transcription: User's transcribed speech
         """
         import logging
         logger = logging.getLogger("DictatorService")
 
-        # ADDED - Phase 3: Check if already processing
+        # ADDED - Phase 4: Cancel previous call if one is in progress
         if self._processing:
-            logger.warning(f"⚠️ LLM call already in progress, queueing new request: '{transcription[:50]}...'")
+            logger.warning(f"⚠️ LLM call already in progress, cancelling it for new request: '{transcription[:50]}...'")
+            self.cancel_current_call()
 
         # ADDED - Phase 3: Acquire lock (blocks if another call is in progress)
         async with self._call_lock:
             self._processing = True
+            self._cancel_requested = False  # Reset cancel flag
             logger.debug(f"🔒 LLM lock acquired for: '{transcription[:50]}...'")
 
             try:
-                await self._process_transcription_internal(transcription)
+                # Create task for this call (for cancellation tracking)
+                self._current_task = asyncio.create_task(
+                    self._process_transcription_internal(transcription)
+                )
+                await self._current_task
+            except asyncio.CancelledError:
+                logger.info("✋ LLM call was cancelled")
+                # Emit cancellation event
+                self.pubsub.publish_nowait(Event(
+                    type=EventType.LLM_RESPONSE_FAILED,
+                    data={"error": "Cancelled by user"},
+                    session_id=self.session_id
+                ))
+                raise
             finally:
                 self._processing = False
+                self._current_task = None
                 logger.debug("🔓 LLM lock released")
 
     async def _process_transcription_internal(self, transcription: str) -> None:
@@ -129,6 +167,11 @@ class LLMCaller:
             response = await self._call_claude_cli(transcription)
             logger.info(f"🟢 _call_claude_cli returned: {len(response)} chars")
 
+            # ADDED - Phase 4: Check if cancelled after LLM call
+            if self._cancel_requested:
+                logger.info("✋ Cancellation detected after LLM call, aborting...")
+                raise asyncio.CancelledError()
+
             # Add response to history
             self.conversation_history.append({
                 "role": "assistant",
@@ -139,10 +182,15 @@ class LLMCaller:
 
             # Remove thinking tags first (for thinking models like Qwen, DeepSeek-R1)
             response = remove_thinking_tags(response)
-            
+
             # Clean entire response for TTS (single shot)
             clean_response = MarkdownCleaner.clean(response)
             logger.info(f"🧹 Cleaned response: {clean_response[:100]}...")
+
+            # ADDED - Phase 4: Check if cancelled before emitting TTS
+            if self._cancel_requested:
+                logger.info("✋ Cancellation detected before TTS, aborting...")
+                raise asyncio.CancelledError()
 
             # Emit single TTS event
             logger.info(f"📢 Publishing TTS_SENTENCE_READY event...")
@@ -160,6 +208,10 @@ class LLMCaller:
                 session_id=self.session_id
             ))
 
+        except asyncio.CancelledError:
+            # Re-raise to propagate cancellation
+            logger.info("✋ LLM processing cancelled")
+            raise
         except Exception as e:
             # Emit failure event
             self.pubsub.publish_nowait(Event(
@@ -511,6 +563,11 @@ class OllamaLLMCaller(LLMCaller):
             response = await self._call_ollama_api(transcription)
             logger.info(f"🟢 Ollama returned: {len(response)} chars")
 
+            # ADDED - Phase 4: Check if cancelled after LLM call
+            if self._cancel_requested:
+                logger.info("✋ Cancellation detected after Ollama call, aborting...")
+                raise asyncio.CancelledError()
+
             # Add response to history
             self.conversation_history.append({
                 "role": "assistant",
@@ -521,10 +578,15 @@ class OllamaLLMCaller(LLMCaller):
 
             # Remove thinking tags first (for thinking models like Qwen, DeepSeek-R1)
             response = remove_thinking_tags(response)
-            
+
             # Clean response for TTS
             clean_response = MarkdownCleaner.clean(response)
             logger.info(f"🧹 Cleaned response: {clean_response[:100]}...")
+
+            # ADDED - Phase 4: Check if cancelled before emitting TTS
+            if self._cancel_requested:
+                logger.info("✋ Cancellation detected before TTS, aborting...")
+                raise asyncio.CancelledError()
 
             # Emit TTS event
             logger.info(f"📢 Publishing TTS_SENTENCE_READY event...")
@@ -542,6 +604,10 @@ class OllamaLLMCaller(LLMCaller):
                 session_id=self.session_id
             ))
 
+        except asyncio.CancelledError:
+            # Re-raise to propagate cancellation
+            logger.info("✋ Ollama processing cancelled")
+            raise
         except Exception as e:
             logger = logging.getLogger("DictatorService")
             logger.error(f"❌ Ollama API error: {e}")
@@ -727,6 +793,11 @@ class N8NToolCallingLLMCaller(LLMCaller):
             response = await self._call_n8n_webhook(transcription)
             logger.info(f"🟢 N8N returned: {len(response)} chars")
 
+            # ADDED - Phase 4: Check if cancelled after N8N call
+            if self._cancel_requested:
+                logger.info("✋ Cancellation detected after N8N call, aborting...")
+                raise asyncio.CancelledError()
+
             # Add response to history
             self.conversation_history.append({
                 "role": "assistant",
@@ -741,6 +812,11 @@ class N8NToolCallingLLMCaller(LLMCaller):
             # Clean response for TTS
             clean_response = MarkdownCleaner.clean(response)
             logger.info(f"🧹 Cleaned response: {clean_response[:100]}...")
+
+            # ADDED - Phase 4: Check if cancelled before emitting TTS
+            if self._cancel_requested:
+                logger.info("✋ Cancellation detected before TTS, aborting...")
+                raise asyncio.CancelledError()
 
             # Emit TTS event
             logger.info(f"📢 Publishing TTS_SENTENCE_READY event...")
@@ -758,6 +834,10 @@ class N8NToolCallingLLMCaller(LLMCaller):
                 session_id=self.session_id
             ))
 
+        except asyncio.CancelledError:
+            # Re-raise to propagate cancellation
+            logger.info("✋ N8N processing cancelled")
+            raise
         except Exception as e:
             logger = logging.getLogger("DictatorService")
             logger.error(f"❌ N8N webhook error: {e}")

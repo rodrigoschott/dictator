@@ -27,6 +27,7 @@ from pynput.mouse import Button
 
 from . import logging_setup
 from .monitoring.thread_monitor import ThreadMonitor
+from .audio_processor import AudioProcessor, VoiceSessionAudioBridge  # ADDED - Phase 5.1
 try:
     from .tts_engine import KokoroTTSEngine
     TTS_AVAILABLE = True
@@ -90,6 +91,8 @@ class DictatorService:
         self._state = ServiceState.IDLE  # CHANGED - Phase 2: State machine
         self.is_recording = False  # DEPRECATED - kept for backward compat, will be removed
         self.recording_data = []
+        self._session_counter = 0  # ADDED - Phase 4.3: Track recording sessions to discard stale TTS
+        self._current_tts_session = 0  # ADDED - Phase 4.3: Session number for current/pending TTS
         self.model: Optional[WhisperModel] = None
         self.tts_engine: Optional[KokoroTTSEngine] = None
         self.hotkey_listener: Optional[keyboard.GlobalHotKeys] = None
@@ -101,7 +104,11 @@ class DictatorService:
         self.voice_session_thread: Optional[threading.Thread] = None
         self.voice_session_loop: Optional['asyncio.AbstractEventLoop'] = None
         self.use_event_driven_mode = False
-        self.audio_chunk_timestamp_ms = 0  # Track timestamp for audio chunks
+        self.audio_chunk_timestamp_ms = 0  # Track timestamp for audio chunks (DEPRECATED - Phase 5.1)
+
+        # Audio processing (ADDED - Phase 5.1)
+        self.audio_processor: Optional[AudioProcessor] = None
+        self.voice_session_bridge: Optional[VoiceSessionAudioBridge] = None
 
         # State change callbacks
         self.state_callbacks = []
@@ -501,6 +508,12 @@ class DictatorService:
                     asyncio.set_event_loop(loop)
                     self.voice_session_loop = loop  # Store reference
 
+                    # Initialize VoiceSessionBridge (ADDED - Phase 5.1)
+                    self.voice_session_bridge = VoiceSessionAudioBridge(
+                        voice_session=self.voice_session,
+                        event_loop=loop
+                    )
+
                     try:
                         self.logger.info(f"🎤 Starting voice session (attempt {retry_count + 1}/{max_retries})")
                         loop.run_until_complete(self.voice_session.start())
@@ -633,17 +646,26 @@ class DictatorService:
         # Log interrupt if applicable
         with self._state_lock:
             old_state = self._state
+            # ADDED - Phase 4.3: Increment session counter (invalidates pending TTS from previous session)
+            self._session_counter += 1
+            current_session = self._session_counter
 
         if old_state in [ServiceState.SPEAKING, ServiceState.PROCESSING]:
-            self.logger.info(f"🚨 Interrupting {old_state.value} - user pressed hotkey to speak")
+            self.logger.info(f"🚨 Interrupting {old_state.value} (session {current_session}) - user pressed hotkey to speak")
 
-        self.logger.info(f"🔴 Recording started{vad_mode}...")
+        self.logger.info(f"🔴 Recording started (session {current_session}){vad_mode}...")
 
         # Interrupt TTS if playing (user wants to speak)
         if self.tts_engine and self.tts_engine.is_speaking():
             self.logger.info("⏹️ Stopping TTS playback...")
             self.tts_engine.stop()
             time.sleep(0.1)  # Brief wait for TTS to fully stop
+
+        # ADDED - Phase 4: Cancel LLM call if in PROCESSING state
+        if old_state == ServiceState.PROCESSING and self.use_event_driven_mode and self.voice_session:
+            self.logger.info("🛑 Cancelling LLM call...")
+            if hasattr(self.voice_session.llm_caller, 'cancel_current_call'):
+                self.voice_session.llm_caller.cancel_current_call()
 
         with self._recording_data_lock:
             self.recording_data = []
@@ -659,18 +681,31 @@ class DictatorService:
         threading.Thread(target=self._record_audio, daemon=True).start()
 
     def _record_audio(self):
-        """Record audio in background"""
+        """Record audio in background (REFACTORED - Phase 5.1)"""
         sample_rate = self.config['audio']['sample_rate']
         channels = self.config['audio']['channels']
         vad_enabled = self.config['hotkey'].get('vad_enabled', False)
         silence_duration = self.config['hotkey'].get('auto_stop_silence', 2.0)
         silence_threshold = self.config['hotkey'].get('vad_threshold', 0.01)
 
-        # Track RMS values for debugging and adaptive threshold
-        rms_samples = []
-        max_rms_seen = [0.0]  # Track maximum RMS seen during recording
+        # Initialize AudioProcessor for this recording session
+        def on_audio_chunk(chunk: np.ndarray):
+            """Callback for each audio chunk - forwards to voice session if enabled"""
+            if self.use_event_driven_mode and self.voice_session_bridge:
+                timestamp_ms = self.audio_processor.get_timestamp_ms()
+                self.voice_session_bridge.process_audio_chunk(chunk, timestamp_ms)
 
+        self.audio_processor = AudioProcessor(
+            sample_rate=sample_rate,
+            on_audio_chunk=on_audio_chunk if self.use_event_driven_mode else None,
+            vad_enabled=vad_enabled and not self.use_event_driven_mode,  # Only use VAD in legacy mode
+            silence_threshold=silence_threshold
+        )
+        self.audio_processor.start()
+
+        # Simplified sounddevice callback
         def callback(indata, frames, time_info, status):
+            """Audio callback - delegates to AudioProcessor (SIMPLIFIED - Phase 5.1)"""
             if status:
                 self.logger.warning(f"Audio status: {status}")
 
@@ -679,67 +714,12 @@ class DictatorService:
                 is_currently_recording = self.is_recording
 
             if is_currently_recording:
-                audio_chunk = indata.copy()
+                # Store in recording_data for backward compatibility
                 with self._recording_data_lock:
-                    self.recording_data.append(audio_chunk)
+                    self.recording_data.append(indata.copy())
 
-                # Pass chunk to event-driven voice session if enabled
-                if self.use_event_driven_mode and self.voice_session:
-                    # Convert to float32 if needed
-                    if audio_chunk.dtype != np.float32:
-                        audio_chunk = audio_chunk.astype(np.float32)
-
-                    # Flatten to 1D if stereo
-                    if len(audio_chunk.shape) > 1:
-                        audio_chunk = audio_chunk.mean(axis=1)
-
-                    # Pass to voice session (synchronous wrapper for async call)
-                    import asyncio
-                    try:
-                        # Use the voice session's event loop
-                        if self.voice_session_loop:
-                            # Log first chunk for health check
-                            if self.audio_chunk_timestamp_ms == 0:
-                                self.logger.debug("🎵 Voice session started receiving audio chunks")
-
-                            asyncio.run_coroutine_threadsafe(
-                                self.voice_session.process_audio_chunk(
-                                    audio_chunk,
-                                    self.audio_chunk_timestamp_ms
-                                ),
-                                self.voice_session_loop
-                            )
-
-                            # Log after 1 second to confirm session is alive
-                            if self.audio_chunk_timestamp_ms == 0:
-                                self.last_health_check_time = time.time()
-                            elif self.audio_chunk_timestamp_ms >= 1000 and hasattr(self, 'last_health_check_time'):
-                                if time.time() - self.last_health_check_time < 2:
-                                    self.logger.info("✅ Voice session healthy, processing audio")
-                                    delattr(self, 'last_health_check_time')  # Log only once
-
-                            # Increment timestamp (assume chunks at 16kHz)
-                            self.audio_chunk_timestamp_ms += int(len(audio_chunk) * 1000 / sample_rate)
-                    except Exception as e:
-                        self.logger.warning(f"Failed to pass audio chunk to voice session: {e}")
-
-                # VAD: Check if audio contains sound (not silence)
-                if vad_enabled and not self.use_event_driven_mode:
-                    # Calculate RMS (root mean square) amplitude
-                    rms = np.sqrt(np.mean(indata**2))
-                    rms_samples.append(rms)
-
-                    # Track maximum RMS
-                    if rms > max_rms_seen[0]:
-                        max_rms_seen[0] = rms
-
-                    # Adaptive threshold: use either fixed threshold or 20% of max RMS
-                    # whichever is lower (more sensitive)
-                    adaptive_threshold = min(silence_threshold, max_rms_seen[0] * 0.2)
-
-                    # If amplitude is above adaptive threshold, reset silence timer
-                    if rms > adaptive_threshold:
-                        self.last_sound_time = time.time()
+                # Process chunk through AudioProcessor
+                self.audio_processor.process_chunk(indata)
 
         try:
             with sd.InputStream(
@@ -758,19 +738,22 @@ class DictatorService:
 
                     time.sleep(0.1)
 
-                    # VAD auto-stop: check if silence duration exceeded
+                    # VAD auto-stop: check if silence duration exceeded (REFACTORED - Phase 5.1)
                     # Skip in event-driven mode - VoiceSessionManager handles VAD
-                    if vad_enabled and not self.use_event_driven_mode:
-                        silence_time = time.time() - self.last_sound_time
+                    if vad_enabled and not self.use_event_driven_mode and self.audio_processor:
+                        silence_time = self.audio_processor.get_vad_silence_duration()
 
                         # Only check after minimum recording time (0.5s)
                         if time.time() - start_time > 0.5 and silence_time >= silence_duration:
                             # Log RMS statistics for calibration
-                            if rms_samples:
-                                avg_rms = np.mean(rms_samples)
-                                max_rms = np.max(rms_samples)
+                            vad_stats = self.audio_processor.get_vad_stats()
+                            if vad_stats['samples'] > 0:
                                 self.logger.info(f"🔇 Silence detected ({silence_time:.1f}s)")
-                                self.logger.info(f"   RMS stats: avg={avg_rms:.5f}, max={max_rms:.5f}, threshold={silence_threshold:.5f}")
+                                self.logger.info(
+                                    f"   RMS stats: avg={vad_stats['avg_rms']:.5f}, "
+                                    f"max={vad_stats['max_rms']:.5f}, "
+                                    f"threshold={vad_stats['threshold']:.5f}"
+                                )
                             self.stop_recording()
                             break
 
@@ -785,6 +768,11 @@ class DictatorService:
             self.logger.error(f"❌ Recording error: {e}")
             # Reset to IDLE on error
             self._transition_state([ServiceState.RECORDING], ServiceState.IDLE)
+        finally:
+            # Cleanup AudioProcessor (ADDED - Phase 5.1)
+            if self.audio_processor:
+                self.audio_processor.stop()
+                self.audio_processor = None
 
     def stop_recording(self):
         """Stop recording and transcribe"""
@@ -792,7 +780,11 @@ class DictatorService:
         if not self._transition_state([ServiceState.RECORDING], ServiceState.PROCESSING):
             return
 
-        self.logger.info("⏹️ Recording stopped")
+        # ADDED - Phase 4.3: Capture session number for this processing cycle
+        with self._state_lock:
+            self._current_tts_session = self._session_counter
+
+        self.logger.info(f"⏹️ Recording stopped (will process for session {self._current_tts_session})")
 
         # Event-driven mode with VAD disabled: emit SPEECH_STOPPED manually
         if self.use_event_driven_mode and self.voice_session:
@@ -939,22 +931,55 @@ class DictatorService:
         if not self.tts_engine:
             self.logger.warning("⚠️ TTS engine not available")
             # No TTS, go straight to IDLE
-            self._transition_state([ServiceState.PROCESSING], ServiceState.IDLE)
+            self._transition_state([ServiceState.PROCESSING, ServiceState.IDLE], ServiceState.IDLE)
+            return
+
+        # ADDED - Phase 4.3: Check if this TTS is for the current session
+        with self._state_lock:
+            current = self._state
+            tts_session = self._current_tts_session
+            active_session = self._session_counter
+
+        if tts_session < active_session:
+            # This TTS is from an old session - user already started new recording
+            self.logger.info(f"🔇 Skipping stale TTS from session {tts_session} (current session: {active_session})")
+            return
+
+        if current == ServiceState.RECORDING:
+            # User already started recording again (race condition) - skip TTS
+            self.logger.info(f"🔇 Skipping TTS - user already recording new input (session {active_session})")
             return
 
         # Transition to SPEAKING
-        if not self._transition_state([ServiceState.PROCESSING], ServiceState.SPEAKING):
+        # Allow from PROCESSING (normal flow) or IDLE (if LLM completed before TTS event arrived)
+        if not self._transition_state([ServiceState.PROCESSING, ServiceState.IDLE], ServiceState.SPEAKING):
+            self.logger.warning(f"⚠️ Cannot transition to SPEAKING from {current}, skipping TTS")
             return
 
         try:
             self.logger.info(f"🔊 Speaking: {text[:50]}{'...' if len(text) > 50 else ''}")
             # Use blocking=True to ensure sentence completes before next one starts
             self.tts_engine.speak(text, blocking=True)
-            # After speaking, return to IDLE
-            self._transition_state([ServiceState.SPEAKING], ServiceState.IDLE)
+
+            # After speaking, return to IDLE (if not already interrupted)
+            # MODIFIED - Phase 4.1: Check current state - if interrupted, don't change
+            with self._state_lock:
+                current = self._state
+
+            if current == ServiceState.SPEAKING:
+                # Normal completion - return to IDLE
+                self._transition_state([ServiceState.SPEAKING], ServiceState.IDLE)
+            else:
+                # Was interrupted - keep current state (RECORDING or PROCESSING)
+                self.logger.info(f"🔄 TTS completed but state already changed to {current.value}, keeping it")
+
         except Exception as e:
             self.logger.error(f"❌ TTS error: {e}", exc_info=True)
-            self._transition_state([ServiceState.SPEAKING], ServiceState.IDLE)
+            # On error, only transition if still in SPEAKING
+            with self._state_lock:
+                current = self._state
+            if current == ServiceState.SPEAKING:
+                self._transition_state([ServiceState.SPEAKING], ServiceState.IDLE)
 
     def test_tts(self):
         """Test TTS functionality (for debugging)"""
