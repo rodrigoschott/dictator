@@ -88,6 +88,9 @@ class DictatorTray:
             new_icon = self.create_icon_image(color_map[state])
             self.icon.icon = new_icon
 
+        # Update tooltip with health status (NEW)
+        self.update_tooltip()
+
         # Update overlay
         overlay_state_map = {
             "idle": OverlayState.IDLE,
@@ -97,6 +100,25 @@ class DictatorTray:
             "tts_idle": OverlayState.IDLE,
             "tts_stopping": OverlayState.IDLE
         }
+
+    def update_tooltip(self):
+        """Update tray tooltip with health status (NEW)"""
+        if not self.icon:
+            return
+
+        try:
+            base_text = self.service.config.get('tray', {}).get('tooltip', 'Dictator')
+
+            # Get health status if available
+            if hasattr(self.service, 'health_report') and self.service.health_report:
+                tooltip = self.service.health_report.get_tray_tooltip(base_text)
+            else:
+                tooltip = base_text
+
+            self.icon.title = tooltip
+
+        except Exception as e:
+            self.service.logger.warning(f"Failed to update tooltip: {e}")
 
         if state in overlay_state_map:
             set_overlay_state(overlay_state_map[state])

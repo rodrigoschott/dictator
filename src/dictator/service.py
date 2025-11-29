@@ -113,14 +113,27 @@ class DictatorService:
         # State change callbacks
         self.state_callbacks = []
 
+        # Health check and dependency validation (NEW)
+        from .health_check import DependencyValidator
+        validator = DependencyValidator(self.config)
+        self.health_report = validator.run_full_check(quick=True)
+
+        # Auto-disable features based on health (NEW)
+        self._apply_health_degradation()
+
+        # Write status file (NEW)
+        self._write_status_file()
+
         # Load Whisper model
         self.load_model()
 
-        # Load TTS engine if enabled
-        self.load_tts()
+        # Load TTS engine if enabled AND available (MODIFIED)
+        if self._tts_available:
+            self.load_tts()
 
-        # Load event-driven voice session if enabled
-        self.load_voice_session()
+        # Load event-driven voice session if enabled AND available (MODIFIED)
+        if self._voice_available:
+            self.load_voice_session()
 
     def register_state_callback(self, callback):
         """Register a callback for state changes: callback(state: str)"""
@@ -1034,6 +1047,70 @@ class DictatorService:
         except KeyboardInterrupt:
             self.logger.info("Received interrupt signal")
             self.stop()
+
+    def _apply_health_degradation(self):
+        """
+        Apply feature degradation based on health report (NEW)
+
+        Disables optional features when dependencies are unavailable,
+        ensuring core dictation functionality remains operational.
+        """
+        self._tts_available = True
+        self._voice_available = True
+
+        for component in self.health_report.components:
+            # Critical failures: abort startup
+            if component.status == "critical" and component.required:
+                self.logger.error(f"❌ CRITICAL: {component.message}")
+                if component.fix_hint:
+                    self.logger.error(f"   Fix: {component.fix_hint}")
+                raise RuntimeError(f"Critical dependency missing: {component.name}")
+
+            # Optional failures: disable features
+            if component.status in ["unavailable", "critical"]:
+                if component.name in ["Git LFS & Models", "TTS Model Files"]:
+                    self._tts_available = False
+                    self.logger.warning(f"⚠️ TTS disabled: {component.message}")
+                    if component.fix_hint:
+                        self.logger.warning(f"   Fix: {component.fix_hint}")
+
+                elif component.name in ["Ollama", "N8N"]:
+                    self._voice_available = False
+                    self.logger.warning(f"⚠️ Voice assistant disabled: {component.message}")
+                    if component.fix_hint:
+                        self.logger.warning(f"   Fix: {component.fix_hint}")
+
+                elif component.name == "GPU/CUDA" and component.status == "critical":
+                    # Force CPU mode
+                    self.config['whisper']['device'] = 'cpu'
+                    self.logger.warning(f"⚠️ Fallback to CPU mode: {component.message}")
+                    if component.fix_hint:
+                        self.logger.warning(f"   Fix: {component.fix_hint}")
+
+        # Log final status
+        if self.health_report.overall_status == "healthy":
+            self.logger.info("✅ All systems healthy")
+        elif self.health_report.overall_status == "degraded":
+            degraded_list = ', '.join(self.health_report.degraded_features) if self.health_report.degraded_features else 'features'
+            self.logger.warning(f"⚠️ Running in degraded mode: {degraded_list} disabled")
+            self.logger.info("ℹ️  Core dictation functionality remains available")
+
+    def _write_status_file(self):
+        """Write health status to JSON file (NEW)"""
+        if not self.run_dir:
+            return
+
+        try:
+            import json
+            status_file = self.run_dir / "status.json"
+
+            with open(status_file, 'w') as f:
+                json.dump(self.health_report.to_dict(), f, indent=2)
+
+            self.logger.debug(f"Status file written: {status_file}")
+
+        except Exception as e:
+            self.logger.warning(f"Failed to write status file: {e}")
 
     def stop(self):
         """Stop the service"""
