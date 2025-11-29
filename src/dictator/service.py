@@ -718,8 +718,9 @@ class DictatorService:
                 with self._recording_data_lock:
                     self.recording_data.append(indata.copy())
 
-                # Process chunk through AudioProcessor
-                self.audio_processor.process_chunk(indata)
+                # Process chunk through AudioProcessor (FIXED - Phase 6: race condition protection)
+                if self.audio_processor is not None:
+                    self.audio_processor.process_chunk(indata)
 
         try:
             with sd.InputStream(
@@ -764,12 +765,17 @@ class DictatorService:
                         self.stop_recording()
                         break
 
+                # Cleanup AudioProcessor BEFORE exiting InputStream context (FIXED - Phase 6)
+                # This ensures no callbacks arrive after AudioProcessor is None
+                if self.audio_processor:
+                    self.audio_processor.stop()
+                    self.audio_processor = None
+
         except Exception as e:
             self.logger.error(f"❌ Recording error: {e}")
             # Reset to IDLE on error
             self._transition_state([ServiceState.RECORDING], ServiceState.IDLE)
-        finally:
-            # Cleanup AudioProcessor (ADDED - Phase 5.1)
+            # Cleanup AudioProcessor on error
             if self.audio_processor:
                 self.audio_processor.stop()
                 self.audio_processor = None
