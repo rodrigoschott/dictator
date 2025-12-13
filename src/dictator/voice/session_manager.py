@@ -137,7 +137,7 @@ class VoiceSessionManager:
         import logging
         loop = asyncio.get_event_loop()
         self.pubsub.set_event_loop(loop)
-        logging.getLogger("DictatorService").info(f"🔗 Event loop configured for thread-safe publishing")
+        logging.getLogger("DictatorService").info(f" Event loop configured for thread-safe publishing")
 
         # Emit session started
         self.pubsub.publish_nowait(Event(
@@ -219,7 +219,7 @@ class VoiceSessionManager:
         logger = logging.getLogger("DictatorService")
         if not self.vad_enabled and len(self.current_audio_buffer) < 50000:  # First ~3 seconds
             if len(self.current_audio_buffer) % 16000 < len(audio_chunk):  # Log every ~1 second
-                logger.debug(f"📊 Buffer size: {len(self.current_audio_buffer)} samples ({len(self.current_audio_buffer)/16000:.2f}s)")
+                logger.debug(f"[STATS] Buffer size: {len(self.current_audio_buffer)} samples ({len(self.current_audio_buffer)/16000:.2f}s)")
 
     async def _event_processor(self) -> None:
         """
@@ -232,21 +232,21 @@ class VoiceSessionManager:
         """
         import logging
         logger = logging.getLogger("DictatorService")
-        logger.info("🔄 Event processor started")
+        logger.info("[RETRY] Event processor started")
 
         # Track event count for debugging
         event_count = 0
         
         async for event in self.pubsub.poll():
             event_count += 1
-            logger.info(f"📨 Event received: {event.type} (total events: {event_count})")
+            logger.info(f" Event received: {event.type} (total events: {event_count})")
             
             try:
                 await self._handle_event(event)
             except Exception as e:
-                logger.error(f"❌ Error handling event {event.type}: {e}")
+                logger.error(f"Error handling event {event.type}: {e}")
                 import traceback
-                logger.error(f"📋 Traceback: {traceback.format_exc()}")
+                logger.error(f" Traceback: {traceback.format_exc()}")
                 self.pubsub.publish_nowait(Event(
                     type=EventType.SESSION_ERROR,
                     data={"error": str(e), "event_type": event.type},
@@ -262,18 +262,18 @@ class VoiceSessionManager:
         import logging
         logger = logging.getLogger("DictatorService")
 
-        logger.info(f"🎯 Handling event: {event.type}")
+        logger.info(f" Handling event: {event.type}")
 
         # Speech started
         if event.type == EventType.SPEECH_STARTED:
             # Log speech detection
             import logging
-            logging.getLogger("DictatorService").info("🎤 Speech detected by VAD")
+            logging.getLogger("DictatorService").info("[MIC] Speech detected by VAD")
 
         # Speech stopped → Transcribe
         elif event.type == EventType.SPEECH_STOPPED:
             import logging
-            logging.getLogger("DictatorService").info("🛑 Speech ended, transcribing...")
+            logging.getLogger("DictatorService").info("[STOP] Speech ended, transcribing...")
             
             # Notify service to reset recording state (if VAD detected the stop)
             if self.vad_enabled and self.vad_stop_callback:
@@ -284,19 +284,19 @@ class VoiceSessionManager:
         # Transcription completed → Call LLM
         elif event.type == EventType.TRANSCRIPTION_COMPLETED:
             import logging
-            logging.getLogger("DictatorService").info("📝 Transcription complete, calling LLM...")
+            logging.getLogger("DictatorService").info("[NOTE] Transcription complete, calling LLM...")
             await self._handle_transcription_completed(event)
 
         # TTS sentence ready → Synthesize
         elif event.type == EventType.TTS_SENTENCE_READY:
             import logging
-            logging.getLogger("DictatorService").info("🔊 TTS sentence ready, synthesizing...")
+            logging.getLogger("DictatorService").info(" TTS sentence ready, synthesizing...")
             await self._handle_tts_sentence_ready(event)
 
         # Error events → Reset to idle state
         elif event.type in (EventType.SESSION_ERROR, EventType.LLM_RESPONSE_FAILED, EventType.TRANSCRIPTION_FAILED, EventType.TTS_FAILED):
             import logging
-            logging.getLogger("DictatorService").warning(f"⚠️ Error event received: {event.type}")
+            logging.getLogger("DictatorService").warning(f"Error event received: {event.type}")
             # Call error callback to reset UI state
             if self.error_callback:
                 self.error_callback("idle")
@@ -330,13 +330,13 @@ class VoiceSessionManager:
             # Debug log
             import logging
             logger = logging.getLogger("DictatorService")
-            logger.info(f"🎯 Speech stopped - VAD mode: {'enabled' if self.vad_enabled else 'disabled'}, Buffer size: {len(audio)} samples ({len(audio)/16000:.2f}s)")
+            logger.info(f" Speech stopped - VAD mode: {'enabled' if self.vad_enabled else 'disabled'}, Buffer size: {len(audio)} samples ({len(audio)/16000:.2f}s)")
 
             # Check if we have enough audio to transcribe (at least 0.5 seconds)
             min_samples = int(0.5 * 16000)  # 0.5s at 16kHz
             if len(audio) < min_samples:
                 logger.warning(
-                    f"⚠️ Ignoring speech event with insufficient audio ({len(audio)} samples, need {min_samples})"
+                    f"Ignoring speech event with insufficient audio ({len(audio)} samples, need {min_samples})"
                 )
                 # Clear buffer and skip transcription
                 if self.vad_enabled:
@@ -388,7 +388,7 @@ class VoiceSessionManager:
 
         import logging
         logger = logging.getLogger("DictatorService")
-        logger.info(f"📝 Transcribed text: '{transcription}'")
+        logger.info(f"[NOTE] Transcribed text: '{transcription}'")
 
         # Call LLM (SINGLE CALL - efficient!)
         await self.llm_caller.process_transcription(transcription)
@@ -403,10 +403,10 @@ class VoiceSessionManager:
         logger = logging.getLogger("DictatorService")
 
         sentence = event.data.get("text", "")
-        logger.info(f"🎵 TTS handler received: '{sentence[:100]}...'")
+        logger.info(f" TTS handler received: '{sentence[:100]}...'")
 
         if not sentence.strip():
-            logger.warning("⚠️ Empty sentence, skipping TTS")
+            logger.warning("Empty sentence, skipping TTS")
             return
 
         # Use lock to ensure sentences play sequentially
@@ -415,13 +415,13 @@ class VoiceSessionManager:
                 # Set flag to pause VAD during TTS
                 self.tts_speaking = True
 
-                logger.info("🔊 Starting TTS synthesis...")
+                logger.info(" Starting TTS synthesis...")
                 # Synthesize (LOCAL - no tokens!)
                 await asyncio.to_thread(
                     self.tts_callback,
                     sentence
                 )
-                logger.info("✅ TTS synthesis completed")
+                logger.info("TTS synthesis completed")
 
                 # Emit audio generated
                 self.pubsub.publish_nowait(Event(
@@ -431,7 +431,7 @@ class VoiceSessionManager:
                 ))
 
             except Exception as e:
-                logger.error(f"❌ TTS synthesis failed: {e}")
+                logger.error(f"TTS synthesis failed: {e}")
                 self.pubsub.publish_nowait(Event(
                     type=EventType.TTS_FAILED,
                     data={"error": str(e)},
@@ -440,7 +440,7 @@ class VoiceSessionManager:
             finally:
                 # Always re-enable VAD after TTS completes (even on error)
                 self.tts_speaking = False
-                logger.info("🎤 VAD re-enabled after TTS")
+                logger.info("[MIC] VAD re-enabled after TTS")
 
     def get_stats(self) -> dict:
         """Get session statistics"""

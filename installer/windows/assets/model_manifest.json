@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0",
+  "models": {
+    "kokoro-v1.0.onnx": {
+      "filename": "kokoro-v1.0.onnx",
+      "size_bytes": 325532387,
+      "sha256": "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5",
+      "required_for": ["tts"],
+      "description": "Kokoro TTS ONNX model for high-quality speech synthesis",
+      "mirrors": [
+        "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx"
+      ]
+    },
+    "voices-v1.0.bin": {
+      "filename": "voices-v1.0.bin",
+      "size_bytes": 28311552,
+      "sha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+      "required_for": ["tts"],
+      "description": "Voice embeddings for Kokoro TTS (56 voices in 9 languages)",
+      "mirrors": [
+        "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin"
+      ]
+    }
+  },
+  "total_download_size_bytes": 353843939,
+  "total_download_size_mb": 337,
+  "features_enabled": {
+    "tts": ["kokoro-v1.0.onnx", "voices-v1.0.bin"]
+  },
+  "notes": {
+    "tts_disabled_message": "Text-to-Speech will be disabled. You can download models later by running the installer again.",
+    "fallback_behavior": "If TTS models are not available, the application will run in silent mode (transcription only)."
+  }
+}

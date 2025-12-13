@@ -23,6 +23,8 @@ pyyaml = "^6.0.1"
 
 # Note: faster-whisper uses CTranslate2 (automatically included)
 # No need for PyTorch! Works with RTX 5080 out of the box
+# Pin CTranslate2 to 4.6.1 - version 4.6.2 has a crash bug with large-v3 model
+ctranslate2 = "4.6.1"
 kokoro-onnx = {extras = ["gpu"], version = "^0.4.9"}
 
 # LLM integration
@@ -34,6 +36,9 @@ psutil = "^5.9.8"
 pytest = "^7.4.0"
 black = "^23.7.0"
 ruff = "^0.0.285"
+pyinstaller = "^6.0.0"
+winshell = "^0.6"
+pywin32 = "^311"
 
 [build-system]
 requires = ["poetry-core"]

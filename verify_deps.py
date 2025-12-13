@@ -329,5 +329,53 @@ def main():
         sys.exit(1)
 
 
+def run_health_check():
+    """
+    Wrapper for installer integration
+
+    Returns:
+        dict: Health check results with 'success', 'critical_failures', 'warnings'
+    """
+    critical_failures = []
+    warnings = []
+
+    # Python version
+    ok, info = check_python_version()
+    if not ok:
+        critical_failures.append(f"Python version: {info}")
+
+    # Critical dependencies
+    critical_deps, missing_critical, optional_deps, missing_optional = check_python_packages()
+    if missing_critical:
+        critical_failures.append(f"Missing packages: {', '.join(missing_critical)}")
+
+    # Git LFS
+    ok, info = check_git_lfs()
+    if not ok:
+        critical_failures.append(f"Git LFS: {info}")
+
+    # Model files
+    ok, info = check_model_files()
+    if not ok:
+        warnings.append(f"Model files: {info}")
+
+    # Optional dependencies
+    if 'kokoro_onnx' in missing_optional:
+        warnings.append("Kokoro TTS not installed (TTS disabled)")
+    if 'torch' in missing_optional:
+        warnings.append("PyTorch not installed (VAD disabled)")
+
+    # Audio device
+    ok, info = check_audio_device()
+    if not ok:
+        critical_failures.append(f"Audio device: {info}")
+
+    return {
+        'success': len(critical_failures) == 0,
+        'critical_failures': critical_failures,
+        'warnings': warnings
+    }
+
+
 if __name__ == "__main__":
     main()

@@ -63,12 +63,12 @@ class KokoroTTSEngine:
         self.voices_path = kokoro_config.get('voices_path', 'voices-v1.0.bin')
 
         # Initialize Kokoro
-        self.logger.info(f"🎤 Loading Kokoro TTS (model={self.model_path})...")
+        self.logger.info(f"[MIC] Loading Kokoro TTS (model={self.model_path})...")
         try:
             self.kokoro = Kokoro(self.model_path, self.voices_path)
-            self.logger.info("✅ Kokoro TTS loaded successfully!")
+            self.logger.info("Kokoro TTS loaded successfully!")
         except Exception as e:
-            self.logger.error(f"❌ Failed to load Kokoro: {e}")
+            self.logger.error(f"Failed to load Kokoro: {e}")
             raise
 
     def register_state_callback(self, callback: Callable[[str], None]):
@@ -109,7 +109,7 @@ class KokoroTTSEngine:
             self.stop()
             time.sleep(0.1)  # Brief pause
 
-        self.logger.info(f"🔊 Speaking: {text[:50]}{'...' if len(text) > 50 else ''}")
+        self.logger.info(f" Speaking: {text[:50]}{'...' if len(text) > 50 else ''}")
 
         # Use specified voice or default
         voice_to_use = voice or self.voice
@@ -128,7 +128,7 @@ class KokoroTTSEngine:
             )
 
             generation_time = time.time() - start_time
-            self.logger.info(f"⚡ Audio generated in {generation_time:.2f}s")
+            self.logger.info(f" Audio generated in {generation_time:.2f}s")
 
             # Apply volume adjustment
             if self.volume != 1.0:
@@ -145,7 +145,7 @@ class KokoroTTSEngine:
                 self._play_audio_async(audio_data, sample_rate)
 
         except Exception as e:
-            self.logger.error(f"❌ TTS error: {e}", exc_info=True)
+            self.logger.error(f"TTS error: {e}", exc_info=True)
             self._emit_state(TTSState.IDLE)
 
     def _play_audio_blocking(self, audio_data: np.ndarray, sample_rate: int):
@@ -154,9 +154,9 @@ class KokoroTTSEngine:
             sd.play(audio_data, samplerate=sample_rate)
             sd.wait()  # Wait until playback is finished
             self._emit_state(TTSState.IDLE)
-            self.logger.info("✅ Speech completed")
+            self.logger.info("Speech completed")
         except Exception as e:
-            self.logger.error(f"❌ Playback error: {e}")
+            self.logger.error(f"Playback error: {e}")
             self._emit_state(TTSState.IDLE)
 
     def _play_audio_async(self, audio_data: np.ndarray, sample_rate: int):
@@ -166,9 +166,9 @@ class KokoroTTSEngine:
                 sd.play(audio_data, samplerate=sample_rate)
                 sd.wait()
                 self._emit_state(TTSState.IDLE)
-                self.logger.info("✅ Speech completed")
+                self.logger.info("Speech completed")
             except Exception as e:
-                self.logger.error(f"❌ Playback error: {e}")
+                self.logger.error(f"Playback error: {e}")
                 self._emit_state(TTSState.IDLE)
 
         self.playback_thread = threading.Thread(target=playback, daemon=True)
@@ -179,7 +179,7 @@ class KokoroTTSEngine:
         if not self.is_speaking():
             return
 
-        self.logger.info("⏹️ Stopping TTS playback...")
+        self.logger.info("Stopping TTS playback...")
         self._emit_state(TTSState.STOPPING)
 
         try:
@@ -191,10 +191,10 @@ class KokoroTTSEngine:
                 self.playback_thread.join(timeout=1.0)
 
             self._emit_state(TTSState.IDLE)
-            self.logger.info("✅ TTS stopped")
+            self.logger.info("TTS stopped")
 
         except Exception as e:
-            self.logger.error(f"❌ Error stopping TTS: {e}")
+            self.logger.error(f"Error stopping TTS: {e}")
             self._emit_state(TTSState.IDLE)
 
     def is_speaking(self) -> bool:
@@ -227,7 +227,7 @@ class KokoroTTSEngine:
         voice_to_use = voice or self.voice
 
         try:
-            self.logger.info(f"💾 Saving TTS to file: {output_path}")
+            self.logger.info(f" Saving TTS to file: {output_path}")
 
             # Generate audio
             audio_data, sample_rate = self.kokoro.create(
@@ -243,10 +243,10 @@ class KokoroTTSEngine:
 
             # Save to file
             sf.write(output_path, audio_data, sample_rate)
-            self.logger.info(f"✅ Audio saved to {output_path}")
+            self.logger.info(f"Audio saved to {output_path}")
 
         except Exception as e:
-            self.logger.error(f"❌ Error saving audio: {e}", exc_info=True)
+            self.logger.error(f"Error saving audio: {e}", exc_info=True)
 
 
 def main():
@@ -310,7 +310,7 @@ def main():
     test_text_en = "Hello! This is a test of the text to speech system."
     engine_en.speak(test_text_en, blocking=True)
 
-    print("\n✅ TTS engine test completed!")
+    print("\nTTS engine test completed!")
 
 
 if __name__ == "__main__":

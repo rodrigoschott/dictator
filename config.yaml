@@ -8,17 +8,17 @@ hotkey:
   auto_stop_silence: 2.0
   keyboard_trigger: ctrl+alt+v
   max_duration: 60
-  mode: toggle
+  mode: push_to_talk
   mouse_button: middle
   type: mouse
-  vad_enabled: true
+  vad_enabled: false
   vad_threshold: 0.002
 logging:
-  level: DEBUG
+  level: INFO
   run_retention: 5
   structured: true
-  trace_main_loop: true
-  trace_threads: true
+  trace_main_loop: false
+  trace_threads: false
 mcp:
   claude:
     max_tokens: 4096
@@ -60,7 +60,7 @@ tts:
     voices_path: voices-v1.0.bin
   volume: 0.8
 voice:
-  claude_mode: true
+  claude_mode: false
   event_loop:
     local: true
     pubsub_buffer_size: 100
@@ -78,12 +78,12 @@ voice:
     ollama:
       base_url: http://localhost:11434
       model: qwen3:14b
-    provider: n8n_toolcalling
+    provider: ollama
     sentence_chunking: true
     streaming: true
   mode: event_driven
   vad:
-    enabled: true
+    enabled: false
     min_speech_duration_ms: 250
     model_ttl: -1
     silence_duration_ms: 700

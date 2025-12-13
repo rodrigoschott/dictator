@@ -88,7 +88,7 @@ class LLMCaller:
         logger = logging.getLogger("DictatorService")
 
         if self._current_task and not self._current_task.done():
-            logger.info("🛑 Cancelling current LLM call...")
+            logger.info("[STOP] Cancelling current LLM call...")
             self._cancel_requested = True
             self._current_task.cancel()
         else:
@@ -114,14 +114,14 @@ class LLMCaller:
 
         # ADDED - Phase 4: Cancel previous call if one is in progress
         if self._processing:
-            logger.warning(f"⚠️ LLM call already in progress, cancelling it for new request: '{transcription[:50]}...'")
+            logger.warning(f"LLM call already in progress, cancelling it for new request: '{transcription[:50]}...'")
             self.cancel_current_call()
 
         # ADDED - Phase 3: Acquire lock (blocks if another call is in progress)
         async with self._call_lock:
             self._processing = True
             self._cancel_requested = False  # Reset cancel flag
-            logger.debug(f"🔒 LLM lock acquired for: '{transcription[:50]}...'")
+            logger.debug(f" LLM lock acquired for: '{transcription[:50]}...'")
 
             try:
                 # Create task for this call (for cancellation tracking)
@@ -130,7 +130,7 @@ class LLMCaller:
                 )
                 await self._current_task
             except asyncio.CancelledError:
-                logger.info("✋ LLM call was cancelled")
+                logger.info("[CANCELLED] LLM call was cancelled")
                 # Emit cancellation event
                 self.pubsub.publish_nowait(Event(
                     type=EventType.LLM_RESPONSE_FAILED,
@@ -141,7 +141,7 @@ class LLMCaller:
             finally:
                 self._processing = False
                 self._current_task = None
-                logger.debug("🔓 LLM lock released")
+                logger.debug(" LLM lock released")
 
     async def _process_transcription_internal(self, transcription: str) -> None:
         """Internal implementation of transcription processing (called within lock)"""
@@ -163,13 +163,13 @@ class LLMCaller:
 
         try:
             # Call Claude Code CLI directly (subprocess)
-            logger.info("🔵 About to call _call_claude_cli...")
+            logger.info(" About to call _call_claude_cli...")
             response = await self._call_claude_cli(transcription)
             logger.info(f"🟢 _call_claude_cli returned: {len(response)} chars")
 
             # ADDED - Phase 4: Check if cancelled after LLM call
             if self._cancel_requested:
-                logger.info("✋ Cancellation detected after LLM call, aborting...")
+                logger.info("[CANCELLED] Cancellation detected after LLM call, aborting...")
                 raise asyncio.CancelledError()
 
             # Add response to history
@@ -178,22 +178,22 @@ class LLMCaller:
                 "content": response
             })
 
-            logger.info(f"📄 Response text: {response[:200]}...")
+            logger.info(f" Response text: {response[:200]}...")
 
             # Remove thinking tags first (for thinking models like Qwen, DeepSeek-R1)
             response = remove_thinking_tags(response)
 
             # Clean entire response for TTS (single shot)
             clean_response = MarkdownCleaner.clean(response)
-            logger.info(f"🧹 Cleaned response: {clean_response[:100]}...")
+            logger.info(f"[CLEANUP] Cleaned response: {clean_response[:100]}...")
 
             # ADDED - Phase 4: Check if cancelled before emitting TTS
             if self._cancel_requested:
-                logger.info("✋ Cancellation detected before TTS, aborting...")
+                logger.info("[CANCELLED] Cancellation detected before TTS, aborting...")
                 raise asyncio.CancelledError()
 
             # Emit single TTS event
-            logger.info(f"📢 Publishing TTS_SENTENCE_READY event...")
+            logger.info(f" Publishing TTS_SENTENCE_READY event...")
             self.pubsub.publish_nowait(Event(
                 type=EventType.TTS_SENTENCE_READY,
                 data={"text": clean_response},
@@ -201,7 +201,7 @@ class LLMCaller:
             ))
 
             # Emit completion
-            logger.info("📢 Publishing LLM_RESPONSE_COMPLETED event")
+            logger.info(" Publishing LLM_RESPONSE_COMPLETED event")
             self.pubsub.publish_nowait(Event(
                 type=EventType.LLM_RESPONSE_COMPLETED,
                 data={},
@@ -210,7 +210,7 @@ class LLMCaller:
 
         except asyncio.CancelledError:
             # Re-raise to propagate cancellation
-            logger.info("✋ LLM processing cancelled")
+            logger.info("[CANCELLED] LLM processing cancelled")
             raise
         except Exception as e:
             # Emit failure event
@@ -249,14 +249,14 @@ class LLMCaller:
         # Find Claude Code CLI executable
         claude_cmd = self._find_claude_executable()
         if not claude_cmd:
-            logger.error("❌ Claude Code CLI not found in PATH or common locations")
+            logger.error("Claude Code CLI not found in PATH or common locations")
             raise RuntimeError(
                 "Claude Code CLI not found. Please install from: "
                 "https://docs.anthropic.com/en/docs/claude-code\n"
                 "Or ensure 'claude' is in your PATH"
             )
         
-        logger.info(f"🔍 Using Claude CLI: {claude_cmd}")
+        logger.info(f" Using Claude CLI: {claude_cmd}")
 
         # Use a queue to get result from thread
         result_queue: queue.Queue = queue.Queue()
@@ -265,14 +265,14 @@ class LLMCaller:
             """Run Claude CLI in dedicated thread (not asyncio executor)"""
             try:
                 logger.info(f"🤖 [Thread {threading.current_thread().name}] Calling Claude CLI")
-                logger.info(f"📝 Prompt length: {len(context)} chars")
-                logger.info(f"🔧 Command: {claude_cmd} --print --output-format text")
-                logger.info(f"📄 First 200 chars of prompt: {context[:200]}...")
+                logger.info(f"[NOTE] Prompt length: {len(context)} chars")
+                logger.info(f"[CONFIG] Command: {claude_cmd} --print --output-format text")
+                logger.info(f" First 200 chars of prompt: {context[:200]}...")
                 
                 # Run in project directory (important for Claude CLI context)
                 import os
                 cwd = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-                logger.info(f"📁 Working directory: {cwd}")
+                logger.info(f" Working directory: {cwd}")
 
                 result = subprocess.run(
                     [claude_cmd, '--print', '--output-format', 'text'],
@@ -282,13 +282,13 @@ class LLMCaller:
                     cwd=cwd  # Run in project root
                 )
 
-                logger.info(f"✅ Subprocess completed with code: {result.returncode}")
+                logger.info(f"Subprocess completed with code: {result.returncode}")
 
                 if result.returncode != 0:
                     error_msg = result.stderr.decode('utf-8', errors='replace').strip()
                     stdout_msg = result.stdout.decode('utf-8', errors='replace').strip()
-                    logger.error(f"❌ Claude CLI stderr: {error_msg}")
-                    logger.error(f"❌ Claude CLI stdout: {stdout_msg}")
+                    logger.error(f"Claude CLI stderr: {error_msg}")
+                    logger.error(f"Claude CLI stdout: {stdout_msg}")
                     
                     # Use stdout if stderr is empty (Claude might output error to stdout)
                     full_error = error_msg or stdout_msg or "Unknown error (no output)"
@@ -300,14 +300,14 @@ class LLMCaller:
                 result_queue.put(('success', response))
 
             except subprocess.TimeoutExpired:
-                logger.error("❌ Claude CLI timed out")
+                logger.error("Claude CLI timed out")
                 result_queue.put(('error', "Claude CLI timed out after 30 seconds"))
             except Exception as e:
-                logger.error(f"❌ Exception in thread: {e}")
+                logger.error(f"Exception in thread: {e}")
                 result_queue.put(('error', str(e)))
 
         # Start thread
-        logger.info("🚀 Starting dedicated thread for subprocess...")
+        logger.info("Starting dedicated thread for subprocess...")
         thread = threading.Thread(target=_run_in_thread, daemon=True, name="ClaudeCLI")
         thread.start()
 
@@ -318,7 +318,7 @@ class LLMCaller:
 
         while thread.is_alive():
             if time.time() - start_time > timeout:
-                logger.error("❌ Thread timeout")
+                logger.error("Thread timeout")
                 raise RuntimeError("Claude CLI thread timed out")
 
             # Sleep briefly to avoid busy-waiting (yield to asyncio)
@@ -329,7 +329,7 @@ class LLMCaller:
             status, data = result_queue.get_nowait()
             if status == 'error':
                 raise RuntimeError(data)
-            logger.info("✅ Got response from thread")
+            logger.info("Got response from thread")
             return data
         except queue.Empty:
             raise RuntimeError("Thread completed but no result in queue")
@@ -565,7 +565,7 @@ class OllamaLLMCaller(LLMCaller):
 
             # ADDED - Phase 4: Check if cancelled after LLM call
             if self._cancel_requested:
-                logger.info("✋ Cancellation detected after Ollama call, aborting...")
+                logger.info("[CANCELLED] Cancellation detected after Ollama call, aborting...")
                 raise asyncio.CancelledError()
 
             # Add response to history
@@ -574,22 +574,22 @@ class OllamaLLMCaller(LLMCaller):
                 "content": response
             })
 
-            logger.info(f"📄 Response text: {response[:200]}...")
+            logger.info(f" Response text: {response[:200]}...")
 
             # Remove thinking tags first (for thinking models like Qwen, DeepSeek-R1)
             response = remove_thinking_tags(response)
 
             # Clean response for TTS
             clean_response = MarkdownCleaner.clean(response)
-            logger.info(f"🧹 Cleaned response: {clean_response[:100]}...")
+            logger.info(f"[CLEANUP] Cleaned response: {clean_response[:100]}...")
 
             # ADDED - Phase 4: Check if cancelled before emitting TTS
             if self._cancel_requested:
-                logger.info("✋ Cancellation detected before TTS, aborting...")
+                logger.info("[CANCELLED] Cancellation detected before TTS, aborting...")
                 raise asyncio.CancelledError()
 
             # Emit TTS event
-            logger.info(f"📢 Publishing TTS_SENTENCE_READY event...")
+            logger.info(f" Publishing TTS_SENTENCE_READY event...")
             self.pubsub.publish_nowait(Event(
                 type=EventType.TTS_SENTENCE_READY,
                 data={"text": clean_response},
@@ -597,7 +597,7 @@ class OllamaLLMCaller(LLMCaller):
             ))
 
             # Emit completion
-            logger.info("📢 Publishing LLM_RESPONSE_COMPLETED event")
+            logger.info(" Publishing LLM_RESPONSE_COMPLETED event")
             self.pubsub.publish_nowait(Event(
                 type=EventType.LLM_RESPONSE_COMPLETED,
                 data={},
@@ -606,11 +606,11 @@ class OllamaLLMCaller(LLMCaller):
 
         except asyncio.CancelledError:
             # Re-raise to propagate cancellation
-            logger.info("✋ Ollama processing cancelled")
+            logger.info("[CANCELLED] Ollama processing cancelled")
             raise
         except Exception as e:
             logger = logging.getLogger("DictatorService")
-            logger.error(f"❌ Ollama API error: {e}")
+            logger.error(f"Ollama API error: {e}")
             # Emit failure event
             self.pubsub.publish_nowait(Event(
                 type=EventType.LLM_RESPONSE_FAILED,
@@ -671,8 +671,8 @@ Provide helpful, accurate information in a friendly, spoken style."""
             }
         }
 
-        logger.info(f"🔗 Calling Ollama: {self.base_url}/api/chat")
-        logger.info(f"📦 Payload: {len(messages)} messages, model={self.model}")
+        logger.info(f" Calling Ollama: {self.base_url}/api/chat")
+        logger.info(f"[PACKAGE] Payload: {len(messages)} messages, model={self.model}")
 
         try:
             async with aiohttp.ClientSession() as session:
@@ -695,18 +695,18 @@ Provide helpful, accurate information in a friendly, spoken style."""
                         raise RuntimeError(f"Unexpected Ollama response format: {result}")
 
                     response_text = result["message"]["content"].strip()
-                    logger.info(f"✅ Ollama response: {len(response_text)} chars")
+                    logger.info(f"Ollama response: {len(response_text)} chars")
 
                     return response_text
 
         except aiohttp.ClientError as e:
-            logger.error(f"❌ HTTP error calling Ollama: {e}")
+            logger.error(f"HTTP error calling Ollama: {e}")
             raise RuntimeError(f"Failed to connect to Ollama at {self.base_url}: {e}")
         except asyncio.TimeoutError:
-            logger.error("❌ Ollama API timeout")
+            logger.error("Ollama API timeout")
             raise RuntimeError("Ollama API timed out after 60 seconds")
         except Exception as e:
-            logger.error(f"❌ Unexpected error: {e}")
+            logger.error(f"Unexpected error: {e}")
             raise
 
 
@@ -787,7 +787,7 @@ class N8NToolCallingLLMCaller(LLMCaller):
         ))
 
         try:
-            logger.info(f"🔗 Calling N8N webhook: {self.webhook_url}")
+            logger.info(f" Calling N8N webhook: {self.webhook_url}")
 
             # Call N8N webhook
             response = await self._call_n8n_webhook(transcription)
@@ -795,7 +795,7 @@ class N8NToolCallingLLMCaller(LLMCaller):
 
             # ADDED - Phase 4: Check if cancelled after N8N call
             if self._cancel_requested:
-                logger.info("✋ Cancellation detected after N8N call, aborting...")
+                logger.info("[CANCELLED] Cancellation detected after N8N call, aborting...")
                 raise asyncio.CancelledError()
 
             # Add response to history
@@ -804,22 +804,22 @@ class N8NToolCallingLLMCaller(LLMCaller):
                 "content": response
             })
 
-            logger.info(f"📄 Response text: {response[:200]}...")
+            logger.info(f" Response text: {response[:200]}...")
 
             # Remove thinking tags first (for thinking models)
             response = remove_thinking_tags(response)
 
             # Clean response for TTS
             clean_response = MarkdownCleaner.clean(response)
-            logger.info(f"🧹 Cleaned response: {clean_response[:100]}...")
+            logger.info(f"[CLEANUP] Cleaned response: {clean_response[:100]}...")
 
             # ADDED - Phase 4: Check if cancelled before emitting TTS
             if self._cancel_requested:
-                logger.info("✋ Cancellation detected before TTS, aborting...")
+                logger.info("[CANCELLED] Cancellation detected before TTS, aborting...")
                 raise asyncio.CancelledError()
 
             # Emit TTS event
-            logger.info(f"📢 Publishing TTS_SENTENCE_READY event...")
+            logger.info(f" Publishing TTS_SENTENCE_READY event...")
             self.pubsub.publish_nowait(Event(
                 type=EventType.TTS_SENTENCE_READY,
                 data={"text": clean_response},
@@ -827,7 +827,7 @@ class N8NToolCallingLLMCaller(LLMCaller):
             ))
 
             # Emit completion
-            logger.info("📢 Publishing LLM_RESPONSE_COMPLETED event")
+            logger.info(" Publishing LLM_RESPONSE_COMPLETED event")
             self.pubsub.publish_nowait(Event(
                 type=EventType.LLM_RESPONSE_COMPLETED,
                 data={},
@@ -836,11 +836,11 @@ class N8NToolCallingLLMCaller(LLMCaller):
 
         except asyncio.CancelledError:
             # Re-raise to propagate cancellation
-            logger.info("✋ N8N processing cancelled")
+            logger.info("[CANCELLED] N8N processing cancelled")
             raise
         except Exception as e:
             logger = logging.getLogger("DictatorService")
-            logger.error(f"❌ N8N webhook error: {e}")
+            logger.error(f"N8N webhook error: {e}")
             # Emit failure event
             self.pubsub.publish_nowait(Event(
                 type=EventType.LLM_RESPONSE_FAILED,
@@ -902,8 +902,8 @@ Provide helpful, accurate information in a friendly, spoken style."""
             "session_id": self.session_id or "default"
         }
 
-        logger.info(f"🔗 Calling N8N webhook: {self.webhook_url}")
-        logger.info(f"📦 Payload: {len(messages)} messages")
+        logger.info(f" Calling N8N webhook: {self.webhook_url}")
+        logger.info(f"[PACKAGE] Payload: {len(messages)} messages")
 
         try:
             async with aiohttp.ClientSession() as session:
@@ -931,17 +931,17 @@ Provide helpful, accurate information in a friendly, spoken style."""
                     # Log tool usage if available
                     if "tools_used" in result and result["tools_used"]:
                         tools = ", ".join(result["tools_used"])
-                        logger.info(f"🔧 Tools used: {tools}")
+                        logger.info(f"[CONFIG] Tools used: {tools}")
 
-                    logger.info(f"✅ N8N response: {len(response_text)} chars")
+                    logger.info(f"N8N response: {len(response_text)} chars")
                     return response_text
 
         except aiohttp.ClientError as e:
-            logger.error(f"❌ HTTP error calling N8N: {e}")
+            logger.error(f"HTTP error calling N8N: {e}")
             raise RuntimeError(f"Failed to connect to N8N at {self.webhook_url}: {e}")
         except asyncio.TimeoutError:
-            logger.error(f"❌ N8N webhook timeout ({self.timeout}s)")
+            logger.error(f"N8N webhook timeout ({self.timeout}s)")
             raise RuntimeError(f"N8N webhook timed out after {self.timeout} seconds")
         except Exception as e:
-            logger.error(f"❌ Unexpected error: {e}")
+            logger.error(f"Unexpected error: {e}")
             raise

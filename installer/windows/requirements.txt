@@ -1,0 +1,9 @@
+# Dictator Installer Runtime Dependencies
+# These are the minimal dependencies needed for the installer to run
+
+# Reference to main project requirements
+# The installer will use this to install Dictator itself
+-r ../../requirements.txt
+
+# Additional installer-only dependencies
+# (None currently - all installer deps are stdlib or already in main requirements)

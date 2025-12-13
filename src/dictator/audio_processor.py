@@ -116,7 +116,7 @@ class AudioProcessor:
 
             # Log health check after 1 second
             if not self._health_check_logged and self._timestamp_ms >= 1000:
-                self.logger.info("✅ Audio processor healthy, receiving chunks")
+                self.logger.info("Audio processor healthy, receiving chunks")
                 self._health_check_logged = True
 
         # Call external callback (outside lock to avoid deadlock)
@@ -228,7 +228,7 @@ class VoiceSessionAudioBridge:
 
         # Log first chunk
         if not self._first_chunk_logged:
-            self.logger.debug("🎵 Voice session started receiving audio chunks")
+            self.logger.debug(" Voice session started receiving audio chunks")
             self._first_chunk_logged = True
 
         # Schedule async call in voice session's event loop

@@ -37,9 +37,18 @@ poetry.lock
 *~
 /logs/*
 
+# Claude local settings
+.claude/settings.local.json
+
 # OS
 .DS_Store
 Thumbs.db
+
+# Build artifacts / local bundles
+DictatorInstaller*.exe
+DictatorInstaller*.rar
+nul
+installer/**/nul
 
 # Project specific
 *.wav

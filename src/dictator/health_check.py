@@ -14,6 +14,9 @@ from typing import List, Optional, Dict, Any
 from pathlib import Path
 from datetime import datetime
 
+# Export public API for installer integration
+__all__ = ['DependencyValidator', 'HealthReport', 'ComponentStatus']
+
 
 @dataclass
 class ComponentStatus:
@@ -51,15 +54,15 @@ class HealthReport:
     def get_tray_tooltip(self, base_text: str = "Dictator") -> str:
         """Generate tooltip text for system tray"""
         if self.overall_status == "healthy":
-            return f"{base_text} - ✅ Healthy"
+            return f"{base_text} - Healthy"
         elif self.overall_status == "degraded":
             if self.degraded_features:
                 features = ", ".join(self.degraded_features)
-                return f"{base_text} - ⚠️ Degraded ({features})"
+                return f"{base_text} - Degraded ({features})"
             else:
-                return f"{base_text} - ⚠️ Degraded"
+                return f"{base_text} - Degraded"
         else:
-            return f"{base_text} - ❌ Critical Issues"
+            return f"{base_text} - Critical Issues"
 
 
 class DependencyValidator:
@@ -117,13 +120,13 @@ class DependencyValidator:
         for component in components:
             # Log component status
             if component.status == "healthy":
-                self.logger.info(f"✅ {component.name}: {component.message}")
+                self.logger.info(f"{component.name}: {component.message}")
             elif component.status == "degraded":
-                self.logger.warning(f"⚠️ {component.name}: {component.message}")
+                self.logger.warning(f"{component.name}: {component.message}")
                 if component.fix_hint:
                     self.logger.warning(f"   Fix: {component.fix_hint}")
             elif component.status in ["unavailable", "critical"]:
-                self.logger.warning(f"❌ {component.name}: {component.message}")
+                self.logger.warning(f"{component.name}: {component.message}")
                 if component.fix_hint:
                     self.logger.warning(f"   Fix: {component.fix_hint}")
 

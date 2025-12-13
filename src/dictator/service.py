@@ -81,7 +81,7 @@ class DictatorService:
         self.run_dir: Optional[Path] = None
         self.setup_logging()
 
-        self.logger.info("🎙️ Dictator Service initializing...")
+        self.logger.info("Dictator Service initializing...")
 
         # Thread synchronization (ADDED - Phase 1.1)
         self._state_lock = threading.RLock()  # Recursive lock for state
@@ -341,7 +341,7 @@ class DictatorService:
         else:
             compute_type = "int8"  # Best for CPU
 
-        self.logger.info(f"📦 Loading Whisper model '{model_name}' on {device}...")
+        self.logger.info(f"[PACKAGE] Loading Whisper model '{model_name}' on {device}...")
         self.logger.info(f"   Using faster-whisper with compute_type={compute_type}")
 
         try:
@@ -350,7 +350,7 @@ class DictatorService:
                 device=device,
                 compute_type=compute_type
             )
-            self.logger.info(f"✅ Model '{model_name}' loaded successfully on {device}!")
+            self.logger.info(f"Model '{model_name}' loaded successfully on {device}!")
 
             # Try to get GPU info if available
             if device == 'cuda':
@@ -359,11 +359,11 @@ class DictatorService:
                     if torch.cuda.is_available():
                         gpu_name = torch.cuda.get_device_name(0)
                         vram_total = torch.cuda.get_device_properties(0).total_memory / (1024**3)
-                        self.logger.info(f"🎮 Using GPU: {gpu_name} ({vram_total:.1f} GB VRAM)")
+                        self.logger.info(f"[GPU] Using GPU: {gpu_name} ({vram_total:.1f} GB VRAM)")
                 except:
-                    self.logger.info(f"🎮 Using CUDA device")
+                    self.logger.info(f"[GPU] Using CUDA device")
         except Exception as e:
-            self.logger.error(f"❌ Failed to load model: {e}")
+            self.logger.error(f"Failed to load model: {e}")
             raise
 
     def load_tts(self):
@@ -372,23 +372,23 @@ class DictatorService:
         tts_enabled = tts_config.get('enabled', False)
 
         if not tts_enabled:
-            self.logger.info("🔇 TTS disabled in config")
+            self.logger.info(" TTS disabled in config")
             return
 
         if not TTS_AVAILABLE:
-            self.logger.warning("⚠️ TTS requested but kokoro-onnx not installed")
+            self.logger.warning("TTS requested but kokoro-onnx not installed")
             return
 
         try:
-            self.logger.info("🎤 Loading TTS engine...")
+            self.logger.info("[MIC] Loading TTS engine...")
             self.tts_engine = KokoroTTSEngine(self.config)
 
             # Register TTS state callback to emit to service callbacks
             self.tts_engine.register_state_callback(lambda state: self._emit_state(f"tts_{state}"))
 
-            self.logger.info("✅ TTS engine loaded successfully!")
+            self.logger.info("TTS engine loaded successfully!")
         except Exception as e:
-            self.logger.error(f"❌ Failed to load TTS engine: {e}", exc_info=True)
+            self.logger.error(f"Failed to load TTS engine: {e}", exc_info=True)
             self.tts_engine = None
 
     def load_voice_session(self):
@@ -407,27 +407,27 @@ class DictatorService:
         self.use_event_driven_mode = is_event_driven and is_claude_mode
 
         if not is_event_driven:
-            self.logger.info("📢 Event-driven mode disabled (using legacy mode)")
+            self.logger.info(" Event-driven mode disabled (using legacy mode)")
             return
 
         if not is_claude_mode:
-            self.logger.info("📢 Claude Mode disabled - using Dictation Mode (text only)")
+            self.logger.info(" Claude Mode disabled - using Dictation Mode (text only)")
             return
 
         if not VOICE_SESSION_AVAILABLE:
-            self.logger.warning("⚠️ Voice session requested but module not available")
+            self.logger.warning("Voice session requested but module not available")
             return
 
         if not self.tts_engine:
-            self.logger.warning("⚠️ Voice session requires TTS engine")
+            self.logger.warning("Voice session requires TTS engine")
             return
 
         try:
-            self.logger.info("🎯 Loading event-driven voice session...")
+            self.logger.info(" Loading event-driven voice session...")
 
             # Get VAD enabled flag from hotkey config (same as normal dictation mode)
             vad_enabled = self.config['hotkey'].get('vad_enabled', False)
-            self.logger.info(f"🎤 VAD enabled: {vad_enabled}")
+            self.logger.info(f"[MIC] VAD enabled: {vad_enabled}")
 
             # Create VAD config
             vad_config_dict = voice_config.get('vad', {})
@@ -473,7 +473,7 @@ class DictatorService:
                 webhook_url = n8n_config.get('webhook_url', 'http://localhost:15678/webhook/dictator-llm')
                 timeout = n8n_config.get('timeout', 120)
 
-                self.logger.info(f"🔗 Using N8N Tool-Calling provider: {webhook_url}")
+                self.logger.info(f" Using N8N Tool-Calling provider: {webhook_url}")
                 llm_caller = N8NToolCallingLLMCaller(
                     pubsub=None,  # Will be set by session manager
                     webhook_url=webhook_url,
@@ -528,7 +528,7 @@ class DictatorService:
                     )
 
                     try:
-                        self.logger.info(f"🎤 Starting voice session (attempt {retry_count + 1}/{max_retries})")
+                        self.logger.info(f"[MIC] Starting voice session (attempt {retry_count + 1}/{max_retries})")
                         loop.run_until_complete(self.voice_session.start())
                         self.logger.info("Voice session completed normally")
                         break  # Completed successfully
@@ -539,13 +539,13 @@ class DictatorService:
 
                     except Exception as e:
                         retry_count += 1
-                        self.logger.error(f"❌ Voice session crashed: {e}", exc_info=True)
+                        self.logger.error(f"Voice session crashed: {e}", exc_info=True)
 
                         if retry_count < max_retries:
-                            self.logger.info(f"🔄 Retrying in 2s... ({retry_count}/{max_retries})")
+                            self.logger.info(f"[RETRY] Retrying in 2s... ({retry_count}/{max_retries})")
                             time.sleep(2)
                         else:
-                            self.logger.error(f"❌ Max retries ({max_retries}) reached, giving up on voice session")
+                            self.logger.error(f"Max retries ({max_retries}) reached, giving up on voice session")
                             self.use_event_driven_mode = False  # Fallback to dictation
 
                     finally:
@@ -565,10 +565,10 @@ class DictatorService:
             # Wait a moment for session to start
             time.sleep(0.1)
 
-            self.logger.info("✅ Event-driven voice session loaded - ZERO polling!")
+            self.logger.info("Event-driven voice session loaded - ZERO polling!")
 
         except Exception as e:
-            self.logger.error(f"❌ Failed to load voice session: {e}", exc_info=True)
+            self.logger.error(f"Failed to load voice session: {e}", exc_info=True)
             self.voice_session = None
 
     def parse_hotkey(self, hotkey_str: str) -> str:
@@ -639,7 +639,7 @@ class DictatorService:
         Resets recording state so that next hotkey press starts a new recording
         instead of trying to stop an already-stopped recording.
         """
-        self.logger.info("🎯 VAD detected speech stop, resetting recording state")
+        self.logger.info(" VAD detected speech stop, resetting recording state")
         # Transition to PROCESSING (transcription will happen)
         self._transition_state([ServiceState.RECORDING], ServiceState.PROCESSING)
 
@@ -664,19 +664,19 @@ class DictatorService:
             current_session = self._session_counter
 
         if old_state in [ServiceState.SPEAKING, ServiceState.PROCESSING]:
-            self.logger.info(f"🚨 Interrupting {old_state.value} (session {current_session}) - user pressed hotkey to speak")
+            self.logger.info(f" Interrupting {old_state.value} (session {current_session}) - user pressed hotkey to speak")
 
-        self.logger.info(f"🔴 Recording started (session {current_session}){vad_mode}...")
+        self.logger.info(f"[REC] Recording started (session {current_session}){vad_mode}...")
 
         # Interrupt TTS if playing (user wants to speak)
         if self.tts_engine and self.tts_engine.is_speaking():
-            self.logger.info("⏹️ Stopping TTS playback...")
+            self.logger.info("Stopping TTS playback...")
             self.tts_engine.stop()
             time.sleep(0.1)  # Brief wait for TTS to fully stop
 
         # ADDED - Phase 4: Cancel LLM call if in PROCESSING state
         if old_state == ServiceState.PROCESSING and self.use_event_driven_mode and self.voice_session:
-            self.logger.info("🛑 Cancelling LLM call...")
+            self.logger.info("[STOP] Cancelling LLM call...")
             if hasattr(self.voice_session.llm_caller, 'cancel_current_call'):
                 self.voice_session.llm_caller.cancel_current_call()
 
@@ -688,7 +688,7 @@ class DictatorService:
         # Clear voice session buffer if in event-driven mode
         if self.use_event_driven_mode and self.voice_session:
             self.voice_session.current_audio_buffer = np.array([], dtype=np.float32)
-            self.logger.info("🧹 Cleared audio buffer")
+            self.logger.info("[CLEANUP] Cleared audio buffer")
 
         # Start recording in background thread
         threading.Thread(target=self._record_audio, daemon=True).start()
@@ -762,7 +762,7 @@ class DictatorService:
                             # Log RMS statistics for calibration
                             vad_stats = self.audio_processor.get_vad_stats()
                             if vad_stats['samples'] > 0:
-                                self.logger.info(f"🔇 Silence detected ({silence_time:.1f}s)")
+                                self.logger.info(f" Silence detected ({silence_time:.1f}s)")
                                 self.logger.info(
                                     f"   RMS stats: avg={vad_stats['avg_rms']:.5f}, "
                                     f"max={vad_stats['max_rms']:.5f}, "
@@ -785,7 +785,7 @@ class DictatorService:
                     self.audio_processor = None
 
         except Exception as e:
-            self.logger.error(f"❌ Recording error: {e}")
+            self.logger.error(f"Recording error: {e}")
             # Reset to IDLE on error
             self._transition_state([ServiceState.RECORDING], ServiceState.IDLE)
             # Cleanup AudioProcessor on error
@@ -803,7 +803,7 @@ class DictatorService:
         with self._state_lock:
             self._current_tts_session = self._session_counter
 
-        self.logger.info(f"⏹️ Recording stopped (will process for session {self._current_tts_session})")
+        self.logger.info(f"Recording stopped (will process for session {self._current_tts_session})")
 
         # Event-driven mode with VAD disabled: emit SPEECH_STOPPED manually
         if self.use_event_driven_mode and self.voice_session:
@@ -811,11 +811,11 @@ class DictatorService:
             if not vad_enabled:
                 # User stopped manually, trigger speech processing
                 from .voice import Event, EventType
-                self.logger.info("🎤 VAD disabled: emitting manual SPEECH_STOPPED event")
+                self.logger.info("[MIC] VAD disabled: emitting manual SPEECH_STOPPED event")
                 
                 # Interrupt TTS if playing (user wants to speak)
                 if self.tts_engine and self.tts_engine.is_speaking():
-                    self.logger.info("🚨 Interrupting TTS - user wants to speak")
+                    self.logger.info(" Interrupting TTS - user wants to speak")
                     self.tts_engine.stop()
                 
                 # Emit processing state BEFORE event (voice session will handle transcription)
@@ -824,7 +824,7 @@ class DictatorService:
                 # Emit SPEECH_STOPPED event to voice session
                 try:
                     subscriber_count = self.voice_session.pubsub.subscriber_count
-                    self.logger.info(f"📢 Publishing SPEECH_STOPPED event to {subscriber_count} subscribers")
+                    self.logger.info(f" Publishing SPEECH_STOPPED event to {subscriber_count} subscribers")
                     
                     self.voice_session.pubsub.publish_nowait(Event(
                         type=EventType.SPEECH_STOPPED,
@@ -833,18 +833,18 @@ class DictatorService:
                     ))
                     
                     if subscriber_count == 0:
-                        self.logger.error("❌ No subscribers! Event processor may have crashed")
+                        self.logger.error("No subscribers! Event processor may have crashed")
                         self._emit_state("idle")
                         return
                     
-                    self.logger.info("✅ SPEECH_STOPPED event published to queue")
+                    self.logger.info("SPEECH_STOPPED event published to queue")
                 except Exception as e:
-                    self.logger.error(f"❌ Failed to publish SPEECH_STOPPED event: {e}")
+                    self.logger.error(f"Failed to publish SPEECH_STOPPED event: {e}")
                     self._emit_state("idle")
                     return
                 
                 # In event-driven mode, voice session handles everything
-                self.logger.info("🎯 Event-driven mode: Voice session will handle transcription via events")
+                self.logger.info(" Event-driven mode: Voice session will handle transcription via events")
                 return
 
         if not self.recording_data:
@@ -878,27 +878,41 @@ class DictatorService:
             )
 
         try:
+            self.logger.debug(f"Starting transcription (file={temp_path}, lang={self.config['whisper']['language']})")
+
             # Transcribe with faster-whisper
+            # Note: This can crash with CUDA errors that Python cannot catch
             segments, info = self.model.transcribe(
                 temp_path,
                 language=self.config['whisper']['language']
             )
 
+            self.logger.debug("Transcription completed, collecting segments...")
+
             # Collect all text from segments
             text = "".join([segment.text for segment in segments]).strip()
+
+            self.logger.debug(f"Collected {len(text)} characters")
             return text
+
+        except Exception as e:
+            self.logger.error(f"Transcription failed: {e}", exc_info=True)
+            raise
 
         finally:
             # Clean up temp file
             if os.path.exists(temp_path):
-                os.unlink(temp_path)
+                try:
+                    os.unlink(temp_path)
+                except Exception as e:
+                    self.logger.warning(f"Failed to delete temp file: {e}")
 
     def _process_recording(self):
         """Process recorded audio"""
         try:
             # Event-driven mode: voice session already handled everything during recording
             if self.use_event_driven_mode and self.voice_session:
-                self.logger.info("🎯 Event-driven mode: Voice session processed speech automatically via events")
+                self.logger.info(" Event-driven mode: Voice session processed speech automatically via events")
                 self._emit_state("idle")
                 return
 
@@ -913,7 +927,7 @@ class DictatorService:
 
             # Transcribe audio
             text = self.transcribe_audio(audio_data)
-            self.logger.info(f"📝 Transcribed: {text}")
+            self.logger.info(f"[NOTE] Transcribed: {text}")
 
             # Paste to clipboard
             if text:
@@ -923,7 +937,7 @@ class DictatorService:
             self._transition_state([ServiceState.PROCESSING], ServiceState.IDLE)
 
         except Exception as e:
-            self.logger.error(f"❌ Processing error: {e}", exc_info=True)
+            self.logger.error(f"Processing error: {e}", exc_info=True)
             self._transition_state([ServiceState.PROCESSING], ServiceState.IDLE)
 
     def _paste_text(self, text: str):
@@ -931,7 +945,7 @@ class DictatorService:
         try:
             # Copy to clipboard
             pyperclip.copy(text)
-            self.logger.info("📋 Copied to clipboard")
+            self.logger.info(" Copied to clipboard")
 
             # Auto-paste if enabled
             if self.config['paste']['auto_paste']:
@@ -940,15 +954,15 @@ class DictatorService:
 
                 # Paste (Ctrl+V)
                 pyautogui.hotkey('ctrl', 'v')
-                self.logger.info("✅ Text pasted!")
+                self.logger.info("Text pasted!")
 
         except Exception as e:
-            self.logger.error(f"❌ Paste error: {e}")
+            self.logger.error(f"Paste error: {e}")
 
     def speak_text(self, text: str):
         """Speak text using TTS engine"""
         if not self.tts_engine:
-            self.logger.warning("⚠️ TTS engine not available")
+            self.logger.warning("TTS engine not available")
             # No TTS, go straight to IDLE
             self._transition_state([ServiceState.PROCESSING, ServiceState.IDLE], ServiceState.IDLE)
             return
@@ -961,22 +975,22 @@ class DictatorService:
 
         if tts_session < active_session:
             # This TTS is from an old session - user already started new recording
-            self.logger.info(f"🔇 Skipping stale TTS from session {tts_session} (current session: {active_session})")
+            self.logger.info(f" Skipping stale TTS from session {tts_session} (current session: {active_session})")
             return
 
         if current == ServiceState.RECORDING:
             # User already started recording again (race condition) - skip TTS
-            self.logger.info(f"🔇 Skipping TTS - user already recording new input (session {active_session})")
+            self.logger.info(f" Skipping TTS - user already recording new input (session {active_session})")
             return
 
         # Transition to SPEAKING
         # Allow from PROCESSING (normal flow) or IDLE (if LLM completed before TTS event arrived)
         if not self._transition_state([ServiceState.PROCESSING, ServiceState.IDLE], ServiceState.SPEAKING):
-            self.logger.warning(f"⚠️ Cannot transition to SPEAKING from {current}, skipping TTS")
+            self.logger.warning(f"Cannot transition to SPEAKING from {current}, skipping TTS")
             return
 
         try:
-            self.logger.info(f"🔊 Speaking: {text[:50]}{'...' if len(text) > 50 else ''}")
+            self.logger.info(f" Speaking: {text[:50]}{'...' if len(text) > 50 else ''}")
             # Use blocking=True to ensure sentence completes before next one starts
             self.tts_engine.speak(text, blocking=True)
 
@@ -990,10 +1004,10 @@ class DictatorService:
                 self._transition_state([ServiceState.SPEAKING], ServiceState.IDLE)
             else:
                 # Was interrupted - keep current state (RECORDING or PROCESSING)
-                self.logger.info(f"🔄 TTS completed but state already changed to {current.value}, keeping it")
+                self.logger.info(f"[RETRY] TTS completed but state already changed to {current.value}, keeping it")
 
         except Exception as e:
-            self.logger.error(f"❌ TTS error: {e}", exc_info=True)
+            self.logger.error(f"TTS error: {e}", exc_info=True)
             # On error, only transition if still in SPEAKING
             with self._state_lock:
                 current = self._state
@@ -1003,7 +1017,7 @@ class DictatorService:
     def test_tts(self):
         """Test TTS functionality (for debugging)"""
         if not self.tts_engine:
-            self.logger.error("❌ TTS engine not initialized!")
+            self.logger.error("TTS engine not initialized!")
             return
 
         test_text = "Olá! Este é um teste do sistema de síntese de voz."
@@ -1012,7 +1026,7 @@ class DictatorService:
 
     def start(self):
         """Start the service"""
-        self.logger.info("🚀 Dictator Service started")
+        self.logger.info("Dictator Service started")
         self.running = True
 
         # Setup trigger based on type
@@ -1021,7 +1035,7 @@ class DictatorService:
         if trigger_type == 'mouse':
             # Mouse button trigger
             button_name = self.config['hotkey'].get('mouse_button', 'side1')
-            self.logger.info(f"🖱️  Listening for mouse button: {button_name}")
+            self.logger.info(f"Listening for mouse button: {button_name}")
 
             # Create mouse listener
             self.mouse_listener = mouse.Listener(on_click=self.on_mouse_click)
@@ -1032,7 +1046,7 @@ class DictatorService:
             hotkey_str = self.config['hotkey'].get('keyboard_trigger', 'ctrl+alt+v')
             parsed_hotkey = self.parse_hotkey(hotkey_str)
 
-            self.logger.info(f"⌨️  Listening for hotkey: {hotkey_str}")
+            self.logger.info(f"Listening for hotkey: {hotkey_str}")
 
             # Create hotkey listener
             self.hotkey_listener = keyboard.GlobalHotKeys({
@@ -1061,7 +1075,7 @@ class DictatorService:
         for component in self.health_report.components:
             # Critical failures: abort startup
             if component.status == "critical" and component.required:
-                self.logger.error(f"❌ CRITICAL: {component.message}")
+                self.logger.error(f"CRITICAL: {component.message}")
                 if component.fix_hint:
                     self.logger.error(f"   Fix: {component.fix_hint}")
                 raise RuntimeError(f"Critical dependency missing: {component.name}")
@@ -1070,30 +1084,30 @@ class DictatorService:
             if component.status in ["unavailable", "critical"]:
                 if component.name in ["Git LFS & Models", "TTS Model Files"]:
                     self._tts_available = False
-                    self.logger.warning(f"⚠️ TTS disabled: {component.message}")
+                    self.logger.warning(f"TTS disabled: {component.message}")
                     if component.fix_hint:
                         self.logger.warning(f"   Fix: {component.fix_hint}")
 
                 elif component.name in ["Ollama", "N8N"]:
                     self._voice_available = False
-                    self.logger.warning(f"⚠️ Voice assistant disabled: {component.message}")
+                    self.logger.warning(f"Voice assistant disabled: {component.message}")
                     if component.fix_hint:
                         self.logger.warning(f"   Fix: {component.fix_hint}")
 
                 elif component.name == "GPU/CUDA" and component.status == "critical":
                     # Force CPU mode
                     self.config['whisper']['device'] = 'cpu'
-                    self.logger.warning(f"⚠️ Fallback to CPU mode: {component.message}")
+                    self.logger.warning(f"Fallback to CPU mode: {component.message}")
                     if component.fix_hint:
                         self.logger.warning(f"   Fix: {component.fix_hint}")
 
         # Log final status
         if self.health_report.overall_status == "healthy":
-            self.logger.info("✅ All systems healthy")
+            self.logger.info("All systems healthy")
         elif self.health_report.overall_status == "degraded":
             degraded_list = ', '.join(self.health_report.degraded_features) if self.health_report.degraded_features else 'features'
-            self.logger.warning(f"⚠️ Running in degraded mode: {degraded_list} disabled")
-            self.logger.info("ℹ️  Core dictation functionality remains available")
+            self.logger.warning(f"Running in degraded mode: {degraded_list} disabled")
+            self.logger.info("Core dictation functionality remains available")
 
     def _write_status_file(self):
         """Write health status to JSON file (NEW)"""
@@ -1113,8 +1127,8 @@ class DictatorService:
             self.logger.warning(f"Failed to write status file: {e}")
 
     def stop(self):
-        """Stop the service"""
-        self.logger.info("🛑 Dictator Service stopping...")
+        """Stop the service and free all GPU resources"""
+        self.logger.info("[STOP] Dictator Service stopping...")
         self.running = False
 
         if self.is_recording:
@@ -1144,7 +1158,172 @@ class DictatorService:
             self.thread_monitor.stop()
             self.thread_monitor = None
 
-        self.logger.info("👋 Dictator Service stopped")
+        # CRITICAL: Free GPU resources before restart to prevent VRAM leak
+        self._cleanup_gpu_resources()
+
+        self.logger.info(" Dictator Service stopped")
+
+    def _cleanup_gpu_resources(self):
+        """Clean up GPU resources (Whisper model, TTS engine) to free VRAM"""
+        import gc
+
+        # Unload Whisper model from VRAM
+        if hasattr(self, 'model') and self.model is not None:
+            self.logger.info("[CLEANUP] Unloading Whisper model from VRAM...")
+            del self.model
+            self.model = None
+
+        # Unload TTS engine from VRAM
+        if hasattr(self, 'tts_engine') and self.tts_engine is not None:
+            self.logger.info("[CLEANUP] Unloading TTS engine from VRAM...")
+            del self.tts_engine
+            self.tts_engine = None
+
+        # Force garbage collection to free memory
+        gc.collect()
+
+        # Clear CUDA cache if PyTorch is available
+        try:
+            import torch
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+                torch.cuda.synchronize()
+                self.logger.info("[CLEANUP] CUDA cache cleared")
+        except ImportError:
+            pass  # PyTorch not available, skip CUDA cleanup
+        except Exception as e:
+            self.logger.warning(f"[CLEANUP] Could not clear CUDA cache: {e}")
+
+    def update_llm_caller(self):
+        """Update LLM caller in voice session without restarting service"""
+        if not self.use_event_driven_mode or not self.voice_session:
+            self.logger.warning("Cannot update LLM caller: not in LLM mode")
+            return False
+
+        try:
+            from .voice import create_llm_caller
+
+            provider = self.config['voice']['llm'].get('provider', 'claude-cli')
+            self.logger.info(f"[UPDATE] Recreating LLM caller with provider: {provider}")
+
+            # Create new LLM caller
+            llm_caller = create_llm_caller(self.config['voice']['llm'], self.logger)
+
+            # Update voice session's LLM caller
+            self.voice_session.llm_caller = llm_caller
+
+            self.logger.info("[UPDATE] LLM caller updated successfully")
+            return True
+
+        except Exception as e:
+            self.logger.error(f"Failed to update LLM caller: {e}", exc_info=True)
+            return False
+
+    def update_hotkey_listener(self):
+        """Update hotkey listener without restarting service"""
+        try:
+            # Stop old listeners
+            if self.hotkey_listener:
+                self.hotkey_listener.stop()
+                self.hotkey_listener = None
+
+            if self.mouse_listener:
+                self.mouse_listener.stop()
+                self.mouse_listener = None
+
+            # Wait a moment for listeners to stop
+            import time
+            time.sleep(0.1)
+
+            # Start new listener based on current config
+            trigger_type = self.config['hotkey'].get('type', 'keyboard')
+
+            if trigger_type == 'mouse':
+                button = self.config['hotkey'].get('mouse_button', 'side1')
+                self.logger.info(f"[UPDATE] Starting mouse listener for button: {button}")
+
+                from pynput import mouse
+                self.mouse_listener = mouse.Listener(on_click=self.on_mouse_click)
+                self.mouse_listener.start()
+
+            else:
+                hotkey_str = self.config['hotkey'].get('keyboard_trigger', 'ctrl+alt+v')
+                parsed_hotkey = self.parse_hotkey(hotkey_str)
+                self.logger.info(f"[UPDATE] Starting keyboard listener for: {hotkey_str}")
+
+                from pynput import keyboard
+                self.hotkey_listener = keyboard.GlobalHotKeys({
+                    parsed_hotkey: self.toggle_recording
+                })
+                self.hotkey_listener.start()
+
+            self.logger.info("[UPDATE] Hotkey listener updated successfully")
+            return True
+
+        except Exception as e:
+            self.logger.error(f"Failed to update hotkey listener: {e}", exc_info=True)
+            return False
+
+    def update_whisper_model(self):
+        """Reload Whisper model without restarting service"""
+        try:
+            # Get new model from config
+            new_model = self.config['whisper'].get('model', 'large-v3')
+            device = self.config['whisper'].get('device', 'cuda')
+
+            self.logger.info(f"[UPDATE] Reloading Whisper model: {new_model} on {device}")
+
+            # Stop recording if active
+            if self._state == ServiceState.RECORDING:
+                self.logger.warning("[UPDATE] Stopping active recording to reload model")
+                self.stop_recording()
+                import time
+                time.sleep(0.5)
+
+            # Clean up old model from VRAM
+            if hasattr(self, 'model') and self.model is not None:
+                self.logger.info("[UPDATE] Unloading current Whisper model from VRAM...")
+                del self.model
+                self.model = None
+
+                import gc
+                gc.collect()
+
+                # Clear CUDA cache
+                try:
+                    import torch
+                    if torch.cuda.is_available():
+                        torch.cuda.empty_cache()
+                        torch.cuda.synchronize()
+                except:
+                    pass
+
+            # Load new model
+            self.logger.info(f"[UPDATE] Loading Whisper model '{new_model}' on {device}...")
+
+            from faster_whisper import WhisperModel
+
+            if device == "cuda":
+                self.logger.info("   Using faster-whisper with compute_type=float16")
+                self.model = WhisperModel(
+                    new_model,
+                    device="cuda",
+                    compute_type="float16"
+                )
+            else:
+                self.logger.info("   Using faster-whisper with compute_type=int8 (CPU)")
+                self.model = WhisperModel(
+                    new_model,
+                    device="cpu",
+                    compute_type="int8"
+                )
+
+            self.logger.info(f"[UPDATE] ✓ Whisper model '{new_model}' loaded successfully on {device}!")
+            return True
+
+        except Exception as e:
+            self.logger.error(f"Failed to reload Whisper model: {e}", exc_info=True)
+            return False
 
 
 def main():
